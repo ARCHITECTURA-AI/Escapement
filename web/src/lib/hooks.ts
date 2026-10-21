@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "./api";
 import type { Me, Meta } from "./types";
@@ -16,4 +17,11 @@ export function useMeta() {
 
 export function useApi<T>(path: string | null, refreshInterval?: number) {
   return useSWR<T>(path, fetcher, { refreshInterval, revalidateOnFocus: false, shouldRetryOnError: false });
+}
+
+/** The browser origin, read after hydration so server and client render the same markup. */
+export function useOrigin(fallback = "https://your-escapement-host") {
+  const [origin, setOrigin] = useState(fallback);
+  useEffect(() => setOrigin(window.location.origin), []);
+  return origin;
 }

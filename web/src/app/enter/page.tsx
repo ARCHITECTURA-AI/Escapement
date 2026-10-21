@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Badge, Button, ButtonLink, Card, CodeBlock, Notice, OutcomeBadge, Page, PageHeader, Tabs } from "@/components/ui";
 import { api } from "@/lib/api";
 import { relative } from "@/lib/format";
-import { useApi, useMe, useMeta } from "@/lib/hooks";
+import { useApi, useMe, useMeta, useOrigin } from "@/lib/hooks";
 import type { RunSummary } from "@/lib/types";
 
 function StepShell({ n, title, done, children }: { n: number; title: string; done?: boolean; children: React.ReactNode }) {
@@ -31,7 +31,7 @@ export default function EnterPage() {
   const [tab, setTab] = useState<"python" | "mcp" | "http">("python");
   const keys = useApi<{ keys: { id: string; revoked_at: string | null }[] }>(user ? "/api/v1/me/keys" : null);
   const runs = useApi<{ runs: RunSummary[] }>(user ? "/api/v1/runs?limit=6" : null, 3000);
-  const origin = typeof window !== "undefined" ? window.location.origin : "https://escapement.dev";
+  const origin = useOrigin();
   const shownKey = key ?? "esk_your_key_here";
   const hasKey = Boolean(key) || Boolean(keys.data?.keys.some((k) => !k.revoked_at));
 
@@ -112,7 +112,7 @@ curl -s -X POST ${origin}/api/v1/runs/$RUN_ID/finish -H "Authorization: Bearer $
               </div>
             ) : (
               <div className="flex flex-wrap items-center gap-3">
-                <Button variant="primary" onClick={create} loading={creating} icon={<KeyRound className="size-4" aria-hidden />}>Create a key</Button>
+                <Button variant="primary" onClick={create} loading={creating} icon={<KeyRound className="size-4" aria-hidden />}>{hasKey ? "Create another key" : "Create a key"}</Button>
                 {hasKey && <span className="text-sm text-muted">You already have an active key. <Link href="/settings" className="underline">Manage keys</Link></span>}
                 {err && <span className="text-sm text-bad">{err}</span>}
               </div>

@@ -178,6 +178,7 @@ def test_agent_fails_within_budget_then_replay_and_compare(browser):
     page.get_by_text("Observation after step 1").wait_for()
     page.goto(f"{BASE}/compare?runs={run.id},{other.id}", wait_until="networkidle")
     page.get_by_text("Paired comparison").wait_for()
+    page.get_by_role("button", name="Go to end").click()
     page.get_by_text("Finished at step 2").wait_for()
     page.goto(f"{BASE}/c/{run.certificate_id}", wait_until="networkidle")
     page.get_by_role("button", name="Verify now").click()

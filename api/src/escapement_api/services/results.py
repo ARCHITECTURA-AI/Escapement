@@ -247,23 +247,29 @@ def resume_bullet(s: Session, version: AgentVersion, settings) -> dict[str, Any]
 def profile(s: Session, user: User, viewer_id: str | None) -> dict[str, Any]:
     versions = s.execute(select(AgentVersion).where(AgentVersion.user_id == user.id).order_by(AgentVersion.created_at)).scalars().all()
     out_versions = [version_results(s, v) for v in versions]
+    # Compare versions on one common footing (16.6: pair comparisons, report
+    # per tier): the ranked season and tier with the most runs, else Practice.
+    totals: dict[tuple[str, str | None, str], int] = defaultdict(int)
+    for vr in out_versions:
+        for g in vr["results"]:
+            totals[(g["mode"], g["season_id"], g["tier"])] += g["summary"]["runs"]
+    ranked = {k: v for k, v in totals.items() if k[0] == "ranked"}
+    pool = ranked or totals
+    basis = max(pool, key=lambda k: (pool[k], k[2] == "standard")) if pool else None
     timeline = []
     for vr in out_versions:
-        best = None
-        for g in vr["results"]:
-            if g["summary"]["runs"] and (best is None or (g["mode"] == "ranked") > (best["mode"] == "ranked")):
-                best = g
+        g = next((g for g in vr["results"] if basis and (g["mode"], g["season_id"], g["tier"]) == basis), None)
         timeline.append(
             {
                 "agent_version_id": vr["agent_version"]["id"],
                 "label": f"{vr['agent_version']['name']} {vr['agent_version']['version']}",
                 "created_at": vr["agent_version"]["created_at"],
-                "mode": best["mode"] if best else None,
-                "tier": best["tier"] if best else None,
-                "rate": best["summary"]["rate"] if best else None,
-                "ci_low": best["summary"]["ci_low"] if best else None,
-                "ci_high": best["summary"]["ci_high"] if best else None,
-                "runs": best["summary"]["runs"] if best else 0,
+                "mode": g["mode"] if g else None,
+                "tier": g["tier"] if g else None,
+                "rate": g["summary"]["rate"] if g else None,
+                "ci_low": g["summary"]["ci_low"] if g else None,
+                "ci_high": g["summary"]["ci_high"] if g else None,
+                "runs": g["summary"]["runs"] if g else 0,
             }
         )
     human_runs = s.execute(
@@ -286,6 +292,7 @@ def profile(s: Session, user: User, viewer_id: str | None) -> dict[str, Any]:
         },
         "versions": out_versions,
         "timeline": timeline,
+        "timeline_basis": {"mode": basis[0], "season_id": basis[1], "tier": basis[2]} if basis else None,
         "human_play": {
             "runs": len(human_runs),
             "escapes": sum(1 for r, _ in human_runs if r.status == ESCAPED),

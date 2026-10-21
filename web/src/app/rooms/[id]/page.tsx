@@ -3,12 +3,13 @@
 import { Download, Gamepad2, Lock } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Badge, ButtonLink, Card, CardHeader, CodeBlock, ErrorState, Hash, KV, Page, PageHeader, Skeleton } from "@/components/ui";
-import { useApi } from "@/lib/hooks";
+import { useApi, useOrigin } from "@/lib/hooks";
 import type { RoomMeta } from "@/lib/types";
 
 export default function RoomPage() {
   const { id } = useParams<{ id: string }>();
   const { data, error } = useApi<RoomMeta & { locations?: number }>(`/api/v1/rooms/${id}`);
+  const origin = useOrigin();
   if (error) return <Page><ErrorState error={error} /></Page>;
   if (!data) return <Page><Skeleton className="h-80" /></Page>;
   const playable = data.kind === "practice" || data.kind === "daily" || data.kind === "research";
@@ -43,7 +44,7 @@ export default function RoomPage() {
             <>
               <Badge tone="good">Manifest public</Badge>
               <p className="mt-3 text-sm text-ink-2">Anyone can re-simulate any run on this room through the pinned engine:</p>
-              <CodeBlock className="mt-3" code={`curl -sO ${typeof window !== "undefined" ? window.location.origin : ""}/api/v1/rooms/${id}/manifest
+              <CodeBlock className="mt-3" code={`curl -sO ${origin}/api/v1/rooms/${id}/manifest
 escapement replay RUN.replay.json --manifest manifest`} />
             </>
           ) : (

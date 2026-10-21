@@ -13,6 +13,7 @@ type Profile = {
   user: { id: string; handle: string; display_name: string | null; avatar_url: string | null; profile_public: boolean; joined: string; is_self: boolean; is_system: boolean };
   versions: VersionResults[];
   timeline: TimelinePoint[];
+  timeline_basis: { mode: string; season_id: string | null; tier: string } | null;
   human_play: { runs: number; escapes: number };
 };
 
@@ -64,7 +65,14 @@ export default function ProfilePage() {
       </div>
 
       <Card className="mb-6">
-        <CardHeader title="Versions over time" subtitle="Success rate with its 95% interval, per agent version (ranked results where available)" />
+        <CardHeader
+          title="Versions over time"
+          subtitle={
+            data.timeline_basis
+              ? `Success rate with its 95% interval on the same rooms: ${data.timeline_basis.mode === "ranked" ? `season ${data.timeline_basis.season_id}, ${data.timeline_basis.tier} tier` : `${data.timeline_basis.mode}`}`
+              : "Success rate with its 95% interval, per agent version"
+          }
+        />
         <VersionTimeline points={data.timeline} />
       </Card>
 

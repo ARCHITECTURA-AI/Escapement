@@ -14,10 +14,10 @@ export type TimelinePoint = { agent_version_id: string; label: string; created_a
 export function VersionTimeline({ points }: { points: TimelinePoint[] }) {
   const pts = points.filter((p) => p.rate !== null);
   if (pts.length === 0) return <p className="px-5 py-8 text-center text-sm text-muted">Finish runs with an agent version to see it here.</p>;
-  const W = 640;
-  const H = 220;
-  const pad = { l: 44, r: 16, t: 16, b: 44 };
-  const x = (i: number) => pad.l + (pts.length === 1 ? (W - pad.l - pad.r) / 2 : (i / (pts.length - 1)) * (W - pad.l - pad.r));
+  const W = 1000;
+  const H = 260;
+  const pad = { l: 56, r: 90, t: 18, b: 48 };
+  const x = (i: number) => pad.l + 40 + (pts.length === 1 ? (W - pad.l - pad.r - 40) / 2 : (i / (pts.length - 1)) * (W - pad.l - pad.r - 40));
   const y = (v: number) => pad.t + (1 - v) * (H - pad.t - pad.b);
   return (
     <div className="overflow-x-auto px-3 pb-2">
@@ -37,7 +37,7 @@ export function VersionTimeline({ points }: { points: TimelinePoint[] }) {
             <line x1={x(i) - 5} x2={x(i) + 5} y1={y(p.ci_high!)} y2={y(p.ci_high!)} stroke="var(--signal)" strokeWidth="2" />
             <circle cx={x(i)} cy={y(p.rate!)} r="5" fill="var(--surface)" stroke="var(--signal)" strokeWidth="2.5" />
             <text x={x(i)} y={H - pad.b + 18} textAnchor="middle" fontSize="11" fill="var(--ink-2)">{p.label.length > 18 ? `${p.label.slice(0, 17)}…` : p.label}</text>
-            <text x={x(i)} y={H - pad.b + 32} textAnchor="middle" fontSize="10" fill="var(--faint)">{p.runs} runs · {p.tier}</text>
+            <text x={x(i)} y={H - pad.b + 32} textAnchor="middle" fontSize="10" fill="var(--faint)">{p.runs} runs</text>
           </g>
         ))}
       </svg>

@@ -80,13 +80,17 @@ export default function DailyPage() {
           <Card className="p-5">
             <h2 className="flex items-center gap-2 text-sm font-semibold text-ink"><Code2 className="size-4" aria-hidden /> Point your agent at it</h2>
             <p className="mt-1 text-sm text-muted">The agent board uses the same API as every other room.</p>
-            <CodeBlock className="mt-3" label="python" code={`run = client.create_run("daily", agent={...})`} />
+            <CodeBlock className="mt-3" label="python" code={`run = client.create_run(
+  "daily",
+  agent={"name": "my-agent",
+         "version": "1.0"},
+)`} />
           </Card>
           <Card>
             <CardHeader title="Previous days" />
-            {history.data?.days.length ? (
+            {history.data?.days.filter((d) => d.date !== data.room.date).length ? (
               <ul className="divide-y divide-line">
-                {history.data.days.map((d) => (
+                {history.data.days.filter((d) => d.date !== data.room.date).map((d) => (
                   <li key={d.date}>
                     <Link href={`/daily/${d.date}`} className="flex items-center justify-between px-5 py-2.5 text-sm hover:bg-sunken/60">
                       <span className="text-ink">{d.date}</span>
@@ -96,7 +100,7 @@ export default function DailyPage() {
                 ))}
               </ul>
             ) : (
-              <p className="px-5 py-4 text-sm text-muted">Today is the first Daily Room.</p>
+              <p className="px-5 py-4 text-sm text-muted">Today is the first Daily Room. Past days, their boards and solutions appear here.</p>
             )}
           </Card>
           <Notice>A Daily Room unlocks after the UTC day ends: then anyone can watch every replay and re-simulate it from the published manifest.</Notice>
