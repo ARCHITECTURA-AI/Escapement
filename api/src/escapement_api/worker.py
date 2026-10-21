@@ -27,6 +27,15 @@ from .timeutil import utcnow
 
 log = logging.getLogger("escapement.worker")
 
+class Deferred(Exception):
+    """Raised by a handler to put its job back without using an attempt."""
+
+    def __init__(self, until: datetime, note: str) -> None:
+        super().__init__(note)
+        self.until = until
+        self.note = note
+
+
 LOCAL_KINDS = ["generate_season", "close_season", "batch_run", "reference_baselines", "sweep"]
 
 
@@ -79,6 +88,9 @@ class Worker:
                 current = s.get(Job, job_id)
                 if current is not None and current.status != "cancelled":
                     job_service.complete(s, job_id, result)
+        except Deferred as exc:
+            with self.ctx.db.service_session() as s:
+                job_service.defer(s, job_id, exc.until, exc.note)
         except Exception as exc:
             log.exception("job %s failed", job_id)
             with self.ctx.db.service_session() as s:

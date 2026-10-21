@@ -34,6 +34,7 @@ from escapement_engine.schemas.endings import (
     IDLE_TIMEOUT,
     IN_PROGRESS,
     INFRASTRUCTURE_ENDINGS,
+    REFERENCE_PROVIDER_FAILURE,
     WALL_CLOCK_EXCEEDED,
 )
 from escapement_engine.version import ENGINE_VERSION, PROTOCOL_VERSION
@@ -472,7 +473,11 @@ class RunService:
             if totals:
                 run.usage = {**(run.usage or {}), **totals}
             if run.status == IN_PROGRESS and not self._expire_if_stale(s, run):
-                self._terminate(s, run, CLIENT_ABORTED, "Run ended by the client.")
+                if body.get("reason") == REFERENCE_PROVIDER_FAILURE and run.agent_type == "reference":
+                    # Infrastructure, not an agent failure: kept distinct in every report.
+                    self._terminate(s, run, REFERENCE_PROVIDER_FAILURE, "The reference model provider failed.")
+                else:
+                    self._terminate(s, run, CLIENT_ABORTED, "Run ended by the client.")
             elif run.status != IN_PROGRESS and run.certificate_id is None and run.user_id:
                 self._finalize(s, run, load_room(s, run.instance_id))
             return {
