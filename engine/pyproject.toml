@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "escapement-engine"
+version = "1.0.0"
+description = "Deterministic engine, verified room generator, hash-chained replay and certificate verifier for Escapement."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.12"
+authors = [{ name = "Escapement contributors" }]
+dependencies = [
+  "pydantic>=2.7,<3",
+  "cryptography>=42",
+]
+
+[project.urls]
+Homepage = "https://github.com/architectura-ai/escapement"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/escapement_engine"]
+

@@ -1,0 +1,5509 @@
+{
+ "format": "escapement-replay/1",
+ "run_id": "golden-practice-random",
+ "engine_version": "1.0.0",
+ "protocol_version": "1",
+ "room": {
+  "room_id": "practice",
+  "title": "Emergency Lockdown · Practice",
+  "tier": "practice",
+  "family": "emergency_lockdown",
+  "template_version": "el-1.0",
+  "instance_hash": "2415cfbedd3f99222f8d7fcf4e5ebf27ca3249fdbb7f65e496ebebd82b43bc93",
+  "season": null,
+  "action_budget": 60
+ },
+ "mode": "local",
+ "agent": {
+  "name": "local",
+  "version": "0"
+ },
+ "self_reported": {
+  "note": "Agent name, model, framework, memory strategy, tokens, cost and decision summaries are reported by the client and not verified.",
+  "usage": {}
+ },
+ "initial_observation": {
+  "goal": "Escape to the exterior loading dock.",
+  "location": {
+   "id": "maintenance_bay",
+   "name": "Maintenance bay",
+   "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+  },
+  "objects": [
+   {
+    "id": "maintenance_panel",
+    "name": "Maintenance panel",
+    "state": [
+     "closed"
+    ],
+    "operations": [
+     "open"
+    ]
+   },
+   {
+    "id": "tool_cabinet",
+    "name": "Tool cabinet",
+    "state": [
+     "closed"
+    ],
+    "operations": [
+     "open"
+    ]
+   },
+   {
+    "id": "mop_bucket",
+    "name": "Mop bucket"
+   }
+  ],
+  "exits": [
+   {
+    "id": "control_room",
+    "name": "Control room"
+   }
+  ],
+  "inventory": [],
+  "journal_entries": 0,
+  "actions_used": 0,
+  "action_budget": 60,
+  "actions_remaining": 60,
+  "status": "in_progress",
+  "last_result": null
+ },
+ "chain_start": "a3b37e5d2bd810aee3e46dded7410f4ee4a574013fb2569f731643740dcf13ab",
+ "steps": [
+  {
+   "seq": 1,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "mop_bucket"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "INVALID_OPERATION",
+    "message": "Mop bucket can't be carried.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 1,
+    "action_budget": 60,
+    "actions_remaining": 59,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "INVALID_OPERATION",
+     "message": "Mop bucket can't be carried.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "ce3d3ef916dbc191b6aeacfe9ffac015cbe126317da7a249e3df7e503a7e20cf",
+   "chain_hash": "6c79527d6750609d8d5067da14f3408a93ea9dc6ba742c533b7f2343d34aa314",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "mop_bucket"
+    }
+   }
+  },
+  {
+   "seq": 2,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "ALREADY_COMPLETED",
+    "message": "Tool cabinet is already closed.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 2,
+    "action_budget": 60,
+    "actions_remaining": 58,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "ALREADY_COMPLETED",
+     "message": "Tool cabinet is already closed.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "63305c137e75dd1a78a90e12509a16a12936d0038835f3968732cb1953b4c58a",
+   "chain_hash": "80062f0c8539abf4c7e568f61364cacd9efe46ca3d122e7c5dc5eb44221f695f",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 3,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "activate"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't activate the tool cabinet.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 3,
+    "action_budget": 60,
+    "actions_remaining": 57,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't activate the tool cabinet.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "23a12a323015f61b075511432f65dc7a2defd22b0d1a384a6e0ae88ed7d3b511",
+   "chain_hash": "9ef0ffabcac7f7345e556028fe0fdaf081f7effc88d25116d5e630cba9aa7b93",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "activate"
+    }
+   }
+  },
+  {
+   "seq": 4,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "ALREADY_COMPLETED",
+    "message": "Maintenance panel is already closed.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 4,
+    "action_budget": 60,
+    "actions_remaining": 56,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "ALREADY_COMPLETED",
+     "message": "Maintenance panel is already closed.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "1ed2155e9262652a98111669cbdd55e1c83cd0de2f7bef968c77db2e600f341e",
+   "chain_hash": "43daa9a9a7bb602a7f3afb2a63c9b46c0312193a7957e82978fd2fc09ac3a86b",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 5,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You open the tool cabinet. Inside: the screwdriver.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "tool_cabinet",
+      "state": "open"
+     },
+     {
+      "type": "object_revealed",
+      "object_id": "screwdriver"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver",
+      "in": "tool_cabinet",
+      "portable": true
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 5,
+    "action_budget": 60,
+    "actions_remaining": 55,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You open the tool cabinet. Inside: the screwdriver.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "tool_cabinet",
+       "state": "open"
+      },
+      {
+       "type": "object_revealed",
+       "object_id": "screwdriver"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "6c3031cd3cc0c46ad1955197fa674c37865c31ecc940985b64435d91ad18d1a0",
+   "chain_hash": "690d0505200fb2e869678a7dd815427cc27ac59edfa4dbf37cf71bcd058a59c3",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 6,
+   "action": {
+    "tool": "review_journal",
+    "arguments": {}
+   },
+   "result": {
+    "ok": true,
+    "tool": "review_journal",
+    "error": null,
+    "message": "Your journal is empty.",
+    "events": [],
+    "cost": 1,
+    "data": {
+     "clues": []
+    }
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver",
+      "in": "tool_cabinet",
+      "portable": true
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 6,
+    "action_budget": 60,
+    "actions_remaining": 54,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "review_journal",
+     "error": null,
+     "message": "Your journal is empty.",
+     "events": [],
+     "cost": 1,
+     "data": {
+      "clues": []
+     }
+    }
+   },
+   "state_hash": "38acc4666901e441712850ee28da19b7aa8ee391e7e369061bfcbf90b816629b",
+   "chain_hash": "d25986c211be6853d56a6afd011eaad1536cf0c444b9a0da0b11e00d00d0a151",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "review_journal",
+    "arguments": {}
+   }
+  },
+  {
+   "seq": 7,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "activate"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't activate the maintenance panel.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver",
+      "in": "tool_cabinet",
+      "portable": true
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 7,
+    "action_budget": 60,
+    "actions_remaining": 53,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't activate the maintenance panel.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "2cbbae87968e66f92cc41c7763803ae9d21f35157057928c496db3b0e740e71a",
+   "chain_hash": "b5a775e74e7b013a230ec3cf20e2c0c9c098176d005ac879a3055484da5381be",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "activate"
+    }
+   }
+  },
+  {
+   "seq": 8,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "take",
+    "error": null,
+    "message": "You take the screwdriver.",
+    "events": [
+     {
+      "type": "item_taken",
+      "item_id": "screwdriver"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 8,
+    "action_budget": 60,
+    "actions_remaining": 52,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "take",
+     "error": null,
+     "message": "You take the screwdriver.",
+     "events": [
+      {
+       "type": "item_taken",
+       "item_id": "screwdriver"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "195fd26e58b121399364f90bac2e576454b15058acbdc048827c3c3175ed2c8e",
+   "chain_hash": "eafd4c68e5b38c8d260602414f908079e0879dd0b75dd67dba0b412f991ed941",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 9,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "enter_code",
+     "value": "8862"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't enter code the maintenance panel.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 9,
+    "action_budget": 60,
+    "actions_remaining": 51,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't enter code the maintenance panel.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "353178ac1b9e09309f7243582241de1f03c5e44ad003d35309a686e0d6b25662",
+   "chain_hash": "27b362d93fe46b1a0f7e1f7a4fcc4efb6912b2487d761d43c0f1c49017322a3d",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "enter_code",
+     "value": "8862"
+    }
+   }
+  },
+  {
+   "seq": 10,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "activate"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't activate the mop bucket.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 10,
+    "action_budget": 60,
+    "actions_remaining": 50,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't activate the mop bucket.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "2d240515a6e64eb96e17271730b12e9277ec8e460bdf604b2617b7a94742307f",
+   "chain_hash": "e097f293b36804df6789a60bf1bdd7af75816972ec07e540ed99f1f6cf7364db",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "activate"
+    }
+   }
+  },
+  {
+   "seq": 11,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the screwdriver does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 11,
+    "action_budget": 60,
+    "actions_remaining": 49,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the screwdriver does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "952c3dead18b7ba4a2f94eeecc8e9b7e8fc5f79b6ab48a84586335cdb26e290d",
+   "chain_hash": "8e9bb2167fddb7070f56944952dbe5b2b87396c62086be7e5e9b8f4d87e8f85c",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 12,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "activate"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't activate the tool cabinet.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 12,
+    "action_budget": 60,
+    "actions_remaining": 48,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't activate the tool cabinet.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "65fc1023056eec399d7bdeee86897203518d6686831ab0ceb35ad85d985eaf7a",
+   "chain_hash": "771ba00e8df7c2e955a70ed8a06e8654ebba72708e0f948e1de7e158d9df9bdf",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "activate"
+    }
+   }
+  },
+  {
+   "seq": 13,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "activate"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't activate the tool cabinet.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 13,
+    "action_budget": 60,
+    "actions_remaining": 47,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't activate the tool cabinet.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "08113c353f75f99b1afc925f555afbc9549128578c4b84c91db01f12660a8df5",
+   "chain_hash": "b9a858c6204af9b2aeff24d744aa10828679859d84da221b9b4fdaaa02c7a64b",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "activate"
+    }
+   }
+  },
+  {
+   "seq": 14,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "ALREADY_COMPLETED",
+    "message": "You are already carrying the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 14,
+    "action_budget": 60,
+    "actions_remaining": 46,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "ALREADY_COMPLETED",
+     "message": "You are already carrying the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "2ed5a6026f6c36f915aa7f7f7cad6451bf572dd8ba0bc75e03e7eb7cf95e889d",
+   "chain_hash": "332e057d74821cfe2257eeeb4a49099a7ccb02e7cf45df11dd527ff4bdc70d42",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 15,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "ALREADY_COMPLETED",
+    "message": "You are already carrying the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 15,
+    "action_budget": 60,
+    "actions_remaining": 45,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "ALREADY_COMPLETED",
+     "message": "You are already carrying the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "4b7bb642906a841fa2ef7a63c4a1d19d0e2e22883d22587264e52538af6ce64d",
+   "chain_hash": "ba2e8de8b3dd6aa2e7646ba1af48e043d5f59d43bdf77bc9cb4155c2becba4b4",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 16,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "mop_bucket"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the mop bucket does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 16,
+    "action_budget": 60,
+    "actions_remaining": 44,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the mop bucket does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "36d36b0f4f6714d330f942f58fa932a136c51a1e82e3d1020e6294442fe19823",
+   "chain_hash": "e3c9d6ff62f9ff8dd84eb29d9c7081d99fcaf2f3c51a8f8c521dd1e0e231ecec",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "mop_bucket"
+    }
+   }
+  },
+  {
+   "seq": 17,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't close the mop bucket.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 17,
+    "action_budget": 60,
+    "actions_remaining": 43,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't close the mop bucket.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "0d52cf41e3601d96cd8d680bfebca0e5d0e080c2f7b8cfc3483a0bb66689f263",
+   "chain_hash": "39f4d307e1c56e347c37b5c7e6802c1da2147bbc0b2a40321b0a879f24edf1d1",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 18,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the screwdriver does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 18,
+    "action_budget": 60,
+    "actions_remaining": 42,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the screwdriver does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "dc4ae930ad7691b2e794c22d4453548f4bf51780371940a8932bb41d7c7390a3",
+   "chain_hash": "4fb027fc3260b675e1839efa24f9ae1e4616b6e31958934432865ebadd5863bf",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 19,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "PRECONDITION_NOT_MET",
+    "message": "The cover is held shut by four screws.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 19,
+    "action_budget": 60,
+    "actions_remaining": 41,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "PRECONDITION_NOT_MET",
+     "message": "The cover is held shut by four screws.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "856538080ec5206173530d9fcdc9d09f9a80cb94f5c6df2f32be9747d8eb5798",
+   "chain_hash": "da6a836c0d26608750ff6d06e7ef16dca2ccc1fe88124a7cabdc3b40e4ec12d1",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 20,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "tool_cabinet"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A steel tool cabinet with a stiff latch.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 20,
+    "action_budget": 60,
+    "actions_remaining": 40,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A steel tool cabinet with a stiff latch.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "b56f9f3f58316b2ebb04fbac12acee9283ceef038088331621975b395d610893",
+   "chain_hash": "dbacb90d22cf4e47133d1bcce4c83cabd2c9b8742de2011729a3e5993a3041f2",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "tool_cabinet"
+    }
+   }
+  },
+  {
+   "seq": 21,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "tool_cabinet"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the tool cabinet does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 21,
+    "action_budget": 60,
+    "actions_remaining": 39,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the tool cabinet does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "7aa861284bdef2d868da122053522c60ff3fc52447838d501524ad655b49c5d7",
+   "chain_hash": "8b7122f77be90af71d990322b5c89bac375e85e80400de4d26620721756b1ffc",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "tool_cabinet"
+    }
+   }
+  },
+  {
+   "seq": 22,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "ALREADY_COMPLETED",
+    "message": "Tool cabinet is already open.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 22,
+    "action_budget": 60,
+    "actions_remaining": 38,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "ALREADY_COMPLETED",
+     "message": "Tool cabinet is already open.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "eee2ec8bb30accdf86dc742117b284182c6775d9aea71e604b616ed1ccbee898",
+   "chain_hash": "9a424858dc6cb497a64c89db1afbd87656aae65dc323c96429c155079c43884c",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 23,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "ALREADY_COMPLETED",
+    "message": "You are already carrying the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 23,
+    "action_budget": 60,
+    "actions_remaining": 37,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "ALREADY_COMPLETED",
+     "message": "You are already carrying the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "2b19c01ee16ee60b17849bb54cc9727cf0f6a9a3d7529eaa6805e2885d8e7c35",
+   "chain_hash": "f7484bf60a77879b2b9cbcd0d5f4488a16f4fbb41fff2d720139b9425cb3b20d",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 24,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "enter_code",
+     "value": "5735"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't enter code the mop bucket.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 24,
+    "action_budget": 60,
+    "actions_remaining": 36,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't enter code the mop bucket.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "40b6ed5688999395168fc763bd722540f9a48a4c7e6f72bfc37ed564fc29dc9a",
+   "chain_hash": "d2e72f708c4461710a866fa72b4b474f9947a6ccdae560ddbccb004476b5749b",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "enter_code",
+     "value": "5735"
+    }
+   }
+  },
+  {
+   "seq": 25,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't close the mop bucket.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 25,
+    "action_budget": 60,
+    "actions_remaining": 35,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't close the mop bucket.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "ab5c15cdac3827a48862fdb8d6063d7290b81fc708e7b79c2febeb16ee9b04bd",
+   "chain_hash": "cf22714b09f894c54a5231d20da00aabfa8579fffdcec28f528f3e5fd827b064",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 26,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You close the tool cabinet.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "tool_cabinet",
+      "state": "closed"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 26,
+    "action_budget": 60,
+    "actions_remaining": 34,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You close the tool cabinet.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "tool_cabinet",
+       "state": "closed"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "270fcf03c7a6ab065d2946400b7f5f87602d53305fe2c968c8239a66b116f2a0",
+   "chain_hash": "c8794a2496f8c87ba3c8e4cbe39afe839754bac074b8860f9e8d90a57bc4296e",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 27,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "PRECONDITION_NOT_MET",
+    "message": "The cover is held shut by four screws.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 27,
+    "action_budget": 60,
+    "actions_remaining": 33,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "PRECONDITION_NOT_MET",
+     "message": "The cover is held shut by four screws.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "bd6fa24d319827a64764e3d286d136fe8cbfa30e5f76376919926c6951045d05",
+   "chain_hash": "82562768210bacfd9aadf5f0d5745076052cb1bd2b9e44be04a3d28317281cf1",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 28,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "enter_code",
+     "value": "830"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't enter code the maintenance panel.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 28,
+    "action_budget": 60,
+    "actions_remaining": 32,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't enter code the maintenance panel.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "3520cc2692f183190f41573ed6ebbaa019b409b85922a30dca023f403d86fd8d",
+   "chain_hash": "6ff72f40f60da42fa89c12c72108b8fc6e7a249878c1b1b4c8878860cf0dcb20",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "enter_code",
+     "value": "830"
+    }
+   }
+  },
+  {
+   "seq": 29,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "maintenance_panel"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "INVALID_OPERATION",
+    "message": "Maintenance panel can't be carried.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 29,
+    "action_budget": 60,
+    "actions_remaining": 31,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "INVALID_OPERATION",
+     "message": "Maintenance panel can't be carried.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "45d07ee510617feb9669eba80e60d2896a1721f447422ab3a8bc859d7fe199c5",
+   "chain_hash": "1a8c274e42328e8c6ac2e8ac16e1d42a281e1b59d3eed2b1588bac6c7591bb91",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "maintenance_panel"
+    }
+   }
+  },
+  {
+   "seq": 30,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't open the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 30,
+    "action_budget": 60,
+    "actions_remaining": 30,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't open the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "d49580b85b9384ff0baa1f597f161a673d775edff32b0b939956fc0e0d4cd0e5",
+   "chain_hash": "9370e0060e65eed277c7de2bede6a9ae5a49f3cde7db4e47c21405242d9e373c",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 31,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "mop_bucket"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the mop bucket does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 31,
+    "action_budget": 60,
+    "actions_remaining": 29,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the mop bucket does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "0210cb445cc4b7b6f19a8d9e25129249e1f489a3eeabfaa03705f932638f5135",
+   "chain_hash": "60b3c01d499b95fc9ce5fd80250bf37d093e246ca0c07e00c3424d38f84484e2",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "mop_bucket"
+    }
+   }
+  },
+  {
+   "seq": 32,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "tool_cabinet"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "INVALID_OPERATION",
+    "message": "Tool cabinet can't be carried.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 32,
+    "action_budget": 60,
+    "actions_remaining": 28,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "INVALID_OPERATION",
+     "message": "Tool cabinet can't be carried.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "603d84176bfe96d044ddef3844ad94d8ca2c480155641eff9f8f968092fbe174",
+   "chain_hash": "e052fb414293702772af231128d2cba470861afdf0c687446dc2bfc8ef3b6be6",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "tool_cabinet"
+    }
+   }
+  },
+  {
+   "seq": 33,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "ALREADY_COMPLETED",
+    "message": "Tool cabinet is already closed.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 33,
+    "action_budget": 60,
+    "actions_remaining": 27,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "ALREADY_COMPLETED",
+     "message": "Tool cabinet is already closed.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "7e946e02e11abc37ffb8f452eb844b652bc8bc81f253a37fef257c2378d0b937",
+   "chain_hash": "1f2cfbc563cf1f7fb8d8f188dc78e230274f041b889016e5976880a0babdab10",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 34,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "maintenance_panel"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "use",
+    "error": null,
+    "message": "You back out the four screws and lift the cover away. The breaker rail is exposed, with slot F3 empty.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "maintenance_panel",
+      "state": "open"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 34,
+    "action_budget": 60,
+    "actions_remaining": 26,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "use",
+     "error": null,
+     "message": "You back out the four screws and lift the cover away. The breaker rail is exposed, with slot F3 empty.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "maintenance_panel",
+       "state": "open"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "9782fb1919bda1430c0c487a991b6769fb2f198be5f47082c3b32b3bedcc0d4f",
+   "chain_hash": "06a58cb4e9b7c16a01e4cee2789873e5c2f701df15df2fc0f673cf1a15582f83",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "maintenance_panel"
+    }
+   }
+  },
+  {
+   "seq": 35,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "tool_cabinet"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A steel tool cabinet with a stiff latch.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 35,
+    "action_budget": 60,
+    "actions_remaining": 25,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A steel tool cabinet with a stiff latch.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "26808aa8ab25cdd60bbd855b359b0be7a53ac61d8a9344535a4e0b1df1c0b076",
+   "chain_hash": "620d13b4ae00e32c3a88abd754ef1921692de0ea355c58c6a9e5300b9ec9f5db",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "tool_cabinet"
+    }
+   }
+  },
+  {
+   "seq": 36,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the screwdriver does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 36,
+    "action_budget": 60,
+    "actions_remaining": 24,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the screwdriver does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "7bc6bb262053da02e724f491bef8d745cbb5848ebf6aea04e7f864b1822bcdfb",
+   "chain_hash": "1ffd0fd6cadd6a4ac063217688035e5d0426fe42736df19cb6182bde0bb078bc",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 37,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "mop_bucket"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A grey mop bucket, half full of murky water.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 37,
+    "action_budget": 60,
+    "actions_remaining": 23,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A grey mop bucket, half full of murky water.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "114f70ef0c2fee4d9bb902107cf3afd5501ad4e85a1b8d11f34e5e63d875bfb4",
+   "chain_hash": "797f29e2d14ddd1625b6376160d2ad17dcac8759a8ab99ca7b634a49a4e71c1e",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "mop_bucket"
+    }
+   }
+  },
+  {
+   "seq": 38,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't open the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 38,
+    "action_budget": 60,
+    "actions_remaining": 22,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't open the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "b6122ec961e79032a3106cc1807dcc34dd039c2cd39e797b3fe364ca04f854c2",
+   "chain_hash": "7f67e6107850a45a6f3cd54f8a2c79111d782b487a36ba7ead07e558092a6f53",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 39,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "enter_code",
+     "value": "908"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't enter code the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 39,
+    "action_budget": 60,
+    "actions_remaining": 21,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't enter code the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "e59418ac3c078ec8d26ec319c840989522108091f633d3478ce937039e84fa27",
+   "chain_hash": "359d43f5e21f85f46665c1a5b1caf5c71668d9cfafb445083556068f267306f7",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "enter_code",
+     "value": "908"
+    }
+   }
+  },
+  {
+   "seq": 40,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't open the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 40,
+    "action_budget": 60,
+    "actions_remaining": 20,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't open the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "adc11c25f5011619fd0ab436b594883e86e79c8f4722a4a89c4ed6b4aa84b77e",
+   "chain_hash": "66d68528d8783a4fb32452a2455287863684ff48d46336c6dd2bb04cdbe6cdaf",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 41,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A flat-head screwdriver with a rubber grip.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 41,
+    "action_budget": 60,
+    "actions_remaining": 19,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A flat-head screwdriver with a rubber grip.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "7816668dace86c76b21812e298730432625b2df016010b50a51b12c032404ac8",
+   "chain_hash": "c5f2793c4c10fd6223579b953075dc85b80f068054cce8c86e26a5a95a3605a4",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 42,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "enter_code",
+     "value": "5777"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't enter code the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 42,
+    "action_budget": 60,
+    "actions_remaining": 18,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't enter code the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "f6c2b42460504059b96da2ccbf20cdbf63c8500870825098ea1169b43501a328",
+   "chain_hash": "baa0d243347b5048dcfd34824786c0c5c001d8efd324ed8cdb2dc58cf5032a39",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "enter_code",
+     "value": "5777"
+    }
+   }
+  },
+  {
+   "seq": 43,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "control_room"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the control room.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "control_room"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 43,
+    "action_budget": 60,
+    "actions_remaining": 17,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the control room.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "control_room"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "3e8aac3b7dd4ed9a9b03babc2f3befd910d79169f1552f5eecbc6a29d382d8ef",
+   "chain_hash": "bf1d8d1c0f5bd6f25807349a34de06f3230f792e232657d2a0a2723eb06d0329",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "control_room"
+    }
+   }
+  },
+  {
+   "seq": 44,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "security_vestibule"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "move",
+    "error": "PRECONDITION_NOT_MET",
+    "message": "The vestibule door is sealed. Its motor has no power.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 44,
+    "action_budget": 60,
+    "actions_remaining": 16,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "move",
+     "error": "PRECONDITION_NOT_MET",
+     "message": "The vestibule door is sealed. Its motor has no power.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "65e3295e097e16de6a0fdc8b15650e8ab2050e08b2a319bcabe402ad355c19af",
+   "chain_hash": "77c3478fb7b3493cc8f05a8b349eec567631549ecb0d523e47e6774081437b70",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "security_vestibule"
+    }
+   }
+  },
+  {
+   "seq": 45,
+   "action": {
+    "tool": "review_journal",
+    "arguments": {}
+   },
+   "result": {
+    "ok": true,
+    "tool": "review_journal",
+    "error": null,
+    "message": "Your journal is empty.",
+    "events": [],
+    "cost": 1,
+    "data": {
+     "clues": []
+    }
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 45,
+    "action_budget": 60,
+    "actions_remaining": 15,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "review_journal",
+     "error": null,
+     "message": "Your journal is empty.",
+     "events": [],
+     "cost": 1,
+     "data": {
+      "clues": []
+     }
+    }
+   },
+   "state_hash": "e82f573fcced698c2736395a5824fe1ed4e3ff44f5a69e3744dd90d409209557",
+   "chain_hash": "ddfb424bb3d80a4da273835ad9338231447b0330358992162a88d65b104ac10b",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "review_journal",
+    "arguments": {}
+   }
+  },
+  {
+   "seq": 46,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "parts_drawer"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "INVALID_OPERATION",
+    "message": "Parts drawer can't be carried.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 46,
+    "action_budget": 60,
+    "actions_remaining": 14,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "INVALID_OPERATION",
+     "message": "Parts drawer can't be carried.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "93b7ebeb57e0dce50d3d73a7a9dfa1af07462f0db47843bd4ac38ce56e0efe28",
+   "chain_hash": "b9e7c74e532ce94316d18408afc6712a79812b27c05bd7030a900a5519e355d5",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "parts_drawer"
+    }
+   }
+  },
+  {
+   "seq": 47,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_terminal"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "The terminal's screen is dark. It needs main power.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 47,
+    "action_budget": 60,
+    "actions_remaining": 13,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "The terminal's screen is dark. It needs main power.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "2dc01dcef23f6562d915b0e7d76a0f6df3e7b0d83458900632be74ba1476a984",
+   "chain_hash": "11cb74ea6f388955943f9df2c28214e9ca4033292b898f82dc702f37a3ae6b2d",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_terminal"
+    }
+   }
+  },
+  {
+   "seq": 48,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "security_vestibule"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "move",
+    "error": "PRECONDITION_NOT_MET",
+    "message": "The vestibule door is sealed. Its motor has no power.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 48,
+    "action_budget": 60,
+    "actions_remaining": 12,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "move",
+     "error": "PRECONDITION_NOT_MET",
+     "message": "The vestibule door is sealed. Its motor has no power.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "de1e296b2bff9b7d95dbc6acb83eefd7b8991aa324c3b47b66d71dfbbe0ae155",
+   "chain_hash": "a6662e6517fe131d83cd7188743bab464269d08d1b0aead435176aa75a72155e",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "security_vestibule"
+    }
+   }
+  },
+  {
+   "seq": 49,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "operations_terminal",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't open the operations terminal.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 49,
+    "action_budget": 60,
+    "actions_remaining": 11,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't open the operations terminal.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "782f93973613d2d83176641e77d2ae2258a4acb836768358a62af6f6a7000f71",
+   "chain_hash": "8daf6d7a10479500a12eab91e3637eb705e114e63192afee421eafb94d49481f",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "operations_terminal",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 50,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_terminal"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "The terminal's screen is dark. It needs main power.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 50,
+    "action_budget": 60,
+    "actions_remaining": 10,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "The terminal's screen is dark. It needs main power.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "e4d415c378aa9c9245bf0e847dd5112409b206cf97c0e3592b90e13d351812fc",
+   "chain_hash": "c94b5ba2bad098390d63f5e8e07c59dd514248ddfab5f00796599bdc6de5da29",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_terminal"
+    }
+   }
+  },
+  {
+   "seq": 51,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "operations_terminal"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "take",
+    "error": "INVALID_OPERATION",
+    "message": "Operations terminal can't be carried.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 51,
+    "action_budget": 60,
+    "actions_remaining": 9,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "take",
+     "error": "INVALID_OPERATION",
+     "message": "Operations terminal can't be carried.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "82477b74ce991830183b6ee2f33b8fdf979c3fc0c5b47613eb95616e800f6f28",
+   "chain_hash": "47a52e274a1bf2a2785e88c1f785af782a54099c6707107a6023af0b9ecf1dcd",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "operations_terminal"
+    }
+   }
+  },
+  {
+   "seq": 52,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "operations_terminal",
+     "operation": "enter_code",
+     "value": "260"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't enter code the operations terminal.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 52,
+    "action_budget": 60,
+    "actions_remaining": 8,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't enter code the operations terminal.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "9cc921c82dc19946e34b7ba329183835635f6536d7534eafd26a573f4ea2d9af",
+   "chain_hash": "82010e157c9e74b97f14ebe25462ea58cfca4a1cf00b07f7684d45e7daaa381f",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "operations_terminal",
+     "operation": "enter_code",
+     "value": "260"
+    }
+   }
+  },
+  {
+   "seq": 53,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "operations_terminal",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't close the operations terminal.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "parts_drawer",
+      "name": "Parts drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     },
+     {
+      "id": "wall_calendar",
+      "name": "Wall calendar"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 53,
+    "action_budget": 60,
+    "actions_remaining": 7,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't close the operations terminal.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "5fddfdca835c8f725762edb3f8f1cf2ba8f3d24f12847616daca736f689bf06b",
+   "chain_hash": "2974cfd57bc8c1f5df52d8191c7ea53a9d180b5530a226d17fe89644b8922653",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "operations_terminal",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 54,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "maintenance_bay"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the maintenance bay.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "maintenance_bay"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 54,
+    "action_budget": 60,
+    "actions_remaining": 6,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the maintenance bay.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "maintenance_bay"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "d8c544aadcd93ab9808a29586fee8567fd4fe704ab00361f25ed4eb60b3be9a0",
+   "chain_hash": "b2e0524a544676e883213bcc646b3aa03982f2139fc80504dbdd020b5bea0b20",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "maintenance_bay"
+    }
+   }
+  },
+  {
+   "seq": 55,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "close"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You close the maintenance panel.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "maintenance_panel",
+      "state": "closed"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 55,
+    "action_budget": 60,
+    "actions_remaining": 5,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You close the maintenance panel.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "maintenance_panel",
+       "state": "closed"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "5830f75d4d77eb64fa8e2d4f6277eb1d76b769969f765a5fdb8e8a3f7f77db8d",
+   "chain_hash": "76fc6418939f35958da5ec45eebabf3a97876663b4eef1a9caba5062cbd6ff5c",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "close"
+    }
+   }
+  },
+  {
+   "seq": 56,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You open the maintenance panel.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "maintenance_panel",
+      "state": "open"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 56,
+    "action_budget": 60,
+    "actions_remaining": 4,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You open the maintenance panel.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "maintenance_panel",
+       "state": "open"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "07b999a9fc01eac15c050491107d25fe867034169504cad0089fa727f2321c61",
+   "chain_hash": "704eed6173befec475bb443ff19f83a142be3c1a130d21abfd69f8b0ce5dee28",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "maintenance_panel",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 57,
+   "action": {
+    "tool": "review_journal",
+    "arguments": {}
+   },
+   "result": {
+    "ok": true,
+    "tool": "review_journal",
+    "error": null,
+    "message": "Your journal is empty.",
+    "events": [],
+    "cost": 1,
+    "data": {
+     "clues": []
+    }
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 57,
+    "action_budget": 60,
+    "actions_remaining": 3,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "review_journal",
+     "error": null,
+     "message": "Your journal is empty.",
+     "events": [],
+     "cost": 1,
+     "data": {
+      "clues": []
+     }
+    }
+   },
+   "state_hash": "0f784274fbf1eb13190cbcaf813af63f7b7dc03a0322f4be61a0d0c5e3f1148e",
+   "chain_hash": "dc43179addd047efb335baacd2dfced166c7d2a229844c6c033e00e3b6091ad4",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "review_journal",
+    "arguments": {}
+   }
+  },
+  {
+   "seq": 58,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "activate"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't activate the screwdriver.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 58,
+    "action_budget": 60,
+    "actions_remaining": 2,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't activate the screwdriver.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "a25473e150a26108a90f7a401aa50b6d4728e833e5c22234a114f973b1b0679f",
+   "chain_hash": "78e8ca73764a05b778bcdc418deee861b813cb6af8516e269f472c70a18bb5f5",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "screwdriver",
+     "operation": "activate"
+    }
+   }
+  },
+  {
+   "seq": 59,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "tool_cabinet"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "use",
+    "error": "INVALID_OPERATION",
+    "message": "Using the screwdriver on the tool cabinet does nothing.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 59,
+    "action_budget": 60,
+    "actions_remaining": 1,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "use",
+     "error": "INVALID_OPERATION",
+     "message": "Using the screwdriver on the tool cabinet does nothing.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "ba6af7c5ae54fd885c469f5300e8a91f88f44bf8c524c8ffb9ea3eb243885eb7",
+   "chain_hash": "e0f375d2286dc72bc70658798c186e8d0cf202d1006f21a9280b363fc6cedb19",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "tool_cabinet"
+    }
+   }
+  },
+  {
+   "seq": 60,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "interact",
+    "error": "INVALID_OPERATION",
+    "message": "You can't open the mop bucket. The action budget is exhausted; the run has ended.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 60,
+    "action_budget": 60,
+    "actions_remaining": 0,
+    "status": "action_budget_exhausted",
+    "last_result": {
+     "ok": false,
+     "tool": "interact",
+     "error": "INVALID_OPERATION",
+     "message": "You can't open the mop bucket. The action budget is exhausted; the run has ended.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "3603f7a6e894e0fea038e976ac08538ccaeb371c03e0e443bee721c66e352431",
+   "chain_hash": "dc26ab4fdf5d2119d1a19e56b8c2512185f5726a413bb0cf6cfd9501c16b8797",
+   "status": "action_budget_exhausted",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "mop_bucket",
+     "operation": "open"
+    }
+   }
+  }
+ ],
+ "outcome": "action_budget_exhausted",
+ "final_chain_hash": "dc26ab4fdf5d2119d1a19e56b8c2512185f5726a413bb0cf6cfd9501c16b8797",
+ "started_at": null,
+ "finished_at": null,
+ "wall_time_ms": null,
+ "manifest_file": "practice.manifest.json"
+}
