@@ -1,0 +1,78 @@
+name: CI
+
+# Every pull request passes lint, type checks, unit and property tests, the
+# golden-replay check and the leakage suite before merge (PRD 24.4).
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: escapement
+          POSTGRES_PASSWORD: escapement
+          POSTGRES_DB: escapement_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U escapement" --health-interval 5s --health-retries 10
+    env:
+      ESCAPEMENT_TEST_DATABASE_URL: postgresql://escapement:escapement@localhost:5432/escapement_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - name: Install
+        run: pip install -e engine -e api -e client -e worker pytest hypothesis ruff mypy
+      - name: Lint
+        run: ruff check . && ruff format --check .
+      - name: Type check
+        run: mypy engine/src/escapement_engine api/src/escapement_api client/src/escapement worker/src/escapement_worker
+      - name: Golden replays
+        run: pytest -q tests/engine/test_chain_replay.py -k golden
+      - name: Leakage suite
+        run: pytest -q tests/engine/test_leakage.py tests/api/test_rls.py
+      - name: Unit, property, protocol, certificate and API tests (SQLite and Postgres with RLS)
+        run: pytest -q
+      - name: Practice room is unchanged
+        run: python -c "from escapement_engine.generation import build_practice, practice_manifest; from escapement_engine.core import instance_hash; assert instance_hash(build_practice().manifest) == instance_hash(practice_manifest())"
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: web }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [python, web]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - name: Install
+        run: |
+          pip install -e engine -e api -e client -e worker pytest playwright
+          python -m playwright install --with-deps chromium
+          cd web && npm ci && npm run build
+      - name: Start the stack (local mode, SQLite)
+        run: |
+          ESCAPEMENT_DATA_DIR=$RUNNER_TEMP/esc ESCAPEMENT_DATABASE_URL=sqlite:///$RUNNER_TEMP/esc/e2e.db escapement-api serve --port 8000 &
+          (cd web && npx next start -p 3000) &
+          for i in $(seq 60); do curl -sf localhost:3000/api/v1/meta && break; sleep 2; done
+      - name: End to end
+        env:
+          E2E_BASE_URL: http://localhost:3000
+        run: pytest -q tests/e2e

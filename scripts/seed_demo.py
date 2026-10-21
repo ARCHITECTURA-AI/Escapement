@@ -54,6 +54,7 @@ def play_planner(client: Client, web: httpx.Client, room: str, meta: dict, skill
             break  # gives up mid-run
         run.act(
             action["tool"],
+            **action["arguments"],
             decision_summary=f"Step {i + 1}: following my plan.",
             usage={"tokens_in": 900 + rng.randint(0, 300), "tokens_out": 40 + rng.randint(0, 30), "cost_usd": 0.0004},
         )

@@ -1,0 +1,82 @@
+# Local research mode: the whole stack on your machine.
+#
+#   docker compose up --build        then open http://localhost:3000
+#
+# Set ESCAPEMENT_MODE=public plus the GitHub and signing secrets in .env to run
+# the hosted arena configuration. The reference worker is optional:
+#   docker compose --profile reference up
+name: escapement
+
+x-backend: &backend
+  build: { context: ., dockerfile: docker/backend.Dockerfile }
+  environment: &backend-env
+    ESCAPEMENT_MODE: ${ESCAPEMENT_MODE:-local}
+    ESCAPEMENT_DATABASE_URL: postgresql://escapement:escapement@db:5432/escapement
+    ESCAPEMENT_WEB_BASE_URL: ${ESCAPEMENT_WEB_BASE_URL:-http://localhost:3000}
+    ESCAPEMENT_SEED_SECRET: ${ESCAPEMENT_SEED_SECRET:-change-me-local-seed-secret}
+    ESCAPEMENT_SIGNING_KEY: ${ESCAPEMENT_SIGNING_KEY:-}
+    ESCAPEMENT_GITHUB_CLIENT_ID: ${ESCAPEMENT_GITHUB_CLIENT_ID:-}
+    ESCAPEMENT_GITHUB_CLIENT_SECRET: ${ESCAPEMENT_GITHUB_CLIENT_SECRET:-}
+    ESCAPEMENT_COOKIE_SECURE: ${ESCAPEMENT_COOKIE_SECURE:-false}
+  volumes: [data:/data]
+  depends_on:
+    db: { condition: service_healthy }
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: escapement
+      POSTGRES_PASSWORD: escapement
+      POSTGRES_DB: escapement
+    volumes: [pg:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U escapement"]
+      interval: 3s
+      retries: 20
+
+  migrate:
+    <<: *backend
+    command: ["escapement-api", "migrate"]
+    restart: "no"
+
+  api:
+    <<: *backend
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    ports: ["8000:8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      retries: 20
+
+  worker:
+    <<: *backend
+    command: ["escapement-api", "worker"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  reference:
+    <<: *backend
+    profiles: [reference]
+    command: ["escapement-worker"]
+    environment:
+      <<: *backend-env
+      ESCAPEMENT_BASE_URL: http://api:8000
+      ESCAPEMENT_REFERENCE_KEY: ${ESCAPEMENT_REFERENCE_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      REFERENCE_MODELS: ${REFERENCE_MODELS:-openai/gpt-oss-20b}
+    depends_on:
+      api: { condition: service_healthy }
+
+  web:
+    build: { context: ., dockerfile: docker/web.Dockerfile }
+    environment:
+      ESCAPEMENT_API_INTERNAL_URL: http://api:8000
+    ports: ["3000:3000"]
+    depends_on:
+      api: { condition: service_healthy }
+
+volumes:
+  pg:
+  data:
