@@ -1,0 +1,1031 @@
+{
+  "format": "escapement-manifest/1",
+  "room_id": "golden-standard",
+  "title": "Emergency Lockdown · Standard",
+  "family": "emergency_lockdown",
+  "template_version": "el-1.0",
+  "engine_version": "1.0.0",
+  "tier": "standard",
+  "seed": "golden-standard",
+  "intro": "A research station has entered emergency lockdown. You start in the maintenance bay. The exit needs restored power, an access card and a decoded terminal credential. The emergency clock advances when you take an action, not while you read.",
+  "goal_text": "Escape to the exterior loading dock.",
+  "budget": {
+    "actions": 60,
+    "malformed": 3,
+    "wrong_code_free_attempts": 3,
+    "wrong_code_penalty": 2
+  },
+  "start": "maintenance_bay",
+  "flags": {
+    "power": false,
+    "exit_open": false,
+    "fuse_found": false
+  },
+  "state_labels": {
+    "open": [
+      "open",
+      "closed"
+    ],
+    "locked": [
+      "locked",
+      "unlocked"
+    ]
+  },
+  "locations": [
+    {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay",
+      "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by.",
+      "exits": [
+        {
+          "to": "control_room",
+          "requires": []
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "id": "control_room",
+      "name": "Control room",
+      "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre.",
+      "exits": [
+        {
+          "to": "maintenance_bay",
+          "requires": []
+        },
+        {
+          "to": "security_vestibule",
+          "requires": [
+            {
+              "kind": "flag",
+              "name": "power",
+              "obj": null,
+              "key": null,
+              "value": true,
+              "item": null,
+              "location": null,
+              "clue": null,
+              "fail_code": "PRECONDITION_NOT_MET",
+              "fail_message": "The vestibule door is sealed. Its motor has no power."
+            }
+          ]
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "id": "security_vestibule",
+      "name": "Security vestibule",
+      "description": "A narrow chamber in front of the blast door. Everything here is bolted down and labelled.",
+      "exits": [
+        {
+          "to": "control_room",
+          "requires": [
+            {
+              "kind": "flag",
+              "name": "power",
+              "obj": null,
+              "key": null,
+              "value": true,
+              "item": null,
+              "location": null,
+              "clue": null,
+              "fail_code": "PRECONDITION_NOT_MET",
+              "fail_message": "The vestibule door is sealed. Its motor has no power."
+            }
+          ]
+        },
+        {
+          "to": "exterior",
+          "requires": [
+            {
+              "kind": "flag",
+              "name": "exit_open",
+              "obj": null,
+              "key": null,
+              "value": true,
+              "item": null,
+              "location": null,
+              "clue": null,
+              "fail_code": "PRECONDITION_NOT_MET",
+              "fail_message": "The blast door is sealed."
+            }
+          ]
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "id": "exterior",
+      "name": "Exterior loading dock",
+      "description": "Cold night air and open sky. You are outside the station.",
+      "exits": [],
+      "terminal": true
+    }
+  ],
+  "objects": [
+    {
+      "id": "notice_board",
+      "name": "Notice board",
+      "description": "A cork board covered in faded safety posters.",
+      "location": "maintenance_bay",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "description": "The top drawer of the operations desk.",
+      "location": "control_room",
+      "portable": false,
+      "hidden": false,
+      "container": true,
+      "decoy": false,
+      "state": {
+        "open": false
+      },
+      "public_state": [
+        "open"
+      ],
+      "operations": [
+        "open",
+        "close"
+      ],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "description": "A wooden shipping crate with a hinged lid. It is empty.",
+      "location": "control_room",
+      "portable": false,
+      "hidden": false,
+      "container": true,
+      "decoy": true,
+      "state": {
+        "open": false
+      },
+      "public_state": [
+        "open"
+      ],
+      "operations": [
+        "open",
+        "close"
+      ],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille",
+      "description": "A wide grille. Stale air barely moves through it.",
+      "location": "control_room",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "access_card",
+      "name": "Access card",
+      "description": "A security access card on a lanyard.",
+      "location": "equipment_locker",
+      "portable": true,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "description": "A grey breaker panel stencilled MAIN POWER.",
+      "location": "maintenance_bay",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {
+        "open": false,
+        "secured": true
+      },
+      "public_state": [
+        "open"
+      ],
+      "operations": [
+        "open",
+        "close"
+      ],
+      "open_requires": [
+        {
+          "kind": "state",
+          "name": null,
+          "obj": "maintenance_panel",
+          "key": "secured",
+          "value": false,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "The cover is held shut by four screws."
+        }
+      ],
+      "code_lock": null,
+      "inspect_variants": [
+        {
+          "when": [
+            {
+              "kind": "flag",
+              "name": "power",
+              "obj": null,
+              "key": null,
+              "value": true,
+              "item": null,
+              "location": null,
+              "clue": null,
+              "fail_code": "PRECONDITION_NOT_MET",
+              "fail_message": "Nothing happens."
+            }
+          ],
+          "text": "The breaker rail is complete and every lamp is green. Main power is flowing.",
+          "effects": [],
+          "reveals_information": false
+        },
+        {
+          "when": [],
+          "text": "A grey breaker panel stencilled MAIN POWER. A status lamp blinks FUSE MISSING: slot F3 is empty. The cover is held by four screws.",
+          "effects": [
+            {
+              "kind": "discover",
+              "name": null,
+              "value": true,
+              "obj": null,
+              "key": null,
+              "to": null,
+              "clue": "clue_48"
+            }
+          ],
+          "reveals_information": true
+        }
+      ]
+    },
+    {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse",
+      "description": "A ceramic cartridge fuse marked F3, 30A.",
+      "location": "desk_drawer",
+      "portable": true,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "operations_note",
+      "name": "Operations note",
+      "description": "A printed operations note.",
+      "location": "maintenance_bay",
+      "portable": true,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": [
+        {
+          "when": [],
+          "text": "A printed operations note, mostly routine. A line at the bottom reads: 'Equipment locker label: 1 7 2 4.'",
+          "effects": [
+            {
+              "kind": "discover",
+              "name": null,
+              "value": true,
+              "obj": null,
+              "key": null,
+              "to": null,
+              "clue": "clue_56"
+            }
+          ],
+          "reveals_information": true
+        }
+      ]
+    },
+    {
+      "id": "duty_roster",
+      "name": "Duty roster",
+      "description": "A clipboard of shift assignments.",
+      "location": "control_room",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": [
+        {
+          "when": [],
+          "text": "A clipboard of shift assignments. The top sheet says: 'tonight's shift is C, keypad offset +6.'",
+          "effects": [
+            {
+              "kind": "discover",
+              "name": null,
+              "value": true,
+              "obj": null,
+              "key": null,
+              "to": null,
+              "clue": "clue_85"
+            }
+          ],
+          "reveals_information": true
+        }
+      ]
+    },
+    {
+      "id": "screwdriver",
+      "name": "Screwdriver",
+      "description": "A flat-head screwdriver with a rubber grip.",
+      "location": "tool_cabinet",
+      "portable": true,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "description": "A steel tool cabinet with a stiff latch.",
+      "location": "control_room",
+      "portable": false,
+      "hidden": false,
+      "container": true,
+      "decoy": false,
+      "state": {
+        "open": false
+      },
+      "public_state": [
+        "open"
+      ],
+      "operations": [
+        "open",
+        "close"
+      ],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "exit_reader",
+      "name": "Exit reader",
+      "description": "A card reader beside the blast door. Its display reads PRESENT AUTHORISED CARD.",
+      "location": "security_vestibule",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "cable_reel",
+      "name": "Cable reel",
+      "description": "A heavy reel of orange cable, too bulky to move.",
+      "location": "maintenance_bay",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "locker_bench",
+      "name": "Locker bench",
+      "description": "A long bench for changing into overalls.",
+      "location": "maintenance_bay",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "dried_plant",
+      "name": "Dried plant",
+      "description": "An office plant that gave up some time ago.",
+      "location": "maintenance_bay",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "safety_shower",
+      "name": "Safety shower",
+      "description": "A safety shower station tagged OUT OF SERVICE.",
+      "location": "maintenance_bay",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    },
+    {
+      "id": "equipment_locker",
+      "name": "Equipment locker",
+      "description": "A tall steel locker with a numeric keypad.",
+      "location": "security_vestibule",
+      "portable": false,
+      "hidden": false,
+      "container": true,
+      "decoy": false,
+      "state": {
+        "open": false,
+        "locked": true
+      },
+      "public_state": [
+        "open",
+        "locked"
+      ],
+      "operations": [
+        "open",
+        "close",
+        "enter_code"
+      ],
+      "open_requires": [],
+      "code_lock": {
+        "code": "0387",
+        "requires": [
+          {
+            "kind": "flag",
+            "name": "power",
+            "obj": null,
+            "key": null,
+            "value": true,
+            "item": null,
+            "location": null,
+            "clue": null,
+            "fail_code": "PRECONDITION_NOT_MET",
+            "fail_message": "The keypad is dark."
+          }
+        ],
+        "on_unlock": [],
+        "derivation": {
+          "base_digits": "1724",
+          "base_clue": "clue_56",
+          "offset_clues": [
+            "clue_85"
+          ],
+          "instruction_clue": "clue_10",
+          "transforms": [
+            {
+              "op": "add_mod10",
+              "k": 6
+            },
+            {
+              "op": "swap_ends",
+              "k": null
+            }
+          ]
+        }
+      },
+      "inspect_variants": [
+        {
+          "when": [],
+          "text": "A tall steel locker with a numeric keypad. A worn sticker on the door says LABEL: SEE OPERATIONS NOTE. The keypad takes 4 digits.",
+          "effects": [],
+          "reveals_information": false
+        }
+      ]
+    },
+    {
+      "id": "operations_terminal",
+      "name": "Operations terminal",
+      "description": "A wall terminal for station operations.",
+      "location": "control_room",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": false,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": [
+        {
+          "when": [
+            {
+              "kind": "flag",
+              "name": "power",
+              "obj": null,
+              "key": null,
+              "value": true,
+              "item": null,
+              "location": null,
+              "clue": null,
+              "fail_code": "PRECONDITION_NOT_MET",
+              "fail_message": "Nothing happens."
+            }
+          ],
+          "text": "The terminal has woken up. A security bulletin fills the screen: 'Equipment locker code: add the on-duty shift's keypad offset to each digit of the locker label (9 wraps round to 0), then swap the first and last digits.'",
+          "effects": [
+            {
+              "kind": "discover",
+              "name": null,
+              "value": true,
+              "obj": null,
+              "key": null,
+              "to": null,
+              "clue": "clue_10"
+            }
+          ],
+          "reveals_information": true
+        },
+        {
+          "when": [],
+          "text": "The terminal's screen is dark. It needs main power.",
+          "effects": [],
+          "reveals_information": false
+        }
+      ]
+    },
+    {
+      "id": "pressure_gauge",
+      "name": "Pressure gauge",
+      "description": "A wall gauge whose needle rests in the green band.",
+      "location": "security_vestibule",
+      "portable": false,
+      "hidden": false,
+      "container": false,
+      "decoy": true,
+      "state": {},
+      "public_state": [],
+      "operations": [],
+      "open_requires": [],
+      "code_lock": null,
+      "inspect_variants": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "unscrew_panel",
+      "tool": "use",
+      "target": "maintenance_panel",
+      "item": "screwdriver",
+      "operation": null,
+      "already": [
+        {
+          "kind": "state",
+          "name": null,
+          "obj": "maintenance_panel",
+          "key": "secured",
+          "value": false,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "already_message": "The cover screws are already out.",
+      "requires": [],
+      "effects": [
+        {
+          "kind": "set_state",
+          "name": null,
+          "value": false,
+          "obj": "maintenance_panel",
+          "key": "secured",
+          "to": null,
+          "clue": null
+        },
+        {
+          "kind": "set_state",
+          "name": null,
+          "value": true,
+          "obj": "maintenance_panel",
+          "key": "open",
+          "to": null,
+          "clue": null
+        }
+      ],
+      "message": "You back out the four screws and lift the cover away. The breaker rail is exposed, with slot F3 empty.",
+      "cost": 1,
+      "reveals_information": false
+    },
+    {
+      "id": "install_fuse",
+      "tool": "use",
+      "target": "maintenance_panel",
+      "item": "replacement_fuse",
+      "operation": null,
+      "already": [
+        {
+          "kind": "flag",
+          "name": "power",
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "already_message": "Main power is already restored.",
+      "requires": [
+        {
+          "kind": "state",
+          "name": null,
+          "obj": "maintenance_panel",
+          "key": "open",
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "The panel cover is closed."
+        }
+      ],
+      "effects": [
+        {
+          "kind": "move_object",
+          "name": null,
+          "value": true,
+          "obj": "replacement_fuse",
+          "key": null,
+          "to": "@gone",
+          "clue": null
+        },
+        {
+          "kind": "set_flag",
+          "name": "power",
+          "value": true,
+          "obj": null,
+          "key": null,
+          "to": null,
+          "clue": null
+        }
+      ],
+      "message": "You seat the fuse in slot F3. Relays clack, the strip lights steady and the station hums: main power restored.",
+      "cost": 1,
+      "reveals_information": false
+    },
+    {
+      "id": "open_blast_door",
+      "tool": "use",
+      "target": "exit_reader",
+      "item": "access_card",
+      "operation": null,
+      "already": [
+        {
+          "kind": "flag",
+          "name": "exit_open",
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "already_message": "The blast door is already open.",
+      "requires": [
+        {
+          "kind": "flag",
+          "name": "power",
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "The reader is dark."
+        }
+      ],
+      "effects": [
+        {
+          "kind": "set_flag",
+          "name": "exit_open",
+          "value": true,
+          "obj": null,
+          "key": null,
+          "to": null,
+          "clue": null
+        }
+      ],
+      "message": "The reader chirps green. With a groan, the blast door rolls up onto the loading dock.",
+      "cost": 1,
+      "reveals_information": false
+    }
+  ],
+  "clues": [
+    {
+      "id": "clue_48",
+      "text": "Maintenance panel: fuse slot F3 is empty, so main power is out. The cover is held by four screws.",
+      "refers_to": [
+        "maintenance_panel"
+      ]
+    },
+    {
+      "id": "clue_56",
+      "text": "Operations note: 'Equipment locker label: 1 7 2 4.'",
+      "refers_to": [
+        "equipment_locker"
+      ]
+    },
+    {
+      "id": "clue_10",
+      "text": "Terminal bulletin: 'Equipment locker code: add the on-duty shift's keypad offset to each digit of the locker label (9 wraps round to 0), then swap the first and last digits.'",
+      "refers_to": [
+        "equipment_locker"
+      ]
+    },
+    {
+      "id": "clue_85",
+      "text": "Duty roster: tonight's shift is C, keypad offset +6.",
+      "refers_to": [
+        "equipment_locker"
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "id": "panel_opened",
+      "label": "Opened the maintenance panel",
+      "requires": [
+        {
+          "kind": "state",
+          "name": null,
+          "obj": "maintenance_panel",
+          "key": "secured",
+          "value": false,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "The maintenance panel's cover is screwed shut. Is there a tool nearby?",
+        "Open the tool cabinet, take the screwdriver and use it on the maintenance panel."
+      ]
+    },
+    {
+      "id": "power_restored",
+      "label": "Restored main power",
+      "requires": [
+        {
+          "kind": "flag",
+          "name": "power",
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "The panel has an empty fuse slot. Search the rooms you can reach for a spare.",
+        "Find the replacement fuse, carry it to the open maintenance panel and use it on the panel."
+      ]
+    },
+    {
+      "id": "instructions_read",
+      "label": "Read the terminal bulletin",
+      "requires": [
+        {
+          "kind": "discovered",
+          "name": null,
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": "clue_10",
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "With power back, a screen somewhere has something to say.",
+        "Inspect the operations terminal."
+      ]
+    },
+    {
+      "id": "code_inputs_found",
+      "label": "Found every fact the code needs",
+      "requires": [
+        {
+          "kind": "discovered",
+          "name": null,
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": "clue_56",
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        },
+        {
+          "kind": "discovered",
+          "name": null,
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": "clue_85",
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "The bulletin mentions a locker label. Printed paperwork is worth reading. The duty roster gives the offset.",
+        "Inspect the operations note, the duty roster."
+      ]
+    },
+    {
+      "id": "locker_unlocked",
+      "label": "Unlocked the equipment locker",
+      "requires": [
+        {
+          "kind": "state",
+          "name": null,
+          "obj": "equipment_locker",
+          "key": "locked",
+          "value": false,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "Work the code out from your journal, then try the locker's keypad.",
+        "Apply the bulletin's steps to the label digits, then interact with the equipment locker using enter_code."
+      ]
+    },
+    {
+      "id": "card_taken",
+      "label": "Took the access card",
+      "requires": [
+        {
+          "kind": "has",
+          "name": null,
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": "access_card",
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "The locker is unlocked. Look inside.",
+        "Open the equipment locker and take the access card."
+      ]
+    },
+    {
+      "id": "exit_opened",
+      "label": "Opened the blast door",
+      "requires": [
+        {
+          "kind": "flag",
+          "name": "exit_open",
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": null,
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "A card reader guards the blast door.",
+        "Use the access card on the exit reader."
+      ]
+    },
+    {
+      "id": "escaped",
+      "label": "Escaped",
+      "requires": [
+        {
+          "kind": "at",
+          "name": null,
+          "obj": null,
+          "key": null,
+          "value": true,
+          "item": null,
+          "location": "exterior",
+          "clue": null,
+          "fail_code": "PRECONDITION_NOT_MET",
+          "fail_message": "Nothing happens."
+        }
+      ],
+      "required": true,
+      "hints": [
+        "The way out is open.",
+        "Move to the exterior loading dock."
+      ]
+    }
+  ],
+  "goal": [
+    {
+      "kind": "at",
+      "name": null,
+      "obj": null,
+      "key": null,
+      "value": true,
+      "item": null,
+      "location": "exterior",
+      "clue": null,
+      "fail_code": "PRECONDITION_NOT_MET",
+      "fail_message": "Nothing happens."
+    }
+  ]
+}

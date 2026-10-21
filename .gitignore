@@ -218,3 +218,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Escapement
+!web/src/lib/
+.escapement/
+*.db

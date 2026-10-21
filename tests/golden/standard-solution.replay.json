@@ -1,0 +1,2118 @@
+{
+ "format": "escapement-replay/1",
+ "run_id": "golden-standard-solution",
+ "engine_version": "1.0.0",
+ "protocol_version": "1",
+ "room": {
+  "room_id": "golden-standard",
+  "title": "Emergency Lockdown · Standard",
+  "tier": "standard",
+  "family": "emergency_lockdown",
+  "template_version": "el-1.0",
+  "instance_hash": "e29f7971acfb3cc03db2afffb9cfd302d9015ac8e5c5e9bb71f1fb6d92dacc8b",
+  "season": null,
+  "action_budget": 60
+ },
+ "mode": "local",
+ "agent": {
+  "name": "local",
+  "version": "0"
+ },
+ "self_reported": {
+  "note": "Agent name, model, framework, memory strategy, tokens, cost and decision summaries are reported by the client and not verified.",
+  "usage": {}
+ },
+ "initial_observation": {
+  "goal": "Escape to the exterior loading dock.",
+  "location": {
+   "id": "maintenance_bay",
+   "name": "Maintenance bay",
+   "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+  },
+  "objects": [
+   {
+    "id": "notice_board",
+    "name": "Notice board"
+   },
+   {
+    "id": "maintenance_panel",
+    "name": "Maintenance panel",
+    "state": [
+     "closed"
+    ],
+    "operations": [
+     "open"
+    ]
+   },
+   {
+    "id": "operations_note",
+    "name": "Operations note",
+    "portable": true
+   },
+   {
+    "id": "cable_reel",
+    "name": "Cable reel"
+   },
+   {
+    "id": "locker_bench",
+    "name": "Locker bench"
+   },
+   {
+    "id": "dried_plant",
+    "name": "Dried plant"
+   },
+   {
+    "id": "safety_shower",
+    "name": "Safety shower"
+   }
+  ],
+  "exits": [
+   {
+    "id": "control_room",
+    "name": "Control room"
+   }
+  ],
+  "inventory": [],
+  "journal_entries": 0,
+  "actions_used": 0,
+  "action_budget": 60,
+  "actions_remaining": 60,
+  "status": "in_progress",
+  "last_result": null
+ },
+ "chain_start": "a1f3b728ff3c314fd9220ad241bd5a44185622ca414c45ebe12a1b7960ec9894",
+ "steps": [
+  {
+   "seq": 1,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "control_room"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the control room.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "control_room"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 1,
+    "action_budget": 60,
+    "actions_remaining": 59,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the control room.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "control_room"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "243b8f910e1ea0655fc0d84a09596c8b3a23ee8675438aa30558d54604e64249",
+   "chain_hash": "1b0d5345e2f3116f7812057b1a3efa98f53adee2ba9c214d7c5857ce2483c7d0",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "control_room"
+    }
+   }
+  },
+  {
+   "seq": 2,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "desk_drawer",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You open the desk drawer. Inside: the replacement fuse.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "desk_drawer",
+      "state": "open"
+     },
+     {
+      "type": "object_revealed",
+      "object_id": "replacement_fuse"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse",
+      "in": "desk_drawer",
+      "portable": true
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 2,
+    "action_budget": 60,
+    "actions_remaining": 58,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You open the desk drawer. Inside: the replacement fuse.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "desk_drawer",
+       "state": "open"
+      },
+      {
+       "type": "object_revealed",
+       "object_id": "replacement_fuse"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "36c0d37f4783df3cf8f5d7c91acb7884324e72c2ac6f765c7e0d52042d0576fa",
+   "chain_hash": "9b2c20bbb851e38bb92c0c3a378eb31f5d3262eaf987d512c39142550a8f7496",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "desk_drawer",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 3,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "replacement_fuse"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "take",
+    "error": null,
+    "message": "You take the replacement fuse.",
+    "events": [
+     {
+      "type": "item_taken",
+      "item_id": "replacement_fuse"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     }
+    ],
+    "journal_entries": 0,
+    "actions_used": 3,
+    "action_budget": 60,
+    "actions_remaining": 57,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "take",
+     "error": null,
+     "message": "You take the replacement fuse.",
+     "events": [
+      {
+       "type": "item_taken",
+       "item_id": "replacement_fuse"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "409a921f681f2e957a75a6536a21e51008345c1146d63b87437ac1b57e5fb33e",
+   "chain_hash": "decba66ff5fcecf001e196f85d17c7cd4baf2a7045eaf855b8c61e205df5fb63",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "replacement_fuse"
+    }
+   }
+  },
+  {
+   "seq": 4,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "duty_roster"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A clipboard of shift assignments. The top sheet says: 'tonight's shift is C, keypad offset +6.'",
+    "events": [
+     {
+      "type": "clue_discovered",
+      "clue_id": "clue_85"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     }
+    ],
+    "journal_entries": 1,
+    "actions_used": 4,
+    "action_budget": 60,
+    "actions_remaining": 56,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A clipboard of shift assignments. The top sheet says: 'tonight's shift is C, keypad offset +6.'",
+     "events": [
+      {
+       "type": "clue_discovered",
+       "clue_id": "clue_85"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "e02c7609db4813563aa3d52ab6c22ff09dc3785944aeda7d152874e9fa6ee4fa",
+   "chain_hash": "e9d5f9cef03bff84a2cc56af4782e2f7aa33030f344f243db4dc4b14b22c85b5",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "duty_roster"
+    }
+   }
+  },
+  {
+   "seq": 5,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You open the tool cabinet. Inside: the screwdriver.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "tool_cabinet",
+      "state": "open"
+     },
+     {
+      "type": "object_revealed",
+      "object_id": "screwdriver"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver",
+      "in": "tool_cabinet",
+      "portable": true
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     }
+    ],
+    "journal_entries": 1,
+    "actions_used": 5,
+    "action_budget": 60,
+    "actions_remaining": 55,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You open the tool cabinet. Inside: the screwdriver.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "tool_cabinet",
+       "state": "open"
+      },
+      {
+       "type": "object_revealed",
+       "object_id": "screwdriver"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "ac06534038b5f91ca153b7211eb258f4e07e02920b69ae66190a649df861a496",
+   "chain_hash": "a6470d61dc8b010c3ff4e4341e46df70252ff773cea45f4a90450b032a5f509b",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "tool_cabinet",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 6,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "take",
+    "error": null,
+    "message": "You take the screwdriver.",
+    "events": [
+     {
+      "type": "item_taken",
+      "item_id": "screwdriver"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 1,
+    "actions_used": 6,
+    "action_budget": 60,
+    "actions_remaining": 54,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "take",
+     "error": null,
+     "message": "You take the screwdriver.",
+     "events": [
+      {
+       "type": "item_taken",
+       "item_id": "screwdriver"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "4e1dddb6042ac9fedde9d9db47bfdd05f667d424b7068bd29d5fb55a7db781f3",
+   "chain_hash": "9f3c6155fb976ef2a8a972c263ba222f19534060ad19ca1a8b9307bd606726b0",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "screwdriver"
+    }
+   }
+  },
+  {
+   "seq": 7,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "maintenance_bay"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the maintenance bay.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "maintenance_bay"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "notice_board",
+      "name": "Notice board"
+     },
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "cable_reel",
+      "name": "Cable reel"
+     },
+     {
+      "id": "locker_bench",
+      "name": "Locker bench"
+     },
+     {
+      "id": "dried_plant",
+      "name": "Dried plant"
+     },
+     {
+      "id": "safety_shower",
+      "name": "Safety shower"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 1,
+    "actions_used": 7,
+    "action_budget": 60,
+    "actions_remaining": 53,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the maintenance bay.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "maintenance_bay"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "a7e950a9e063524693f276f9e39b255738f2aaaae0f4a33b443b16a6210c11c2",
+   "chain_hash": "90c97ac53e5dda03cf12d0b9c2c21699169fa136463d43dcf02f3255933ef1f8",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "maintenance_bay"
+    }
+   }
+  },
+  {
+   "seq": 8,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_note"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A printed operations note, mostly routine. A line at the bottom reads: 'Equipment locker label: 1 7 2 4.'",
+    "events": [
+     {
+      "type": "clue_discovered",
+      "clue_id": "clue_56"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "notice_board",
+      "name": "Notice board"
+     },
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "cable_reel",
+      "name": "Cable reel"
+     },
+     {
+      "id": "locker_bench",
+      "name": "Locker bench"
+     },
+     {
+      "id": "dried_plant",
+      "name": "Dried plant"
+     },
+     {
+      "id": "safety_shower",
+      "name": "Safety shower"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 2,
+    "actions_used": 8,
+    "action_budget": 60,
+    "actions_remaining": 52,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A printed operations note, mostly routine. A line at the bottom reads: 'Equipment locker label: 1 7 2 4.'",
+     "events": [
+      {
+       "type": "clue_discovered",
+       "clue_id": "clue_56"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "2c296f16c486d3d432bc341c5e1f27c163d359d2d4cd4d24be0a80e4de1ad294",
+   "chain_hash": "c0ec628508bfc18aba73e19bd2640bf7992fe56b4d2f87f774bf370b4e89d10e",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_note"
+    }
+   }
+  },
+  {
+   "seq": 9,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "maintenance_panel"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "use",
+    "error": null,
+    "message": "You back out the four screws and lift the cover away. The breaker rail is exposed, with slot F3 empty.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "maintenance_panel",
+      "state": "open"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "notice_board",
+      "name": "Notice board"
+     },
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "cable_reel",
+      "name": "Cable reel"
+     },
+     {
+      "id": "locker_bench",
+      "name": "Locker bench"
+     },
+     {
+      "id": "dried_plant",
+      "name": "Dried plant"
+     },
+     {
+      "id": "safety_shower",
+      "name": "Safety shower"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "replacement_fuse",
+      "name": "Replacement fuse"
+     },
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 2,
+    "actions_used": 9,
+    "action_budget": 60,
+    "actions_remaining": 51,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "use",
+     "error": null,
+     "message": "You back out the four screws and lift the cover away. The breaker rail is exposed, with slot F3 empty.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "maintenance_panel",
+       "state": "open"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "2f4d7b09fc8425442f9415f3ab6009ef7cfd641e31c50c5de202f8dae858cf9e",
+   "chain_hash": "f3e80f301c28fbd4005e226de929dd4a66df1e81c69ebd7e0fdf6a9831f2e2b1",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "screwdriver",
+     "target_id": "maintenance_panel"
+    }
+   }
+  },
+  {
+   "seq": 10,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "replacement_fuse",
+     "target_id": "maintenance_panel"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "use",
+    "error": null,
+    "message": "You seat the fuse in slot F3. Relays clack, the strip lights steady and the station hums: main power restored.",
+    "events": [
+     {
+      "type": "item_consumed",
+      "item_id": "replacement_fuse"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "notice_board",
+      "name": "Notice board"
+     },
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "operations_note",
+      "name": "Operations note",
+      "portable": true
+     },
+     {
+      "id": "cable_reel",
+      "name": "Cable reel"
+     },
+     {
+      "id": "locker_bench",
+      "name": "Locker bench"
+     },
+     {
+      "id": "dried_plant",
+      "name": "Dried plant"
+     },
+     {
+      "id": "safety_shower",
+      "name": "Safety shower"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 2,
+    "actions_used": 10,
+    "action_budget": 60,
+    "actions_remaining": 50,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "use",
+     "error": null,
+     "message": "You seat the fuse in slot F3. Relays clack, the strip lights steady and the station hums: main power restored.",
+     "events": [
+      {
+       "type": "item_consumed",
+       "item_id": "replacement_fuse"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "187cb534aa601d3c30a1df06995749fe59512487eb2c140db9ba9c205920c938",
+   "chain_hash": "b641737ae3fdbc92506b3c1942a5a5bf23c1f3152d6fcf41bd0ecd01092b73b6",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "replacement_fuse",
+     "target_id": "maintenance_panel"
+    }
+   }
+  },
+  {
+   "seq": 11,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "control_room"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the control room.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "control_room"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 2,
+    "actions_used": 11,
+    "action_budget": 60,
+    "actions_remaining": 49,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the control room.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "control_room"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "02cc6fbe4a1217c76e062bcf7885c22769cb1696fce770650146415f738d2ee0",
+   "chain_hash": "4b3b757ad4f69f347556fd77d25fcf25a482f9ff2ba1830fbbc557be17638f20",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "control_room"
+    }
+   }
+  },
+  {
+   "seq": 12,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_terminal"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "The terminal has woken up. A security bulletin fills the screen: 'Equipment locker code: add the on-duty shift's keypad offset to each digit of the locker label (9 wraps round to 0), then swap the first and last digits.'",
+    "events": [
+     {
+      "type": "clue_discovered",
+      "clue_id": "clue_10"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "control_room",
+     "name": "Control room",
+     "description": "Banks of dark monitors face a long operations desk. This is the station's nerve centre."
+    },
+    "objects": [
+     {
+      "id": "desk_drawer",
+      "name": "Desk drawer",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "shipping_crate",
+      "name": "Shipping crate",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "ventilation_grille",
+      "name": "Ventilation grille"
+     },
+     {
+      "id": "duty_roster",
+      "name": "Duty roster"
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "open"
+      ],
+      "operations": [
+       "close"
+      ]
+     },
+     {
+      "id": "operations_terminal",
+      "name": "Operations terminal"
+     }
+    ],
+    "exits": [
+     {
+      "id": "maintenance_bay",
+      "name": "Maintenance bay"
+     },
+     {
+      "id": "security_vestibule",
+      "name": "Security vestibule"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 12,
+    "action_budget": 60,
+    "actions_remaining": 48,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "The terminal has woken up. A security bulletin fills the screen: 'Equipment locker code: add the on-duty shift's keypad offset to each digit of the locker label (9 wraps round to 0), then swap the first and last digits.'",
+     "events": [
+      {
+       "type": "clue_discovered",
+       "clue_id": "clue_10"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "0bf99270a666b7fc3404bfa5b2d855de601646267a940a2901f1e0a9bc8e89c6",
+   "chain_hash": "0f002a66af5184e3d5f159e9b77f709a86c48ac2ac89d158523885b4e776c53e",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "operations_terminal"
+    }
+   }
+  },
+  {
+   "seq": 13,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "security_vestibule"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the security vestibule.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "security_vestibule"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "security_vestibule",
+     "name": "Security vestibule",
+     "description": "A narrow chamber in front of the blast door. Everything here is bolted down and labelled."
+    },
+    "objects": [
+     {
+      "id": "exit_reader",
+      "name": "Exit reader"
+     },
+     {
+      "id": "equipment_locker",
+      "name": "Equipment locker",
+      "state": [
+       "closed",
+       "locked"
+      ],
+      "operations": [
+       "open",
+       "enter_code"
+      ]
+     },
+     {
+      "id": "pressure_gauge",
+      "name": "Pressure gauge"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     },
+     {
+      "id": "exterior",
+      "name": "Exterior loading dock"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 13,
+    "action_budget": 60,
+    "actions_remaining": 47,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the security vestibule.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "security_vestibule"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "4136918dd6379a344cb5ac0a90ba83608f1f502630457d613239b8a0af3dea0f",
+   "chain_hash": "3f364a08b1c2cb3afd517a8c8f24953bea5e707d7186978ef93afd8f9a77dc31",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "security_vestibule"
+    }
+   }
+  },
+  {
+   "seq": 14,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "equipment_locker",
+     "operation": "enter_code",
+     "value": "0387"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "The keypad chimes. Equipment locker unlocks.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "equipment_locker",
+      "state": "unlocked"
+     },
+     {
+      "type": "unlocked",
+      "object_id": "equipment_locker"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "security_vestibule",
+     "name": "Security vestibule",
+     "description": "A narrow chamber in front of the blast door. Everything here is bolted down and labelled."
+    },
+    "objects": [
+     {
+      "id": "exit_reader",
+      "name": "Exit reader"
+     },
+     {
+      "id": "equipment_locker",
+      "name": "Equipment locker",
+      "state": [
+       "closed",
+       "unlocked"
+      ],
+      "operations": [
+       "open",
+       "enter_code"
+      ]
+     },
+     {
+      "id": "pressure_gauge",
+      "name": "Pressure gauge"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     },
+     {
+      "id": "exterior",
+      "name": "Exterior loading dock"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 14,
+    "action_budget": 60,
+    "actions_remaining": 46,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "The keypad chimes. Equipment locker unlocks.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "equipment_locker",
+       "state": "unlocked"
+      },
+      {
+       "type": "unlocked",
+       "object_id": "equipment_locker"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "795c02657a1d700fd931b6c963f31239d26f62ff4112c1a192b1785ba13af9b7",
+   "chain_hash": "1a8cae9ba929a7f225c6a659d99564673ace4722ef8d7871091b0e9113e34932",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "equipment_locker",
+     "operation": "enter_code",
+     "value": "0387"
+    }
+   }
+  },
+  {
+   "seq": 15,
+   "action": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "equipment_locker",
+     "operation": "open"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "interact",
+    "error": null,
+    "message": "You open the equipment locker. Inside: the access card.",
+    "events": [
+     {
+      "type": "state_changed",
+      "object_id": "equipment_locker",
+      "state": "open"
+     },
+     {
+      "type": "object_revealed",
+      "object_id": "access_card"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "security_vestibule",
+     "name": "Security vestibule",
+     "description": "A narrow chamber in front of the blast door. Everything here is bolted down and labelled."
+    },
+    "objects": [
+     {
+      "id": "access_card",
+      "name": "Access card",
+      "in": "equipment_locker",
+      "portable": true
+     },
+     {
+      "id": "exit_reader",
+      "name": "Exit reader"
+     },
+     {
+      "id": "equipment_locker",
+      "name": "Equipment locker",
+      "state": [
+       "open",
+       "unlocked"
+      ],
+      "operations": [
+       "close",
+       "enter_code"
+      ]
+     },
+     {
+      "id": "pressure_gauge",
+      "name": "Pressure gauge"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     },
+     {
+      "id": "exterior",
+      "name": "Exterior loading dock"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 15,
+    "action_budget": 60,
+    "actions_remaining": 45,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "interact",
+     "error": null,
+     "message": "You open the equipment locker. Inside: the access card.",
+     "events": [
+      {
+       "type": "state_changed",
+       "object_id": "equipment_locker",
+       "state": "open"
+      },
+      {
+       "type": "object_revealed",
+       "object_id": "access_card"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "5d217ea94c33a3d807bc84b647c38986b166c6c948590243ccbd8b0c34768aef",
+   "chain_hash": "6cf2a929efb0e0aa224d46204f2c78026bf544eddda6fd3215eacab302feefba",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "interact",
+    "arguments": {
+     "target_id": "equipment_locker",
+     "operation": "open"
+    }
+   }
+  },
+  {
+   "seq": 16,
+   "action": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "access_card"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "take",
+    "error": null,
+    "message": "You take the access card.",
+    "events": [
+     {
+      "type": "item_taken",
+      "item_id": "access_card"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "security_vestibule",
+     "name": "Security vestibule",
+     "description": "A narrow chamber in front of the blast door. Everything here is bolted down and labelled."
+    },
+    "objects": [
+     {
+      "id": "exit_reader",
+      "name": "Exit reader"
+     },
+     {
+      "id": "equipment_locker",
+      "name": "Equipment locker",
+      "state": [
+       "open",
+       "unlocked"
+      ],
+      "operations": [
+       "close",
+       "enter_code"
+      ]
+     },
+     {
+      "id": "pressure_gauge",
+      "name": "Pressure gauge"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     },
+     {
+      "id": "exterior",
+      "name": "Exterior loading dock"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     },
+     {
+      "id": "access_card",
+      "name": "Access card"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 16,
+    "action_budget": 60,
+    "actions_remaining": 44,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "take",
+     "error": null,
+     "message": "You take the access card.",
+     "events": [
+      {
+       "type": "item_taken",
+       "item_id": "access_card"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "09746114e07219930fbfd4fdf1d99d7d78cb6d915a3ac59c74155479cbfb2f44",
+   "chain_hash": "2507ed52142e84896cbba22ce45d57bb18c65b6d4f4f349fb945e3f3be121d1c",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "take",
+    "arguments": {
+     "item_id": "access_card"
+    }
+   }
+  },
+  {
+   "seq": 17,
+   "action": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "access_card",
+     "target_id": "exit_reader"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "use",
+    "error": null,
+    "message": "The reader chirps green. With a groan, the blast door rolls up onto the loading dock.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "security_vestibule",
+     "name": "Security vestibule",
+     "description": "A narrow chamber in front of the blast door. Everything here is bolted down and labelled."
+    },
+    "objects": [
+     {
+      "id": "exit_reader",
+      "name": "Exit reader"
+     },
+     {
+      "id": "equipment_locker",
+      "name": "Equipment locker",
+      "state": [
+       "open",
+       "unlocked"
+      ],
+      "operations": [
+       "close",
+       "enter_code"
+      ]
+     },
+     {
+      "id": "pressure_gauge",
+      "name": "Pressure gauge"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     },
+     {
+      "id": "exterior",
+      "name": "Exterior loading dock"
+     }
+    ],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     },
+     {
+      "id": "access_card",
+      "name": "Access card"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 17,
+    "action_budget": 60,
+    "actions_remaining": 43,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "use",
+     "error": null,
+     "message": "The reader chirps green. With a groan, the blast door rolls up onto the loading dock.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "5aada65531a579bbf4fa450ad940d6d341133ec60d4ce8678344ffd13ecd537b",
+   "chain_hash": "532934ed5cf4f083d74815bd01045bfe0a49a0ece5fc05789694c71ef7bb8afd",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "use",
+    "arguments": {
+     "item_id": "access_card",
+     "target_id": "exit_reader"
+    }
+   }
+  },
+  {
+   "seq": 18,
+   "action": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "exterior"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "move",
+    "error": null,
+    "message": "You move to the exterior loading dock.",
+    "events": [
+     {
+      "type": "moved",
+      "location_id": "exterior"
+     },
+     {
+      "type": "escaped"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "exterior",
+     "name": "Exterior loading dock",
+     "description": "Cold night air and open sky. You are outside the station."
+    },
+    "objects": [],
+    "exits": [],
+    "inventory": [
+     {
+      "id": "screwdriver",
+      "name": "Screwdriver"
+     },
+     {
+      "id": "access_card",
+      "name": "Access card"
+     }
+    ],
+    "journal_entries": 3,
+    "actions_used": 18,
+    "action_budget": 60,
+    "actions_remaining": 42,
+    "status": "escaped",
+    "last_result": {
+     "ok": true,
+     "tool": "move",
+     "error": null,
+     "message": "You move to the exterior loading dock.",
+     "events": [
+      {
+       "type": "moved",
+       "location_id": "exterior"
+      },
+      {
+       "type": "escaped"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "2c07b5b87c4e2393e0b544eb05240021a9102ea9eb1530ae6b12113dc69e513e",
+   "chain_hash": "749b3c71407f05e9e4193fdf93be2eec2a60be9ccf80c86c41e16f0d6f3e7ef9",
+   "status": "escaped",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "move",
+    "arguments": {
+     "destination_id": "exterior"
+    }
+   }
+  }
+ ],
+ "outcome": "escaped",
+ "final_chain_hash": "749b3c71407f05e9e4193fdf93be2eec2a60be9ccf80c86c41e16f0d6f3e7ef9",
+ "started_at": null,
+ "finished_at": null,
+ "wall_time_ms": null,
+ "manifest_file": "golden-standard.manifest.json"
+}

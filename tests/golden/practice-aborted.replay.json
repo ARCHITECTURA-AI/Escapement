@@ -1,0 +1,509 @@
+{
+ "format": "escapement-replay/1",
+ "run_id": "golden-practice-mixed",
+ "engine_version": "1.0.0",
+ "protocol_version": "1",
+ "room": {
+  "room_id": "practice",
+  "title": "Emergency Lockdown · Practice",
+  "tier": "practice",
+  "family": "emergency_lockdown",
+  "template_version": "el-1.0",
+  "instance_hash": "2415cfbedd3f99222f8d7fcf4e5ebf27ca3249fdbb7f65e496ebebd82b43bc93",
+  "season": null,
+  "action_budget": 60
+ },
+ "mode": "local",
+ "agent": {
+  "name": "local",
+  "version": "0"
+ },
+ "self_reported": {
+  "note": "Agent name, model, framework, memory strategy, tokens, cost and decision summaries are reported by the client and not verified.",
+  "usage": {}
+ },
+ "initial_observation": {
+  "goal": "Escape to the exterior loading dock.",
+  "location": {
+   "id": "maintenance_bay",
+   "name": "Maintenance bay",
+   "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+  },
+  "objects": [
+   {
+    "id": "maintenance_panel",
+    "name": "Maintenance panel",
+    "state": [
+     "closed"
+    ],
+    "operations": [
+     "open"
+    ]
+   },
+   {
+    "id": "tool_cabinet",
+    "name": "Tool cabinet",
+    "state": [
+     "closed"
+    ],
+    "operations": [
+     "open"
+    ]
+   },
+   {
+    "id": "mop_bucket",
+    "name": "Mop bucket"
+   }
+  ],
+  "exits": [
+   {
+    "id": "control_room",
+    "name": "Control room"
+   }
+  ],
+  "inventory": [],
+  "journal_entries": 0,
+  "actions_used": 0,
+  "action_budget": 60,
+  "actions_remaining": 60,
+  "status": "in_progress",
+  "last_result": null
+ },
+ "chain_start": "cfc1ce4dd8ca572b2129fbbdb4e6a3905a1aae62976ef724b6678ee5ee319e26",
+ "steps": [
+  {
+   "seq": 1,
+   "action": {
+    "tool": "fly",
+    "malformed": true
+   },
+   "result": {
+    "ok": false,
+    "tool": "fly",
+    "error": "INVALID_ARGUMENT",
+    "message": "Unknown tool. Valid tools: inspect, take, use, interact, move, review_journal.",
+    "events": [],
+    "cost": 0,
+    "malformed": true
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 0,
+    "actions_used": 0,
+    "action_budget": 60,
+    "actions_remaining": 60,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "fly",
+     "error": "INVALID_ARGUMENT",
+     "message": "Unknown tool. Valid tools: inspect, take, use, interact, move, review_journal.",
+     "events": [],
+     "cost": 0,
+     "malformed": true
+    }
+   },
+   "state_hash": "aa185e7cdf9b776107ff7de00c0781ab05e1861440dad674fd7308786549363f",
+   "chain_hash": "8812798838067265a8e650f4914f32eb4efff2d7b0dc772399e30243d0e9265c",
+   "status": "in_progress",
+   "malformed": true,
+   "system": false,
+   "request": {
+    "tool": "fly"
+   }
+  },
+  {
+   "seq": 2,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "maintenance_panel"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": "inspect",
+    "error": null,
+    "message": "A grey breaker panel stencilled MAIN POWER. A status lamp blinks FUSE MISSING: slot F3 is empty. The cover is held by four screws.",
+    "events": [
+     {
+      "type": "clue_discovered",
+      "clue_id": "clue_37"
+     }
+    ],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 1,
+    "actions_used": 1,
+    "action_budget": 60,
+    "actions_remaining": 59,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "inspect",
+     "error": null,
+     "message": "A grey breaker panel stencilled MAIN POWER. A status lamp blinks FUSE MISSING: slot F3 is empty. The cover is held by four screws.",
+     "events": [
+      {
+       "type": "clue_discovered",
+       "clue_id": "clue_37"
+      }
+     ],
+     "cost": 1
+    }
+   },
+   "state_hash": "54ded6e000bb9e611790f473f37b9102d30e6a6de06a2619e2f7535e222f4a6a",
+   "chain_hash": "b202d679e07256da58cf33c32fc46b19958542a0f215f6a7bdbe19aa5213ff32",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "maintenance_panel"
+    }
+   }
+  },
+  {
+   "seq": 3,
+   "action": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "nope"
+    }
+   },
+   "result": {
+    "ok": false,
+    "tool": "inspect",
+    "error": "UNKNOWN_TARGET",
+    "message": "You don't know of anything called 'nope'.",
+    "events": [],
+    "cost": 1
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 1,
+    "actions_used": 2,
+    "action_budget": 60,
+    "actions_remaining": 58,
+    "status": "in_progress",
+    "last_result": {
+     "ok": false,
+     "tool": "inspect",
+     "error": "UNKNOWN_TARGET",
+     "message": "You don't know of anything called 'nope'.",
+     "events": [],
+     "cost": 1
+    }
+   },
+   "state_hash": "2e065518b7e33359e973fcc36a109fc2769c00c68f8d295e64efeaa5532a5b43",
+   "chain_hash": "afa7aaa2e877b48fc24f1d3424ac4a44d830ad03fe9cd5f2fa82fa7a6bcbf708",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "inspect",
+    "arguments": {
+     "target_id": "nope"
+    }
+   }
+  },
+  {
+   "seq": 4,
+   "action": {
+    "tool": "review_journal",
+    "arguments": {}
+   },
+   "result": {
+    "ok": true,
+    "tool": "review_journal",
+    "error": null,
+    "message": "Journal: 1 entry.",
+    "events": [],
+    "cost": 1,
+    "data": {
+     "clues": [
+      {
+       "id": "clue_37",
+       "text": "Maintenance panel: fuse slot F3 is empty, so main power is out. The cover is held by four screws."
+      }
+     ]
+    }
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 1,
+    "actions_used": 3,
+    "action_budget": 60,
+    "actions_remaining": 57,
+    "status": "in_progress",
+    "last_result": {
+     "ok": true,
+     "tool": "review_journal",
+     "error": null,
+     "message": "Journal: 1 entry.",
+     "events": [],
+     "cost": 1,
+     "data": {
+      "clues": [
+       {
+        "id": "clue_37",
+        "text": "Maintenance panel: fuse slot F3 is empty, so main power is out. The cover is held by four screws."
+       }
+      ]
+     }
+    }
+   },
+   "state_hash": "908489d7a2988a248f169931a606467d8c313a24f05bcb3592660d6e6547548a",
+   "chain_hash": "3882a5d3da61662000d6cd2a3fed326c053d4e3a67d359d2bc0dd1d94925d185",
+   "status": "in_progress",
+   "malformed": false,
+   "system": false,
+   "request": {
+    "tool": "review_journal"
+   }
+  },
+  {
+   "seq": 5,
+   "action": {
+    "tool": "system.end",
+    "arguments": {
+     "ending": "client_aborted"
+    }
+   },
+   "result": {
+    "ok": true,
+    "tool": null,
+    "error": null,
+    "message": "Run ended: client aborted.",
+    "events": [],
+    "cost": 0
+   },
+   "observation": {
+    "goal": "Escape to the exterior loading dock.",
+    "location": {
+     "id": "maintenance_bay",
+     "name": "Maintenance bay",
+     "description": "A cramped bay of pipes and cable trays. Amber emergency strips give just enough light to work by."
+    },
+    "objects": [
+     {
+      "id": "maintenance_panel",
+      "name": "Maintenance panel",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "tool_cabinet",
+      "name": "Tool cabinet",
+      "state": [
+       "closed"
+      ],
+      "operations": [
+       "open"
+      ]
+     },
+     {
+      "id": "mop_bucket",
+      "name": "Mop bucket"
+     }
+    ],
+    "exits": [
+     {
+      "id": "control_room",
+      "name": "Control room"
+     }
+    ],
+    "inventory": [],
+    "journal_entries": 1,
+    "actions_used": 3,
+    "action_budget": 60,
+    "actions_remaining": 57,
+    "status": "client_aborted",
+    "last_result": {
+     "ok": true,
+     "tool": null,
+     "error": null,
+     "message": "Run ended: client aborted.",
+     "events": [],
+     "cost": 0
+    }
+   },
+   "state_hash": "072070f20e57aa32a78be2563b0f042a4d60f96c64f8cf1b62509a4fda99afa2",
+   "chain_hash": "f829d70a4367d80b43fba208a674649a4ac0f15fedf56efd436b10d00f864cfc",
+   "status": "client_aborted",
+   "malformed": false,
+   "system": true,
+   "request": {
+    "tool": "system.end",
+    "arguments": {
+     "ending": "client_aborted"
+    }
+   }
+  }
+ ],
+ "outcome": "client_aborted",
+ "final_chain_hash": "f829d70a4367d80b43fba208a674649a4ac0f15fedf56efd436b10d00f864cfc",
+ "started_at": null,
+ "finished_at": null,
+ "wall_time_ms": null,
+ "manifest_file": "practice.manifest.json"
+}

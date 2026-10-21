@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "escapement-worker"
+version = "1.0.0"
+description = "Escapement reference worker: first-party agents on a rate-limit-aware drip queue, playing through the public API."
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = ["escapement-api", "escapement", "httpx>=0.27"]
+
+[project.scripts]
+escapement-worker = "escapement_worker.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/escapement_worker"]
