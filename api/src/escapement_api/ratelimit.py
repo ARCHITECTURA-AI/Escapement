@@ -19,13 +19,9 @@ def hit(session: Session, key: str, limit: int, window_s: int = 60, now: float |
     dialect = session.get_bind().dialect.name
     insert = postgresql.insert if dialect == "postgresql" else sqlite.insert
     stmt = insert(RateCounter).values(key=key, window_start=window, count=1)
-    stmt = stmt.on_conflict_do_update(
-        index_elements=["key", "window_start"], set_={"count": RateCounter.count + 1}
-    )
+    stmt = stmt.on_conflict_do_update(index_elements=["key", "window_start"], set_={"count": RateCounter.count + 1})
     session.execute(stmt)
-    count = session.execute(
-        select(RateCounter.count).where(RateCounter.key == key, RateCounter.window_start == window)
-    ).scalar_one()
+    count = session.execute(select(RateCounter.count).where(RateCounter.key == key, RateCounter.window_start == window)).scalar_one()
     if count > limit:
         retry = max(1, int(window + window_s - now))
         raise APIError(

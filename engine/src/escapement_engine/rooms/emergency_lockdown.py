@@ -202,18 +202,11 @@ def build(tier: str, seed: str, room_id: str, attempt: int = 0) -> tuple[RoomMan
         exits[b].append(ExitDef(to=a, requires=req))
         plan.graph.setdefault(a, []).append(b)
         plan.graph.setdefault(b, []).append(a)
-    exits["security_vestibule"].append(
-        ExitDef(to="exterior", requires=[_flag("exit_open", True, "The blast door is sealed.")])
-    )
+    exits["security_vestibule"].append(ExitDef(to="exterior", requires=[_flag("exit_open", True, "The blast door is sealed.")]))
     plan.graph.setdefault("security_vestibule", []).append("exterior")
 
-    locations = [
-        LocationDef(id=loc, name=LOCATION_TEXT[loc][0], description=LOCATION_TEXT[loc][1], exits=exits[loc])
-        for loc in loc_ids
-    ]
-    locations.append(
-        LocationDef(id="exterior", name=LOCATION_TEXT["exterior"][0], description=LOCATION_TEXT["exterior"][1], terminal=True)
-    )
+    locations = [LocationDef(id=loc, name=LOCATION_TEXT[loc][0], description=LOCATION_TEXT[loc][1], exits=exits[loc]) for loc in loc_ids]
+    locations.append(LocationDef(id="exterior", name=LOCATION_TEXT["exterior"][0], description=LOCATION_TEXT["exterior"][1], terminal=True))
 
     # -- clue ids: stable public ids, shuffled so they reveal no ordering ----
     clue_numbers = rng.sample(list(range(10, 100)), 6)
@@ -270,7 +263,11 @@ def build(tier: str, seed: str, room_id: str, attempt: int = 0) -> tuple[RoomMan
     objects: list[ObjectDef] = []
     rules: list[Rule] = []
     clues: list[ClueDef] = [
-        ClueDef(id=c_panel, text="Maintenance panel: fuse slot F3 is empty, so main power is out. The cover is held by four screws.", refers_to=["maintenance_panel"]),
+        ClueDef(
+            id=c_panel,
+            text="Maintenance panel: fuse slot F3 is empty, so main power is out. The cover is held by four screws.",
+            refers_to=["maintenance_panel"],
+        ),
         ClueDef(id=c_label, text=f"Operations note: 'Equipment locker label: {spaced}.'", refers_to=["equipment_locker"]),
         ClueDef(id=c_instr, text=f"Terminal bulletin: '{instruction}'", refers_to=["equipment_locker"]),
     ]
@@ -318,7 +315,13 @@ def build(tier: str, seed: str, room_id: str, attempt: int = 0) -> tuple[RoomMan
         )
     )
     objects.append(
-        ObjectDef(id="screwdriver", name="Screwdriver", description="A flat-head screwdriver with a rubber grip.", location="tool_cabinet", portable=True)
+        ObjectDef(
+            id="screwdriver",
+            name="Screwdriver",
+            description="A flat-head screwdriver with a rubber grip.",
+            location="tool_cabinet",
+            portable=True,
+        )
     )
     plan.where["tool_cabinet"] = cabinet_loc
     plan.container_of["screwdriver"] = "tool_cabinet"
@@ -356,7 +359,13 @@ def build(tier: str, seed: str, room_id: str, attempt: int = 0) -> tuple[RoomMan
             )
         )
         objects.append(
-            ObjectDef(id="replacement_fuse", name="Replacement fuse", description="A ceramic cartridge fuse marked F3, 30A.", location=drawer_id, portable=True)
+            ObjectDef(
+                id="replacement_fuse",
+                name="Replacement fuse",
+                description="A ceramic cartridge fuse marked F3, 30A.",
+                location=drawer_id,
+                portable=True,
+            )
         )
         plan.where[drawer_id] = fuse_loc
         plan.container_of["replacement_fuse"] = drawer_id
@@ -638,7 +647,10 @@ def build(tier: str, seed: str, room_id: str, attempt: int = 0) -> tuple[RoomMan
             requires=code_inputs,
             hints=[
                 "The bulletin mentions a locker label. Printed paperwork is worth reading." + offset_hint,
-                "Inspect the operations note" + (", the duty roster" if params.depth >= 2 else "") + (" and the calibration chart" if params.depth >= 3 else "") + ".",
+                "Inspect the operations note"
+                + (", the duty roster" if params.depth >= 2 else "")
+                + (" and the calibration chart" if params.depth >= 3 else "")
+                + ".",
             ],
         ),
         Milestone(
@@ -699,12 +711,12 @@ def _path(graph: dict[str, list[str]], src: str, dst: str) -> list[str]:
     prev: dict[str, str | None] = {src: None}
     queue = deque([src])
     while queue:
-        node = queue.popleft()
-        if node == dst:
+        here = queue.popleft()
+        if here == dst:
             break
-        for nxt in graph.get(node, []):
+        for nxt in graph.get(here, []):
             if nxt not in prev:
-                prev[nxt] = node
+                prev[nxt] = here
                 queue.append(nxt)
     out = []
     node: str | None = dst

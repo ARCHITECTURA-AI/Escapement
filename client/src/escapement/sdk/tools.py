@@ -40,7 +40,9 @@ def describe_observation(obs: dict[str, Any]) -> str:
         lines.append("You see: " + "; ".join(parts))
     lines.append("Exits: " + (", ".join(f"{e['name']} [{e['id']}]" for e in obs.get("exits", [])) or "none"))
     lines.append("Carrying: " + (", ".join(f"{i['name']} [{i['id']}]" for i in obs.get("inventory", [])) or "nothing"))
-    lines.append(f"Journal entries: {obs.get('journal_entries', 0)}. Actions: {obs['actions_used']}/{obs['action_budget']} used. Status: {obs['status']}.")
+    lines.append(
+        f"Journal entries: {obs.get('journal_entries', 0)}. Actions: {obs['actions_used']}/{obs['action_budget']} used. Status: {obs['status']}."
+    )
     last = obs.get("last_result")
     if last:
         tag = "OK" if last.get("ok") else last.get("error")

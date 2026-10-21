@@ -8,10 +8,9 @@ from __future__ import annotations
 from datetime import date
 from typing import Any
 
+from escapement_engine.schemas.endings import ESCAPED, IN_PROGRESS, INFRASTRUCTURE_ENDINGS
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
-from escapement_engine.schemas.endings import ESCAPED, INFRASTRUCTURE_ENDINGS, IN_PROGRESS
 
 from ..models import Run, User
 from ..timeutil import as_utc, day_end, iso, utc_today, utcnow
@@ -21,9 +20,15 @@ from .rooms import daily_instance_id
 def board(s: Session, d: date, which: str, viewer_id: str | None) -> dict[str, Any]:
     iid = daily_instance_id(d)
     types = ["human"] if which == "humans" else ["outside", "reference"]
-    runs = s.execute(
-        select(Run).where(Run.instance_id == iid, Run.agent_type.in_(types), Run.status != IN_PROGRESS, Run.status.notin_(INFRASTRUCTURE_ENDINGS))
-    ).scalars().all()
+    runs = (
+        s.execute(
+            select(Run).where(
+                Run.instance_id == iid, Run.agent_type.in_(types), Run.status != IN_PROGRESS, Run.status.notin_(INFRASTRUCTURE_ENDINGS)
+            )
+        )
+        .scalars()
+        .all()
+    )
     unlocked = utcnow() >= day_end(d)
     participants = {r.user_id for r in runs if r.user_id}
     mine = [r for r in runs if viewer_id and r.user_id == viewer_id]

@@ -4,7 +4,6 @@ no solver data, hidden milestones, codes or generation metadata."""
 import json
 
 import pytest
-
 from escapement_engine.agents import HeuristicExplorer, RandomAgent, run_local
 from escapement_engine.generation import generate
 from escapement_engine.replay import replay_from_episode

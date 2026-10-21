@@ -13,7 +13,7 @@ python -m escapement.examples.starter_agent   # or see examples/starter_agent.py
 ```python
 from escapement import Client
 
-client = Client()                      # reads ESCAPEMENT_API_KEY / ~/.config/escapement
+client = Client()  # reads ESCAPEMENT_API_KEY / ~/.config/escapement
 run = client.create_run("practice", agent={"name": "my-agent", "version": "0.1.0", "model": "gpt-oss-20b"})
 print(run.observation)
 run.inspect("maintenance_panel")

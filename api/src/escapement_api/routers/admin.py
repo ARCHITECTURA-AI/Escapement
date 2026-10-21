@@ -8,17 +8,15 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
-from fastapi import APIRouter, Depends, Query, Request
-from sqlalchemy import func, select
-
 from escapement_engine.generation import GenerationError, generate, load_manifest, manifest_json
 from escapement_engine.validation import validate
+from fastapi import APIRouter, Depends, Query, Request
+from sqlalchemy import func, select
 
 from ..deps import ctx
 from ..errors import APIError, not_found
 from ..models import Certificate, Job, ModerationReport, RoomInstance, Run, SealedManifest, Season, Setting, User
 from ..services import jobs as job_service
-from ..services.certs import tombstone
 from ..services.rooms import store_instance
 from ..timeutil import iso, utcnow
 
@@ -43,7 +41,9 @@ def overview(request: Request) -> dict[str, Any]:
             "instances": dict(s.execute(select(RoomInstance.kind, func.count()).group_by(RoomInstance.kind)).all()),
             "jobs": jobs,
             "kill_switch": c.runs.kill_switch_on(s),
-            "open_reports": s.execute(select(func.count()).select_from(ModerationReport).where(ModerationReport.resolved_at.is_(None))).scalar_one(),
+            "open_reports": s.execute(
+                select(func.count()).select_from(ModerationReport).where(ModerationReport.resolved_at.is_(None))
+            ).scalar_one(),
         }
 
 
@@ -92,9 +92,17 @@ def instances(request: Request, kind: str | None = None) -> dict[str, Any]:
         return {
             "instances": [
                 {
-                    "id": i.id, "kind": i.kind, "tier": i.tier, "title": i.title, "season_id": i.season_id,
-                    "instance_hash": i.instance_hash, "optimality": i.optimality, "min_length": m.min_length,
-                    "validation": m.validation, "created_at": iso(i.created_at), "manifest_public": i.manifest_public,
+                    "id": i.id,
+                    "kind": i.kind,
+                    "tier": i.tier,
+                    "title": i.title,
+                    "season_id": i.season_id,
+                    "instance_hash": i.instance_hash,
+                    "optimality": i.optimality,
+                    "min_length": m.min_length,
+                    "validation": m.validation,
+                    "created_at": iso(i.created_at),
+                    "manifest_public": i.manifest_public,
                 }
                 for i, m in rows
             ]
@@ -107,7 +115,13 @@ def instance_manifest(instance_id: str, request: Request) -> dict[str, Any]:
         m = s.get(SealedManifest, instance_id)
         if m is None:
             raise not_found()
-        return {"manifest": m.manifest, "solution": m.solution, "seed": m.seed, "validation": m.validation, "json": manifest_json(load_manifest(m.manifest))}
+        return {
+            "manifest": m.manifest,
+            "solution": m.solution,
+            "seed": m.seed,
+            "validation": m.validation,
+            "json": manifest_json(load_manifest(m.manifest)),
+        }
 
 
 @router.get("/jobs")
@@ -160,9 +174,15 @@ async def create_season(request: Request) -> dict[str, Any]:
         if s.get(Season, sid) is not None:
             raise APIError(409, "EXISTS", "That season already exists.")
         job = job_service.enqueue(
-            s, "generate_season",
-            {"season_id": sid, "name": body.get("name") or f"Season {sid.upper()}", "starts_at": starts_at.isoformat(),
-             "weeks": body.get("weeks"), "instances": body.get("instances")},
+            s,
+            "generate_season",
+            {
+                "season_id": sid,
+                "name": body.get("name") or f"Season {sid.upper()}",
+                "starts_at": starts_at.isoformat(),
+                "weeks": body.get("weeks"),
+                "instances": body.get("instances"),
+            },
             priority=10,
         )
         return {"job": job_service.job_public(job)}
@@ -212,4 +232,16 @@ async def kill_switch(request: Request) -> dict[str, Any]:
 def reports(request: Request) -> dict[str, Any]:
     with ctx(request).db.service_session() as s:
         rows = s.execute(select(ModerationReport).order_by(ModerationReport.created_at.desc()).limit(200)).scalars().all()
-        return {"reports": [{"id": r.id, "target_type": r.target_type, "target_id": r.target_id, "reason": r.reason, "created_at": iso(r.created_at), "resolved_at": iso(r.resolved_at)} for r in rows]}
+        return {
+            "reports": [
+                {
+                    "id": r.id,
+                    "target_type": r.target_type,
+                    "target_id": r.target_id,
+                    "reason": r.reason,
+                    "created_at": iso(r.created_at),
+                    "resolved_at": iso(r.resolved_at),
+                }
+                for r in rows
+            ]
+        }

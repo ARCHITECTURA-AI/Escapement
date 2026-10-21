@@ -17,9 +17,10 @@ Everything is deterministic: the bootstrap uses a fixed seeded stream.
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from statistics import median
-from typing import Any, Iterable
+from typing import Any
 
 from .rng import SeededRandom
 

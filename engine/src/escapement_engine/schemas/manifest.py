@@ -56,7 +56,7 @@ class Cond(_Strict):
     fail_message: str = "Nothing happens."
 
     @model_validator(mode="after")
-    def _fields(self) -> "Cond":
+    def _fields(self) -> Cond:
         need = {
             "flag": ("name",),
             "state": ("obj", "key"),
@@ -80,7 +80,7 @@ class Effect(_Strict):
     clue: str | None = None
 
     @model_validator(mode="after")
-    def _fields(self) -> "Effect":
+    def _fields(self) -> Effect:
         need = {
             "set_flag": ("name",),
             "set_state": ("obj", "key"),

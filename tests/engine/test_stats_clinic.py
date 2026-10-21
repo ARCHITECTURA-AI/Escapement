@@ -45,7 +45,7 @@ def test_trace_clinic_labels_are_heuristic(practice, practice_solution):
     assert out["findings"]
     assert all(f["heuristic"] for f in out["findings"])
     kinds = {f["kind"] for f in out["findings"]}
-    assert "first_invalid_action" in kinds and "never_inspected" in kinds or "no_progress_repeat" in kinds
+    assert ("first_invalid_action" in kinds and "never_inspected" in kinds) or "no_progress_repeat" in kinds
     public_only = analyze(replay)
     assert not any(f["kind"] == "first_milestone" for f in public_only["findings"])
     assert public_only["milestones"] is None

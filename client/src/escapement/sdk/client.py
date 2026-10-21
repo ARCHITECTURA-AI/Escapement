@@ -44,7 +44,16 @@ class Client:
 
     # -- low level ---------------------------------------------------------
 
-    def request(self, method: str, path: str, *, token: str | None = None, json: Any = None, params: dict[str, Any] | None = None, retry: bool = True) -> Any:
+    def request(
+        self,
+        method: str,
+        path: str,
+        *,
+        token: str | None = None,
+        json: Any = None,
+        params: dict[str, Any] | None = None,
+        retry: bool = True,
+    ) -> Any:
         headers = {}
         bearer = token or self.api_key
         if bearer:
@@ -83,7 +92,7 @@ class Client:
     def close(self) -> None:
         self._http.close()
 
-    def __enter__(self) -> "Client":
+    def __enter__(self) -> Client:
         return self
 
     def __exit__(self, *exc: Any) -> None:
@@ -98,7 +107,7 @@ class Client:
         agent_version_id: str | None = None,
         replace_active: bool = False,
         **extra: Any,
-    ) -> "Run":
+    ) -> Run:
         """Start a run. `agent` declares name, version and, self-reported,
         model, framework and memory strategy."""
         body: dict[str, Any] = {"room": room, "replace_active": replace_active, **extra}
@@ -109,7 +118,7 @@ class Client:
         data = self.request("POST", "/api/v1/runs", json=body)
         return Run(self, data)
 
-    def resume_run(self, run_id: str, run_token: str) -> "Run":
+    def resume_run(self, run_id: str, run_token: str) -> Run:
         """Reattach after a dropped connection with the same run token."""
         data = self.request("GET", f"/api/v1/runs/{run_id}/observation", token=run_token)
         data["run_token"] = run_token

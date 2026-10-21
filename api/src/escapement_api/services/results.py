@@ -13,12 +13,11 @@ from datetime import timedelta
 from statistics import median
 from typing import Any
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session
-
-from escapement_engine.schemas.endings import ENDINGS, ESCAPED, INFRASTRUCTURE_ENDINGS, IN_PROGRESS
+from escapement_engine.schemas.endings import ENDINGS, ESCAPED, IN_PROGRESS, INFRASTRUCTURE_ENDINGS
 from escapement_engine.stats import floor_pct, interval_text, rank_bands, summarize
 from escapement_engine.version import ENGINE_VERSION
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from ..models import AgentVersion, RoomInstance, Run, Season, User
 from ..timeutil import as_utc, iso, utcnow
@@ -38,8 +37,8 @@ def _group(runs: list[tuple[Run, RoomInstance]]) -> dict[str, list[tuple[bool, i
 
 
 def _cost(runs: list[Run]) -> dict[str, Any]:
-    costs = [r.usage.get("cost_usd_micros") for r in runs if r.usage and r.usage.get("cost_usd_micros") is not None]
-    tokens = [
+    costs: list[int] = [int(r.usage["cost_usd_micros"]) for r in runs if r.usage and r.usage.get("cost_usd_micros") is not None]
+    tokens: list[int] = [
         (r.usage.get("tokens_in") or 0) + (r.usage.get("tokens_out") or 0)
         for r in runs
         if r.usage and (r.usage.get("tokens_in") is not None or r.usage.get("tokens_out") is not None)
@@ -62,7 +61,9 @@ def endings_breakdown(runs: list[Run]) -> dict[str, int]:
 
 def version_results(s: Session, version: AgentVersion) -> dict[str, Any]:
     rows = s.execute(
-        _finished(select(Run, RoomInstance).join(RoomInstance, RoomInstance.id == Run.instance_id).where(Run.agent_version_id == version.id))
+        _finished(
+            select(Run, RoomInstance).join(RoomInstance, RoomInstance.id == Run.instance_id).where(Run.agent_version_id == version.id)
+        )
     ).all()
     buckets: dict[tuple[str, str | None, str], list[tuple[Run, RoomInstance]]] = defaultdict(list)
     for run, inst in rows:
@@ -120,7 +121,7 @@ def leaderboard(s: Session, season: Season, tier: str, viewer_id: str | None = N
             per_version[run.agent_version_id].append((run, inst))
     versions = {v.id: v for v in s.execute(select(AgentVersion).where(AgentVersion.id.in_(list(per_version)))).scalars()}
     users = {u.id: u for u in s.execute(select(User).where(User.id.in_([v.user_id for v in versions.values()]))).scalars()}
-    out_rows = []
+    out_rows: list[dict[str, Any]] = []
     for vid, items in per_version.items():
         v = versions.get(vid)
         if v is None:
@@ -128,7 +129,7 @@ def leaderboard(s: Session, season: Season, tier: str, viewer_id: str | None = N
         owner = users.get(v.user_id)
         summary = summarize(_group(items))
         visible = bool(owner and (owner.profile_public or owner.is_system or owner.id == viewer_id) and owner.deleted_at is None)
-        last = max(as_utc(r.finished_at) for r, _ in items if r.finished_at)  # type: ignore[type-var]
+        last = max(as_utc(r.finished_at or r.started_at) for r, _ in items)
         engine_versions = {r.engine_version for r, _ in items}
         out_rows.append(
             {
@@ -139,7 +140,7 @@ def leaderboard(s: Session, season: Season, tier: str, viewer_id: str | None = N
                 "reference": v.agent_type == "reference",
                 "model": v.declared_model if visible else None,
                 "provider": v.provider if v.agent_type == "reference" else None,
-                "model_label": "verified (first-party run)" if v.agent_type == "reference" else "self-reported",
+                "model_label": "verified, first-party run" if v.agent_type == "reference" else "self-reported",
                 "framework": v.framework if visible else None,
                 "memory": v.memory_strategy if visible else None,
                 "summary": summary.to_dict(),
@@ -210,7 +211,7 @@ def resume_bullet(s: Session, version: AgentVersion, settings) -> dict[str, Any]
                 "tier": best[1] if best else None,
             },
         }
-    season_id, tier, grouped, eligible, items = max(ok, key=lambda c: (sum(len(v) for v in c[3].values())))
+    season_id, tier, grouped, eligible, items = max(ok, key=lambda c: sum(len(v) for v in c[3].values()))
     summary = summarize(eligible)
     season = s.get(Season, season_id) if season_id else None
     season_name = season.name if season else "an Escapement season"
@@ -244,9 +245,7 @@ def resume_bullet(s: Session, version: AgentVersion, settings) -> dict[str, Any]
 
 
 def profile(s: Session, user: User, viewer_id: str | None) -> dict[str, Any]:
-    versions = s.execute(
-        select(AgentVersion).where(AgentVersion.user_id == user.id).order_by(AgentVersion.created_at)
-    ).scalars().all()
+    versions = s.execute(select(AgentVersion).where(AgentVersion.user_id == user.id).order_by(AgentVersion.created_at)).scalars().all()
     out_versions = [version_results(s, v) for v in versions]
     timeline = []
     for vr in out_versions:
@@ -268,7 +267,11 @@ def profile(s: Session, user: User, viewer_id: str | None) -> dict[str, Any]:
             }
         )
     human_runs = s.execute(
-        _finished(select(Run, RoomInstance).join(RoomInstance, RoomInstance.id == Run.instance_id).where(Run.user_id == user.id, Run.agent_type == "human"))
+        _finished(
+            select(Run, RoomInstance)
+            .join(RoomInstance, RoomInstance.id == Run.instance_id)
+            .where(Run.user_id == user.id, Run.agent_type == "human")
+        )
     ).all()
     return {
         "user": {

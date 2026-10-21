@@ -1,5 +1,4 @@
 import pytest
-
 from escapement_engine.canonical import CanonicalError, canonical_json, hash_value
 from escapement_engine.rng import SeededRandom
 

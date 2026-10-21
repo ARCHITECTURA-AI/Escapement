@@ -56,7 +56,10 @@ class S3Store:  # pragma: no cover - needs a bucket
         data = json.dumps(replay, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
         key = f"{self.prefix}{run_id}.json"
         self.client.put_object(
-            Bucket=self.bucket, Key=key, Body=data, ContentType="application/json",
+            Bucket=self.bucket,
+            Key=key,
+            Body=data,
+            ContentType="application/json",
             Metadata={"sha256": sha256_hex(data)},
         )
         return key

@@ -3,16 +3,15 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from fastapi import APIRouter, Depends, Query, Request, Response
-from sqlalchemy import select
-
 from escapement_engine.clinic import analyze, private_context
 from escapement_engine.generation import load_manifest
 from escapement_engine.schemas.endings import ENDING_LABELS, IN_PROGRESS
+from fastapi import APIRouter, Depends, Query, Request, Response
+from sqlalchemy import select
 
 from ..deps import Principal, client_fingerprint, ctx, principal, require_user
 from ..errors import APIError, forbidden, not_found
-from ..models import HintEvent, PublishedManifest, RoomInstance, Run, RunState, Transition
+from ..models import HintEvent, PublishedManifest, RoomInstance, Run, RunState
 from ..security import matches
 from ..services.rooms import load_room
 from ..services.runs import build_run_replay
@@ -46,7 +45,11 @@ async def create_run(request: Request, p: Principal = Depends(principal)) -> dic
     body = await json_body(request)
     if not isinstance(body, dict):
         raise APIError(422, "INVALID_REQUEST", "The body must be a JSON object.")
-    via = "web" if request.headers.get("x-escapement-client") == "web" else ("mcp" if request.headers.get("x-escapement-client") == "mcp" else "api")
+    via = (
+        "web"
+        if request.headers.get("x-escapement-client") == "web"
+        else ("mcp" if request.headers.get("x-escapement-client") == "mcp" else "api")
+    )
     if p.is_system:
         via = "worker"
     return ctx(request).runs.create(p, body, client_fingerprint(request), via)
@@ -137,7 +140,9 @@ def get_run(run_id: str, request: Request) -> dict[str, Any]:
 
 
 @router.get("/runs/{run_id}/replay")
-def get_replay(run_id: str, request: Request, response: Response, after_seq: int = Query(0, ge=0), download: bool = False) -> dict[str, Any]:
+def get_replay(
+    run_id: str, request: Request, response: Response, after_seq: int = Query(0, ge=0), download: bool = False
+) -> dict[str, Any]:
     """Replay, subject to the embargo rules (21.4, AC-12). Ranked replays are
     visible only to their owner until the season closes."""
     c = ctx(request)
@@ -156,15 +161,16 @@ def get_replay(run_id: str, request: Request, response: Response, after_seq: int
                 {"embargo_until": summary["embargo_until"]},
             )
         if after_seq:
-            replay = build_run_replay(s, run)
-            return {"run": summary, "steps": [st for st in replay["steps"] if st["seq"] > after_seq], "status": run.status}
-        replay = None
+            partial = build_run_replay(s, run)
+            return {"run": summary, "steps": [st for st in partial["steps"] if st["seq"] > after_seq], "status": run.status}
+        replay: dict[str, Any] | None = None
         if run.replay_key and run.status != IN_PROGRESS:
             replay = c.store.get(run.replay_key)
         if replay is None:
             replay = build_run_replay(s, run)
         if download:
-            response.headers["Content-Disposition"] = f'attachment; filename="escapement-{run.id}.replay.json"'
+            response.headers["Content-Disposition"] = f'attachment; filename="{run.id}.replay.json"'
+            return replay
         return {"run": summary, "replay": replay}
 
 
@@ -224,9 +230,7 @@ async def get_hint(run_id: str, request: Request) -> dict[str, Any]:
         target = next((m for m in room.manifest.milestones if m.id not in reached and m.hints), None)
         if target is None:
             raise APIError(409, "NO_HINT", "There is nothing left to hint at.")
-        given = s.execute(
-            select(HintEvent).where(HintEvent.run_id == run.id, HintEvent.milestone_id == target.id)
-        ).scalars().all()
+        given = s.execute(select(HintEvent).where(HintEvent.run_id == run.id, HintEvent.milestone_id == target.id)).scalars().all()
         level = min(len(given) + 1, len(target.hints))
         s.add(HintEvent(run_id=run.id, user_id=run.user_id, milestone_id=target.id, level=level, at_seq=run.seq))
         run.assisted = True
@@ -263,12 +267,16 @@ def get_solution(run_id: str, request: Request) -> dict[str, Any]:
             "optimality": pm.optimality,
             "optimality_label": "Proven minimum (breadth-first search)" if pm.optimality == "proven" else "Best verified solution",
             "milestones": [{"id": m.id, "label": m.label} for m in manifest.milestones],
-            "path_efficiency": (pm.min_length / run.actions_used) if pm.optimality == "proven" and run.status == "escaped" and run.actions_used else None,
+            "path_efficiency": (pm.min_length / run.actions_used)
+            if pm.optimality == "proven" and run.status == "escaped" and run.actions_used
+            else None,
         }
 
 
 @router.get("/runs")
-def list_my_runs(request: Request, p: Principal = Depends(require_user), limit: int = Query(50, le=200), offset: int = 0, mode: str | None = None) -> dict[str, Any]:
+def list_my_runs(
+    request: Request, p: Principal = Depends(require_user), limit: int = Query(50, le=200), offset: int = 0, mode: str | None = None
+) -> dict[str, Any]:
     with ctx(request).db.api_session(p.user_id) as s:
         q = select(Run, RoomInstance).join(RoomInstance, RoomInstance.id == Run.instance_id).where(Run.user_id == p.user_id)
         if mode:

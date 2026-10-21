@@ -45,10 +45,14 @@ async def api_error_handler(_: Request, exc: APIError) -> JSONResponse:
 
 
 async def validation_error_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
-    errors = [
-        {"loc": [str(p) for p in e.get("loc", [])], "msg": e.get("msg", "")} for e in exc.errors()
-    ]
+    errors = [{"loc": [str(p) for p in e.get("loc", [])], "msg": e.get("msg", "")} for e in exc.errors()]
     return JSONResponse(
-        {"error": {"code": "INVALID_REQUEST", "message": "The request body does not match the endpoint schema.", "details": {"errors": errors}}},
+        {
+            "error": {
+                "code": "INVALID_REQUEST",
+                "message": "The request body does not match the endpoint schema.",
+                "details": {"errors": errors},
+            }
+        },
         status_code=422,
     )

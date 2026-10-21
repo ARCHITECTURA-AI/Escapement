@@ -26,7 +26,7 @@ from ..core.episode import Episode
 from ..core.world import CompiledRoom, goal_reached, initial_state
 from ..rng import SeededRandom
 from ..rooms.emergency_lockdown import apply_transforms
-from ..schemas.actions import ID_RE, CODE_RE
+from ..schemas.actions import CODE_RE, ID_RE
 from ..schemas.manifest import GONE, INVENTORY, RoomManifest
 from ..version import ENGINE_VERSION
 from .solver import SolveResult, solve
@@ -235,7 +235,9 @@ def validate(manifest: RoomManifest, intended: list[dict[str, Any]] | None = Non
             replay_ok = False
             details.append(f"{label} ended {ep.status}")
         replays[label] = ep
-    report.add("replay", "Solution replay in the real engine", replay_ok, "; ".join(details) or f"solver path {len(result.solution)} actions")
+    report.add(
+        "replay", "Solution replay in the real engine", replay_ok, "; ".join(details) or f"solver path {len(result.solution)} actions"
+    )
 
     # 5. budget feasibility with margin
     limit = int(m.budget.actions * BUDGET_MARGIN)
@@ -260,15 +262,19 @@ def validate(manifest: RoomManifest, intended: list[dict[str, Any]] | None = Non
         for t in d.transforms:
             if t.op == "add_mod10" and f"+{t.k}" not in " ".join(texts.get(c, "") for c in d.offset_clues):
                 clue_problems.append(f"{o.id}: offset absent from clues")
-        ep = replays.get("solver")
-        if ep is not None:
+        solver_ep = replays.get("solver")
+        if solver_ep is not None:
             needed = [d.base_clue, d.instruction_clue, *d.offset_clues]
             entered_at = next(
-                (r.seq for r in ep.records if r.action.get("arguments", {}).get("operation") == "enter_code" and r.action["arguments"]["target_id"] == o.id),
+                (
+                    r.seq
+                    for r in solver_ep.records
+                    if r.action.get("arguments", {}).get("operation") == "enter_code" and r.action["arguments"]["target_id"] == o.id
+                ),
                 None,
             )
             found_before = set()
-            for r in ep.records:
+            for r in solver_ep.records:
                 if entered_at is not None and r.seq >= entered_at:
                     break
                 for ev in r.result["events"]:
@@ -282,9 +288,9 @@ def validate(manifest: RoomManifest, intended: list[dict[str, Any]] | None = Non
     # 7. unintended shortcuts
     required = [ms for ms in m.milestones if ms.required]
     shortcut_problems = []
-    ep = replays.get("solver")
-    if ep is not None:
-        reached = set(ep.state["milestones"])
+    shortest_ep = replays.get("solver")
+    if shortest_ep is not None:
+        reached = set(shortest_ep.state["milestones"])
         skipped = [ms.id for ms in required if ms.id not in reached]
         if skipped:
             shortcut_problems.append(f"shortest path skips milestones {skipped}")
@@ -342,7 +348,12 @@ def validate(manifest: RoomManifest, intended: list[dict[str, Any]] | None = Non
     if max_tokens > OBSERVATION_TOKEN_TARGET:
         leak_problems.append(f"observation estimated at {max_tokens} tokens")
     report.max_observation_tokens = max_tokens
-    report.add("leakage", "No hidden-ID or text leakage", not leak_problems, "; ".join(sorted(set(leak_problems))[:5]) or f"max observation ~{max_tokens} tokens")
+    report.add(
+        "leakage",
+        "No hidden-ID or text leakage",
+        not leak_problems,
+        "; ".join(sorted(set(leak_problems))[:5]) or f"max observation ~{max_tokens} tokens",
+    )
     return report
 
 

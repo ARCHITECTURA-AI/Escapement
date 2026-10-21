@@ -22,9 +22,6 @@ import re
 from datetime import timedelta
 from typing import Any
 
-from sqlalchemy import func, select
-from sqlalchemy.orm import Session
-
 from escapement_engine.core import Episode, EpisodeFinished
 from escapement_engine.core.world import CompiledRoom
 from escapement_engine.replay import build_replay, room_meta
@@ -38,6 +35,8 @@ from escapement_engine.schemas.endings import (
     WALL_CLOCK_EXCEEDED,
 )
 from escapement_engine.version import ENGINE_VERSION, PROTOCOL_VERSION
+from sqlalchemy import func, select
+from sqlalchemy.orm import Session
 
 from ..deps import Principal
 from ..errors import APIError, not_found, unauthorized
@@ -105,19 +104,21 @@ class RunService:
         st = self.settings
         if p.api_key_id:
             hit(s, f"key:{p.api_key_id}", st.rate_per_key_per_min)
-        if p.user_id:
+        if p.user_id and not p.is_system:
             hit(s, f"user:{p.user_id}", st.rate_per_user_per_min)
         else:
             hit(s, f"anon:{fingerprint}", st.rate_anonymous_per_min)
         start = utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
         total_today = s.execute(select(func.count()).select_from(Run).where(Run.started_at >= start)).scalar_one()
         if total_today >= st.global_daily_run_ceiling:
-            raise APIError(503, "GLOBAL_CEILING", "The arena has reached today's global run ceiling. Try again after 00:00 UTC.",
-                           headers={"Retry-After": str(int((day_end(utc_today()) - utcnow()).total_seconds()))})
+            raise APIError(
+                503,
+                "GLOBAL_CEILING",
+                "The arena has reached today's global run ceiling. Try again after 00:00 UTC.",
+                headers={"Retry-After": str(int((day_end(utc_today()) - utcnow()).total_seconds()))},
+            )
         if p.user_id and not p.is_system:
-            mine = s.execute(
-                select(func.count()).select_from(Run).where(Run.user_id == p.user_id, Run.started_at >= start)
-            ).scalar_one()
+            mine = s.execute(select(func.count()).select_from(Run).where(Run.user_id == p.user_id, Run.started_at >= start)).scalar_one()
             new = p.created_at is not None and utcnow() - p.created_at < timedelta(days=st.new_account_days)
             cap = st.new_account_daily_run_cap if new else st.daily_run_cap
             if mine >= cap:
@@ -139,17 +140,23 @@ class RunService:
             agent_type = self._agent_type(p, body)
             self._caps(s, p, fingerprint)
             inst, season = self._resolve_room(s, p, str(body.get("room") or "practice"))
-            mode = "reference" if agent_type == "reference" else {"practice": "practice", "daily": "daily", "ranked": "ranked", "research": "practice"}[inst.kind]
+            mode = (
+                "reference"
+                if agent_type == "reference"
+                else {"practice": "practice", "daily": "daily", "ranked": "ranked", "research": "practice"}[inst.kind]
+            )
             if not p.signed_in and inst.kind != "practice":
                 raise unauthorized("Sign in to play this room. Practice is open to everyone.")
             if inst.kind == "ranked" and agent_type == "human":
                 raise APIError(403, "AGENTS_ONLY", "Ranked rooms are for agents. Humans can play Practice and the Daily Room.")
 
             version, declared = self._agent_version(s, p, body, agent_type, ranked=inst.kind == "ranked")
-            if inst.kind == "ranked" and agent_type != "reference":
+            if inst.kind == "ranked" and agent_type != "reference" and version is not None:
                 used = s.execute(
-                    select(func.count()).select_from(Run).where(
-                        Run.agent_version_id == version.id,  # type: ignore[union-attr]
+                    select(func.count())
+                    .select_from(Run)
+                    .where(
+                        Run.agent_version_id == version.id,
                         Run.instance_id == inst.id,
                         Run.status.notin_(INFRASTRUCTURE_ENDINGS),
                     )
@@ -165,12 +172,16 @@ class RunService:
                 board = "humans" if agent_type == "human" else "agents"
                 types = ["human"] if board == "humans" else ["outside", "reference"]
                 used = s.execute(
-                    select(func.count()).select_from(Run).where(
-                        Run.user_id == p.user_id, Run.instance_id == inst.id, Run.agent_type.in_(types)
-                    )
+                    select(func.count())
+                    .select_from(Run)
+                    .where(Run.user_id == p.user_id, Run.instance_id == inst.id, Run.agent_type.in_(types))
                 ).scalar_one()
                 if used >= st.daily_attempts:
-                    raise APIError(409, "DAILY_ATTEMPTS", f"You have used all {st.daily_attempts} attempts on today's Daily Room for the {board} board.")
+                    raise APIError(
+                        409,
+                        "DAILY_ATTEMPTS",
+                        f"You have used all {st.daily_attempts} attempts on today's Daily Room for the {board} board.",
+                    )
 
             self._one_active(s, p, inst.id, fingerprint, replace=bool(body.get("replace_active")))
 
@@ -268,7 +279,9 @@ class RunService:
             return day_end(date.fromisoformat(inst.id.removeprefix("daily-")))
         return None
 
-    def _agent_version(self, s: Session, p: Principal, body: dict[str, Any], agent_type: str, ranked: bool) -> tuple[AgentVersion | None, dict[str, Any]]:
+    def _agent_version(
+        self, s: Session, p: Principal, body: dict[str, Any], agent_type: str, ranked: bool
+    ) -> tuple[AgentVersion | None, dict[str, Any]]:
         if agent_type == "human":
             return None, {"name": "Human player", "version": None, "agent_type": "human"}
         vid = body.get("agent_version_id")
@@ -287,7 +300,9 @@ class RunService:
             if not NAME_RE.match(name) or not NAME_RE.match(label):
                 raise APIError(422, "INVALID_REQUEST", "Agent name and version may use letters, digits, spaces and ._-+/ only.")
             version = s.execute(
-                select(AgentVersion).where(AgentVersion.user_id == p.user_id, AgentVersion.name == name, AgentVersion.version_label == label)
+                select(AgentVersion).where(
+                    AgentVersion.user_id == p.user_id, AgentVersion.name == name, AgentVersion.version_label == label
+                )
             ).scalar_one_or_none()
             fields = {
                 "declared_model": clean_text(agent.get("model"), 120),
@@ -371,8 +386,9 @@ class RunService:
             raise APIError(422, "INVALID_REQUEST", "'prev_hash' must be the hex chain hash from the previous response.")
         with self.ctx.db.service_session() as s:
             run = self._load(s, run_id, token)
-            limiter = f"user:{run.user_id}" if run.user_id else f"anon:{run.anon_key}"
-            hit(s, limiter, self.settings.rate_per_user_per_min)
+            if run.agent_type != "reference":  # first-party runs are paced by the drip queue
+                limiter = f"user:{run.user_id}" if run.user_id else f"anon:{run.anon_key}"
+                hit(s, limiter, self.settings.rate_per_user_per_min)
             recorded = s.execute(
                 select(Transition).where(Transition.run_id == run.id, Transition.action_id == action_id)
             ).scalar_one_or_none()
@@ -388,11 +404,19 @@ class RunService:
                     {"status": run.status, "sequence": run.seq, "chain_hash": run.chain_hash, "certificate_id": run.certificate_id},
                 )
             if seq != run.seq + 1:
-                raise APIError(409, "STALE_SEQUENCE", f"Expected sequence {run.seq + 1}, got {seq}.",
-                               {"sequence": run.seq, "chain_hash": run.chain_hash})
+                raise APIError(
+                    409,
+                    "STALE_SEQUENCE",
+                    f"Expected sequence {run.seq + 1}, got {seq}.",
+                    {"sequence": run.seq, "chain_hash": run.chain_hash},
+                )
             if prev_hash != run.chain_hash:
-                raise APIError(409, "CHAIN_MISMATCH", "prev_hash does not match the server's chain.",
-                               {"sequence": run.seq, "chain_hash": run.chain_hash})
+                raise APIError(
+                    409,
+                    "CHAIN_MISMATCH",
+                    "prev_hash does not match the server's chain.",
+                    {"sequence": run.seq, "chain_hash": run.chain_hash},
+                )
             room = load_room(s, run.instance_id)
             rs = s.get(RunState, run.id)
             ep = Episode.resume(room, run.id, rs.state, run.chain_hash, rs.last_result)  # type: ignore[union-attr]
@@ -537,13 +561,17 @@ class RunService:
         st = self.settings
         now = utcnow()
         with self.ctx.db.service_session() as s:
-            ids = s.execute(
-                select(Run.id).where(
-                    Run.status == IN_PROGRESS,
-                    (Run.last_activity_at < now - timedelta(seconds=st.idle_timeout_s))
-                    | (Run.started_at < now - timedelta(seconds=st.wall_clock_s)),
+            ids = (
+                s.execute(
+                    select(Run.id).where(
+                        Run.status == IN_PROGRESS,
+                        (Run.last_activity_at < now - timedelta(seconds=st.idle_timeout_s))
+                        | (Run.started_at < now - timedelta(seconds=st.wall_clock_s)),
+                    )
                 )
-            ).scalars().all()
+                .scalars()
+                .all()
+            )
         count = 0
         for rid in ids:
             with self.ctx.db.service_session() as s:
@@ -607,16 +635,20 @@ def build_run_replay(s: Session, run: Run, room: CompiledRoom | None = None, inc
         if include_memory and t.memory:
             step["memory"] = t.memory
         steps.append(step)
-    meta = room_meta(room.manifest, run.season_id) if room is not None else {
-        "room_id": inst.id,  # type: ignore[union-attr]
-        "title": inst.title,  # type: ignore[union-attr]
-        "tier": inst.tier,  # type: ignore[union-attr]
-        "family": (inst.public_meta or {}).get("family"),  # type: ignore[union-attr]
-        "template_version": (inst.public_meta or {}).get("template_version"),  # type: ignore[union-attr]
-        "instance_hash": inst.instance_hash,  # type: ignore[union-attr]
-        "season": run.season_id,
-        "action_budget": run.action_budget,
-    }
+    meta = (
+        room_meta(room.manifest, run.season_id)
+        if room is not None
+        else {
+            "room_id": inst.id,  # type: ignore[union-attr]
+            "title": inst.title,  # type: ignore[union-attr]
+            "tier": inst.tier,  # type: ignore[union-attr]
+            "family": (inst.public_meta or {}).get("family"),  # type: ignore[union-attr]
+            "template_version": (inst.public_meta or {}).get("template_version"),  # type: ignore[union-attr]
+            "instance_hash": inst.instance_hash,  # type: ignore[union-attr]
+            "season": run.season_id,
+            "action_budget": run.action_budget,
+        }
+    )
     meta["kind"] = inst.kind if inst else None
     return build_replay(
         run_id=run.id,

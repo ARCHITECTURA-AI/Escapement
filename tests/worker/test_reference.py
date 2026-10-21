@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import pytest
+from datetime import UTC
 
+import pytest
 from escapement import Client
 from escapement_api.models import ApiKey, Job, Setting, User, UserPrivate
 from escapement_api.security import new_api_key
@@ -13,7 +14,7 @@ from escapement_worker.drip import DailyLimitReached, Drip, Limits
 from escapement_worker.main import ReferenceWorker
 from escapement_worker.providers import ScriptedProvider, parse_duration
 
-from ..api.conftest import app, settings  # noqa: F401
+from ..api.conftest import app, settings
 from ..client.test_sdk import AppTransport
 
 
@@ -40,7 +41,13 @@ def solution_calls():
 def test_llm_reference_run_is_attested_and_cached(app):
     ctx = app.state.ctx
     client = reference_client(app)
-    worker = ReferenceWorker(ctx, client, provider_factory=lambda model: ScriptedProvider(solution_calls(), name="groq", model=model), models=["openai/gpt-oss-20b"], drip_factory=no_sleep_drip(ctx))
+    worker = ReferenceWorker(
+        ctx,
+        client,
+        provider_factory=lambda model: ScriptedProvider(solution_calls(), name="groq", model=model),
+        models=["openai/gpt-oss-20b"],
+        drip_factory=no_sleep_drip(ctx),
+    )
     with ctx.db.service_session() as s:
         job_service.enqueue(s, "reference_run", {"agent": "llm_notebook", "room": "practice", "run_index": 0})
     assert worker.run_once()
@@ -108,11 +115,17 @@ def test_drip_spaces_requests_and_reads_headers(app):
 def test_daily_limit_defers_job(app):
     ctx = app.state.ctx
     client = reference_client(app)
-    worker = ReferenceWorker(ctx, client, provider_factory=lambda model: ScriptedProvider(solution_calls(), model=model), models=["m3"], drip_factory=no_sleep_drip(ctx))
+    worker = ReferenceWorker(
+        ctx,
+        client,
+        provider_factory=lambda model: ScriptedProvider(solution_calls(), model=model),
+        models=["m3"],
+        drip_factory=no_sleep_drip(ctx),
+    )
     with ctx.db.owner_session() as s:
         from datetime import datetime, timezone
 
-        s.add(Setting(key=f"reference_usage:scripted:m3:{datetime.now(timezone.utc).date().isoformat()}", value={"tokens": 195_000, "requests": 10}))
+        s.add(Setting(key=f"reference_usage:scripted:m3:{datetime.now(UTC).date().isoformat()}", value={"tokens": 195_000, "requests": 10}))
         job_service.enqueue(s, "reference_run", {"agent": "llm_reactive", "room": "practice", "run_index": 0})
     worker.run_once()
     with ctx.db.service_session() as s:

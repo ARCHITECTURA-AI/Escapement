@@ -10,14 +10,14 @@ import logging
 import socket
 import threading
 import time
+from collections.abc import Callable
 from datetime import datetime
-from typing import Any, Callable
-
-from sqlalchemy import select
+from typing import Any
 
 from escapement_engine.agents import make_agent, run_local
 from escapement_engine.generation import generate, load_manifest
 from escapement_engine.stats import summarize
+from sqlalchemy import select
 
 from .models import Job, RoomInstance, SealedManifest, Season
 from .services import jobs as job_service
@@ -26,6 +26,7 @@ from .services.rooms import get_or_create_daily, publish_past_dailies
 from .timeutil import utcnow
 
 log = logging.getLogger("escapement.worker")
+
 
 class Deferred(Exception):
     """Raised by a handler to put its job back without using an attempt."""
@@ -116,7 +117,13 @@ class Worker:
             reclaimed = job_service.reclaim_stuck(s)
             kill = self.ctx.runs.kill_switch_on(s)
         cancelled = self.ctx.runs.cancel_live() if kill else 0
-        return {"expired": expired, "dailies_published": published, "seasons_closed": closed, "reclaimed_jobs": reclaimed, "cancelled": cancelled}
+        return {
+            "expired": expired,
+            "dailies_published": published,
+            "seasons_closed": closed,
+            "reclaimed_jobs": reclaimed,
+            "cancelled": cancelled,
+        }
 
     def generate_season(self, job: Job) -> dict[str, Any]:
         p = job.payload
@@ -173,7 +180,14 @@ class Worker:
                 q = q.where(RoomInstance.tier == p["tier"], RoomInstance.kind.in_(("research", "practice")))
             rows = [(i.id, i.tier, sm.manifest) for i, sm in s.execute(q.limit(int(p.get("limit", 20)))).all()]
         if not rows and p.get("tier"):
-            rows = [(f"batch-{p['tier']}-{k}", p["tier"], generate(p["tier"], f"batch-{k}", f"batch-{p['tier']}-{k}").manifest.model_dump(mode="json")) for k in range(int(p.get("count", 5)))]
+            rows = [
+                (
+                    f"batch-{p['tier']}-{k}",
+                    p["tier"],
+                    generate(p["tier"], f"batch-{k}", f"batch-{p['tier']}-{k}").manifest.model_dump(mode="json"),
+                )
+                for k in range(int(p.get("count", 5)))
+            ]
         results: dict[str, list[tuple[bool, int]]] = {}
         detail = []
         total = len(rows) * runs
@@ -184,7 +198,16 @@ class Worker:
                 agent = make_agent(agent_name, seed=f"{job.id}-{iid}-{r}")
                 res = run_local(agent, m, f"{job.id}-{iid}-{r}")
                 results.setdefault(iid, []).append((res.outcome == "escaped", res.actions_used))
-                detail.append({"instance_id": iid, "tier": tier, "run": r, "outcome": res.outcome, "actions_used": res.actions_used, "final_chain_hash": res.final_chain_hash})
+                detail.append(
+                    {
+                        "instance_id": iid,
+                        "tier": tier,
+                        "run": r,
+                        "outcome": res.outcome,
+                        "actions_used": res.actions_used,
+                        "final_chain_hash": res.final_chain_hash,
+                    }
+                )
                 done += 1
                 if done % 5 == 0:
                     self.progress(job.id, f"{done}/{total} runs")
@@ -203,7 +226,8 @@ class Worker:
                 for iid in instances:
                     for k in range(3):
                         job_service.enqueue(
-                            s, "reference_run",
+                            s,
+                            "reference_run",
                             {"agent": agent, "room": iid, "run_index": k, "season_id": season.id if season else sid},
                             priority=60 if agent.startswith("llm") else 40,
                         )

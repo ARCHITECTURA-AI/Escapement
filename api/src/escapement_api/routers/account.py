@@ -9,11 +9,12 @@ from urllib.parse import urlencode
 import httpx
 from fastapi import APIRouter, Depends, Query, Request, Response
 from fastapi.responses import RedirectResponse
-from sqlalchemy import func, select, update
+from sqlalchemy import func, select
 
 from ..deps import SESSION_COOKIE, Principal, ctx, principal, require_session, require_user
 from ..errors import APIError, forbidden, not_found
-from ..models import AgentVersion, ApiKey, ModerationReport, ProductEvent, Run, Session as DbSession, User, UserPrivate
+from ..models import AgentVersion, ApiKey, ModerationReport, ProductEvent, Run, User, UserPrivate
+from ..models import Session as DbSession
 from ..security import new_api_key, new_session_token, sha256_hex
 from ..services import account as account_service
 from ..services.results import profile as build_profile
@@ -37,8 +38,13 @@ def _start_session(c, response: Response, user_id: str) -> None:  # type: ignore
     with c.db.service_session() as s:
         s.add(DbSession(id=digest, user_id=user_id, expires_at=utcnow() + timedelta(days=c.settings.session_days)))
     response.set_cookie(
-        SESSION_COOKIE, token, max_age=c.settings.session_days * 86400, httponly=True,
-        secure=c.settings.cookie_secure, samesite="lax", path="/",
+        SESSION_COOKIE,
+        token,
+        max_age=c.settings.session_days * 86400,
+        httponly=True,
+        secure=c.settings.cookie_secure,
+        samesite="lax",
+        path="/",
     )
 
 
@@ -70,7 +76,9 @@ def github_login(request: Request, next: str | None = None) -> Response:
         "allow_signup": "true",
     }
     resp = RedirectResponse("https://github.com/login/oauth/authorize?" + urlencode(params), status_code=302)
-    resp.set_cookie(STATE_COOKIE, f"{state}|{_safe_next(next)}", max_age=600, httponly=True, secure=c.settings.cookie_secure, samesite="lax", path="/")
+    resp.set_cookie(
+        STATE_COOKIE, f"{state}|{_safe_next(next)}", max_age=600, httponly=True, secure=c.settings.cookie_secure, samesite="lax", path="/"
+    )
     return resp
 
 
@@ -96,11 +104,19 @@ def github_callback(request: Request, code: str = "", state: str = "") -> Respon
             emails = http.get("https://api.github.com/user/emails", headers=headers).json()
     except Exception:
         return RedirectResponse(f"{c.settings.web_base_url}/signin?error=github", status_code=302)
-    email = next((e["email"] for e in emails if isinstance(e, dict) and e.get("primary") and e.get("verified")), None) if isinstance(emails, list) else None
+    email = (
+        next((e["email"] for e in emails if isinstance(e, dict) and e.get("primary") and e.get("verified")), None)
+        if isinstance(emails, list)
+        else None
+    )
     with c.db.service_session() as s:
         priv = s.execute(select(UserPrivate).where(UserPrivate.github_id == int(gh["id"]))).scalar_one_or_none()
         if priv is None:
-            user = User(handle=_unique_handle(s, gh.get("login") or "player"), display_name=(gh.get("name") or None), avatar_url=gh.get("avatar_url"))
+            user = User(
+                handle=_unique_handle(s, gh.get("login") or "player"),
+                display_name=(gh.get("name") or None),
+                avatar_url=gh.get("avatar_url"),
+            )
             s.add(user)
             s.flush()
             s.add(UserPrivate(user_id=user.id, email=email, github_id=int(gh["id"])))
@@ -234,7 +250,14 @@ async def delete_me(request: Request, response: Response, p: Principal = Depends
 
 
 def _key_public(k: ApiKey) -> dict[str, Any]:
-    return {"id": k.id, "name": k.name, "prefix": k.prefix, "created_at": iso(k.created_at), "last_used_at": iso(k.last_used_at), "revoked_at": iso(k.revoked_at)}
+    return {
+        "id": k.id,
+        "name": k.name,
+        "prefix": k.prefix,
+        "created_at": iso(k.created_at),
+        "last_used_at": iso(k.last_used_at),
+        "revoked_at": iso(k.revoked_at),
+    }
 
 
 @router.get("/me/keys")
@@ -282,7 +305,11 @@ def revoke_key(key_id: str, request: Request, p: Principal = Depends(require_ses
 @router.get("/me/agents")
 def my_agents(request: Request, p: Principal = Depends(require_user)) -> dict[str, Any]:
     with ctx(request).db.api_session(p.user_id) as s:
-        versions = s.execute(select(AgentVersion).where(AgentVersion.user_id == p.user_id).order_by(AgentVersion.created_at.desc())).scalars().all()
+        versions = (
+            s.execute(select(AgentVersion).where(AgentVersion.user_id == p.user_id).order_by(AgentVersion.created_at.desc()))
+            .scalars()
+            .all()
+        )
         return {"agents": [version_results(s, v) for v in versions]}
 
 
@@ -296,7 +323,11 @@ async def create_agent(request: Request, p: Principal = Depends(require_user)) -
     if not name or not version or not NAME_RE.match(name) or not NAME_RE.match(version):
         raise APIError(422, "INVALID_REQUEST", "Give the agent a name and a version label (letters, digits, spaces, ._-+/).")
     with ctx(request).db.api_session(p.user_id) as s:
-        if s.execute(select(AgentVersion.id).where(AgentVersion.user_id == p.user_id, AgentVersion.name == name, AgentVersion.version_label == version)).first():
+        if s.execute(
+            select(AgentVersion.id).where(
+                AgentVersion.user_id == p.user_id, AgentVersion.name == name, AgentVersion.version_label == version
+            )
+        ).first():
             raise APIError(409, "EXISTS", "You already have that agent version.")
         fields = {
             "declared_model": clean_text(body.get("model"), 120),
@@ -304,9 +335,13 @@ async def create_agent(request: Request, p: Principal = Depends(require_user)) -
             "memory_strategy": clean_text(body.get("memory"), 120),
         }
         v = AgentVersion(
-            user_id=p.user_id, name=name, version_label=version, agent_type="outside",  # type: ignore[arg-type]
+            user_id=p.user_id,
+            name=name,
+            version_label=version,
+            agent_type="outside",  # type: ignore[arg-type]
             config_hash=sha256_hex(repr(sorted((k, x or "") for k, x in fields.items())) + name + version),
-            notes=clean_text(body.get("notes"), 2000), **fields,
+            notes=clean_text(body.get("notes"), 2000),
+            **fields,
         )
         s.add(v)
         s.flush()
@@ -350,9 +385,19 @@ def agent_version(version_id: str, request: Request) -> dict[str, Any]:
         now = utcnow()
         out["runs"] = [
             {
-                "id": r.id, "instance_id": r.instance_id, "mode": r.mode, "status": r.status, "actions_used": r.actions_used,
-                "action_budget": r.action_budget, "certificate_id": r.certificate_id, "finished_at": iso(r.finished_at),
-                "embargoed": bool(r.embargo_until and r.embargo_until.replace(tzinfo=r.embargo_until.tzinfo or now.tzinfo) > now and p.user_id != r.user_id),
+                "id": r.id,
+                "instance_id": r.instance_id,
+                "mode": r.mode,
+                "status": r.status,
+                "actions_used": r.actions_used,
+                "action_budget": r.action_budget,
+                "certificate_id": r.certificate_id,
+                "finished_at": iso(r.finished_at),
+                "embargoed": bool(
+                    r.embargo_until
+                    and r.embargo_until.replace(tzinfo=r.embargo_until.tzinfo or now.tzinfo) > now
+                    and p.user_id != r.user_id
+                ),
             }
             for r in runs
         ]
@@ -386,10 +431,18 @@ def profile(handle: str, request: Request) -> dict[str, Any]:
 @router.get("/profiles")
 def profiles(request: Request, limit: int = Query(50, le=200)) -> dict[str, Any]:
     with ctx(request).db.api_session(principal(request).user_id) as s:
-        users = s.execute(
-            select(User).where(User.profile_public.is_(True), User.deleted_at.is_(None)).order_by(User.created_at.desc()).limit(limit)
-        ).scalars().all()
-        return {"profiles": [{"handle": u.handle, "display_name": u.display_name, "avatar_url": u.avatar_url, "is_system": u.is_system} for u in users]}
+        users = (
+            s.execute(
+                select(User).where(User.profile_public.is_(True), User.deleted_at.is_(None)).order_by(User.created_at.desc()).limit(limit)
+            )
+            .scalars()
+            .all()
+        )
+        return {
+            "profiles": [
+                {"handle": u.handle, "display_name": u.display_name, "avatar_url": u.avatar_url, "is_system": u.is_system} for u in users
+            ]
+        }
 
 
 # ----------------------------------------------------------------- moderation

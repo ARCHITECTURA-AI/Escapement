@@ -12,7 +12,7 @@ from __future__ import annotations
 import threading
 import time
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from escapement_api.models import Setting
 
@@ -33,7 +33,7 @@ class DailyLimitReached(Exception):
 
 
 def next_utc_midnight() -> datetime:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     return (now + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
 
 
@@ -50,7 +50,7 @@ class Drip:
         self._header_wait = 0.0
 
     def _key(self) -> str:
-        return f"reference_usage:{self.provider}:{self.model}:{datetime.now(timezone.utc).date().isoformat()}"
+        return f"reference_usage:{self.provider}:{self.model}:{datetime.now(UTC).date().isoformat()}"
 
     def usage_today(self) -> dict[str, int]:
         with self.db.owner_session() as s:
@@ -69,7 +69,10 @@ class Drip:
         """Block until a request may go out; raise when today's budget is spent."""
         lim = self.limits
         used = self.usage_today()
-        if used["tokens"] + expected_tokens > lim.stop_fraction * lim.tokens_per_day or used["requests"] + 1 > lim.stop_fraction * lim.requests_per_day:
+        if (
+            used["tokens"] + expected_tokens > lim.stop_fraction * lim.tokens_per_day
+            or used["requests"] + 1 > lim.stop_fraction * lim.requests_per_day
+        ):
             raise DailyLimitReached(next_utc_midnight())
         with self._lock:
             now = time.monotonic()

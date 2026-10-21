@@ -56,9 +56,7 @@ class CompiledRoom:
 
 def initial_state(room: CompiledRoom) -> State:
     m = room.manifest
-    objs = {
-        o.id: {"at": o.location, "hidden": o.hidden, "st": dict(o.state)} for o in m.objects
-    }
+    objs = {o.id: {"at": o.location, "hidden": o.hidden, "st": dict(o.state)} for o in m.objects}
     state: State = {
         "loc": m.start,
         "objs": objs,
@@ -179,15 +177,14 @@ class _Tx:
             flags[effect.name] = effect.value
             self.s["flags"] = flags
         elif kind == "set_state":
-            obj = self.obj(effect.obj)  # type: ignore[arg-type]
+            assert effect.obj is not None and effect.key is not None
+            obj = self.obj(effect.obj)
             before = obj["st"].get(effect.key)
             obj["st"][effect.key] = effect.value
-            if before != effect.value and is_visible(self.room, self.s, effect.obj):  # type: ignore[arg-type]
-                tags = state_tags(self.room, effect.obj, {effect.key: effect.value})  # type: ignore[arg-type]
+            if before != effect.value and is_visible(self.room, self.s, effect.obj):
+                tags = state_tags(self.room, effect.obj, {effect.key: effect.value})
                 if tags:
-                    self.events.append(
-                        {"type": "state_changed", "object_id": effect.obj, "state": tags[0]}
-                    )
+                    self.events.append({"type": "state_changed", "object_id": effect.obj, "state": tags[0]})
         elif kind == "move_object":
             obj = self.obj(effect.obj)  # type: ignore[arg-type]
             was = obj["at"]
@@ -470,9 +467,7 @@ def observe(room: CompiledRoom, state: State, last_result: Result | None) -> dic
         if odef.portable:
             entry["portable"] = True
         ops = [
-            op
-            for op in odef.operations
-            if not (op == "open" and o["st"].get("open")) and not (op == "close" and not o["st"].get("open"))
+            op for op in odef.operations if not (op == "open" and o["st"].get("open")) and not (op == "close" and not o["st"].get("open"))
         ]
         if ops:
             entry["operations"] = ops

@@ -114,7 +114,8 @@ def analyze(replay: dict[str, Any], private: dict[str, Any] | None = None) -> di
             Finding(
                 "wrong_codes",
                 "Wrong code attempts",
-                f"{len(wrong)} wrong code(s) entered" + (f"; the security delay cost {extra} extra actions." if extra else "."),
+                f"{len(wrong)} wrong code{'' if len(wrong) == 1 else 's'} entered"
+                + (f"; the security delay cost {extra} extra actions." if extra else "."),
                 [seq for seq, _ in wrong],
                 "warn" if len(wrong) >= 3 else "info",
             )
@@ -127,7 +128,15 @@ def analyze(replay: dict[str, Any], private: dict[str, Any] | None = None) -> di
         detail = f"{first['seq']} actions before the first milestone ({first['label'].lower()})"
         if ref:
             detail += f"; the reference solution needs {ref}."
-        findings.append(Finding("first_milestone", "Actions before the first milestone", detail, [first["seq"]], "warn" if ref and first["seq"] > 2 * ref else "info"))
+        findings.append(
+            Finding(
+                "first_milestone",
+                "Actions before the first milestone",
+                detail,
+                [first["seq"]],
+                "warn" if ref and first["seq"] > 2 * ref else "info",
+            )
+        )
         missed = private.get("missed")
         if missed:
             findings.append(Finding("milestones_missed", "Milestones not reached", ", ".join(missed), []))

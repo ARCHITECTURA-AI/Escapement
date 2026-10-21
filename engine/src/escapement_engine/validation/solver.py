@@ -127,10 +127,8 @@ class Solver:
                 out.append(Action("interact", {"target_id": oid, "operation": "activate"}))
             if odef.code_lock and o["st"].get("locked"):
                 if all(c in state["found"] for c in self._code_ready[oid]):
-                    out.append(
-                        Action("interact", {"target_id": oid, "operation": "enter_code", "value": odef.code_lock.code})
-                    )
-        for (item, target) in room.use_rules:
+                    out.append(Action("interact", {"target_id": oid, "operation": "enter_code", "value": odef.code_lock.code}))
+        for item, target in room.use_rules:
             if state["objs"][item]["at"] == INVENTORY and target in visible:
                 out.append(Action("use", {"item_id": item, "target_id": target}))
         return out
@@ -183,9 +181,9 @@ class Solver:
             path: list[dict[str, Any]] = []
             node: str | None = goal_key
             while node is not None:
-                parent, action = parents[node]
-                if action is not None:
-                    path.append(action.to_dict())
+                parent, step = parents[node]
+                if step is not None:
+                    path.append(step.to_dict())
                 node = parent
             path.reverse()
             res.solution = path
@@ -212,9 +210,9 @@ class Solver:
                 example: list[dict[str, Any]] = []
                 node = dead[0]
                 while node is not None:
-                    parent, action = parents[node]
-                    if action is not None:
-                        example.append(action.to_dict())
+                    parent, step = parents[node]
+                    if step is not None:
+                        example.append(step.to_dict())
                     node = parent
                 res.dead_end_example = list(reversed(example))
         return res

@@ -8,11 +8,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from escapement_engine.version import ENGINE_VERSION
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-
-from escapement_engine.version import ENGINE_VERSION
 
 from .config import Settings, get_settings
 from .db import Database
@@ -88,7 +87,13 @@ def create_app(settings: Settings | None = None, context: Context | None = None,
         length = request.headers.get("content-length")
         if length and length.isdigit() and int(length) > ctx.settings.payload_limit_bytes:
             return JSONResponse(
-                {"error": {"code": "PAYLOAD_TOO_LARGE", "message": f"Requests are limited to {ctx.settings.payload_limit_bytes} bytes.", "details": {}}},
+                {
+                    "error": {
+                        "code": "PAYLOAD_TOO_LARGE",
+                        "message": f"Requests are limited to {ctx.settings.payload_limit_bytes} bytes.",
+                        "details": {},
+                    }
+                },
                 status_code=413,
             )
         response = await call_next(request)

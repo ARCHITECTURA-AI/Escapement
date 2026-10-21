@@ -82,9 +82,7 @@ def resolve_principal(request: Request) -> Principal:
 def _from_api_key(c, token: str) -> Principal:  # type: ignore[no-untyped-def]
     digest = sha256_hex(token)
     with c.db.service_session() as s:
-        row = s.execute(
-            select(ApiKey, User).join(User, User.id == ApiKey.user_id).where(ApiKey.key_hash == digest)
-        ).first()
+        row = s.execute(select(ApiKey, User).join(User, User.id == ApiKey.user_id).where(ApiKey.key_hash == digest)).first()
         if row is None:
             raise unauthorized("Unknown API key.")
         key, user = row

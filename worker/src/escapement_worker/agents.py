@@ -67,7 +67,9 @@ class Notebook:
 
 
 class LLMAgent:
-    def __init__(self, provider: Provider, drip: Drip | None, variant: str = "reactive", max_output: int = 100, token_budget: int = 120_000) -> None:
+    def __init__(
+        self, provider: Provider, drip: Drip | None, variant: str = "reactive", max_output: int = 100, token_budget: int = 120_000
+    ) -> None:
         assert variant in ("reactive", "notebook")
         self.provider = provider
         self.drip = drip
@@ -88,7 +90,9 @@ class LLMAgent:
             "provider": self.provider.name,
             "model": self.provider.model,
             "prompt_version": PROMPT_VERSION,
-            "memory": "current observation only" if self.variant == "reactive" else f"structured notebook (facts, hypotheses, failed attempts; {NOTEBOOK_CHARS} chars)",
+            "memory": "current observation only"
+            if self.variant == "reactive"
+            else f"structured notebook (facts, hypotheses, failed attempts; {NOTEBOOK_CHARS} chars)",
             "max_output": self.max_output,
         }
 
@@ -101,7 +105,11 @@ class LLMAgent:
         user += describe_observation(run.observation)
         user += "\nChoose exactly one tool call. Put a one-sentence reason in your message text, citing clue ids when relevant."
         messages = [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": user}]
-        while estimate_tokens(messages) > MAX_PROMPT_TOKENS and self.variant == "notebook" and (self.notebook.failed or self.notebook.hypotheses):
+        while (
+            estimate_tokens(messages) > MAX_PROMPT_TOKENS
+            and self.variant == "notebook"
+            and (self.notebook.failed or self.notebook.hypotheses)
+        ):
             if self.notebook.failed:
                 self.notebook.failed.pop(0)
             else:
@@ -176,7 +184,14 @@ class BaselineAdapter:
         return f"reference-{self.agent.name}"
 
     def config(self) -> dict[str, Any]:
-        return {"name": self.name, "version": self.agent.version, "provider": "escapement", "model": f"none ({self.agent.name} baseline)", "memory": "explicit state", "max_output": 0}
+        return {
+            "name": self.name,
+            "version": self.agent.version,
+            "provider": "escapement",
+            "model": f"none ({self.agent.name} baseline)",
+            "memory": "explicit state",
+            "max_output": 0,
+        }
 
     def play(self, run: Any) -> dict[str, Any]:
         self.agent.reset()

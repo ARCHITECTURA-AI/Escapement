@@ -8,7 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 def _ctx():  # type: ignore[no-untyped-def]
@@ -45,15 +45,21 @@ def cmd_create_season(args: argparse.Namespace) -> None:
     from .services import seasons as season_service
 
     ctx = _ctx()
-    starts = datetime.fromisoformat(args.starts_at) if args.starts_at else datetime.now(timezone.utc)
+    starts = datetime.fromisoformat(args.starts_at) if args.starts_at else datetime.now(UTC)
     if starts.tzinfo is None:
-        starts = starts.replace(tzinfo=timezone.utc)
+        starts = starts.replace(tzinfo=UTC)
     with ctx.db.owner_session() as s:
         season = season_service.create_season(
-            s, ctx.settings, args.id, args.name or f"Season {args.id.upper()}", starts,
-            weeks=args.weeks, instances=args.instances, progress=lambda t: print(t, flush=True),
+            s,
+            ctx.settings,
+            args.id,
+            args.name or f"Season {args.id.upper()}",
+            starts,
+            weeks=args.weeks,
+            instances=args.instances,
+            progress=lambda t: print(t, flush=True),
         )
-        if starts <= datetime.now(timezone.utc):
+        if starts <= datetime.now(UTC):
             season.status = "open"
     if not args.no_baselines:
         from .services import jobs

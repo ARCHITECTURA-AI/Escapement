@@ -26,7 +26,14 @@ class LocalRun:
         self.episode = Episode.start(manifest, self.id)
         self.requests: list[Any] = []
         self.observation = self.episode.observation()
-        self.room = {"id": manifest.room_id, "title": manifest.title, "tier": manifest.tier, "intro": manifest.intro, "goal": manifest.goal_text, "action_budget": manifest.budget.actions}
+        self.room: dict[str, Any] = {
+            "id": manifest.room_id,
+            "title": manifest.title,
+            "tier": manifest.tier,
+            "intro": manifest.intro,
+            "goal": manifest.goal_text,
+            "action_budget": manifest.budget.actions,
+        }
         self.last_result: dict[str, Any] | None = None
 
     @property

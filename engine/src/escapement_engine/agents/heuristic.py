@@ -154,10 +154,10 @@ class HeuristicExplorer:
                 a = {"tool": "use", "arguments": {"item_id": item, "target_id": o["id"]}}
                 if self._ok(a):
                     return a
-        moves = [{"tool": "move", "arguments": {"destination_id": e["id"]}} for e in exits]
+        moves: list[dict[str, Any]] = [{"tool": "move", "arguments": {"destination_id": e["id"]}} for e in exits]
         moves = [m for m in moves if self._ok(m)]
         if moves:
-            moves.sort(key=lambda m: (self.visits.get(m["arguments"]["destination_id"], 0)))
+            moves.sort(key=lambda m: self.visits.get(m["arguments"]["destination_id"], 0))
             return moves[0]
         # Everything known has failed here: forget and wander.
         self.failed.clear()

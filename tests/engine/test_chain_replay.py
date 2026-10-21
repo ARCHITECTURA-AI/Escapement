@@ -5,10 +5,9 @@ import json
 from pathlib import Path
 
 import pytest
-
 from escapement_engine.agents import HeuristicExplorer, RandomAgent, run_local
-from escapement_engine.core import Episode, chain_next, chain_start, instance_hash, state_hash
 from escapement_engine.canonical import canonical_json, sha256_hex
+from escapement_engine.core import Episode, chain_next, chain_start, instance_hash, state_hash
 from escapement_engine.generation import load_manifest
 from escapement_engine.replay import replay_from_episode, resimulate, verify_chain
 from escapement_engine.version import ENGINE_VERSION

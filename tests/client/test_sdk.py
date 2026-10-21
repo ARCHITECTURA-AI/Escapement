@@ -6,13 +6,12 @@ import json
 
 import httpx
 import pytest
-from fastapi.testclient import TestClient
-
 from escapement import Client, LocalRun
 from escapement.cli.main import main as cli
 from escapement_engine.generation import build_practice
+from fastapi.testclient import TestClient
 
-from ..api.conftest import api_key, app, settings  # noqa: F401  (fixtures)
+from ..api.conftest import api_key, app, settings
 
 
 class AppTransport(httpx.BaseTransport):
@@ -65,7 +64,19 @@ def test_sdk_practice_escape_and_certificate(app, tmp_path):
     manifest = client.request("GET", "/api/v1/rooms/practice/manifest")
     for name, data in (("cert", cert), ("replay", replay), ("keys", keys), ("manifest", manifest)):
         (tmp_path / f"{name}.json").write_text(json.dumps(data))
-    cli(["verify", str(tmp_path / "cert.json"), "--replay", str(tmp_path / "replay.json"), "--manifest", str(tmp_path / "manifest.json"), "--keys", str(tmp_path / "keys.json"), "--offline"])
+    cli(
+        [
+            "verify",
+            str(tmp_path / "cert.json"),
+            "--replay",
+            str(tmp_path / "replay.json"),
+            "--manifest",
+            str(tmp_path / "manifest.json"),
+            "--keys",
+            str(tmp_path / "keys.json"),
+            "--offline",
+        ]
+    )
     cert["outcome"] = "escaped!"
     (tmp_path / "bad.json").write_text(json.dumps(cert))
     with pytest.raises(SystemExit):
@@ -117,7 +128,10 @@ def test_local_run_matches_interface():
 def test_cli_play_parser():
     from escapement.cli.main import parse_command
 
-    assert parse_command("use screwdriver on maintenance_panel") == {"tool": "use", "arguments": {"item_id": "screwdriver", "target_id": "maintenance_panel"}}
+    assert parse_command("use screwdriver on maintenance_panel") == {
+        "tool": "use",
+        "arguments": {"item_id": "screwdriver", "target_id": "maintenance_panel"},
+    }
     assert parse_command("code equipment_locker 274")["arguments"]["value"] == "274"
     assert "error" in parse_command("dance")
 

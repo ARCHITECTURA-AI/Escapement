@@ -16,14 +16,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from sqlalchemy import func, select
-from sqlalchemy.orm import Session
-
 from escapement_engine.certificate import DOES_NOT_PROVE, PROVES, SELF_REPORTED_FIELDS, verify
 from escapement_engine.core.world import CompiledRoom
 from escapement_engine.generation import load_manifest
 from escapement_engine.replay import verify_chain
-from escapement_engine.schemas.endings import ESCAPED, INFRASTRUCTURE_ENDINGS, IN_PROGRESS
+from escapement_engine.schemas.endings import ESCAPED, IN_PROGRESS, INFRASTRUCTURE_ENDINGS
+from sqlalchemy import func, select
+from sqlalchemy.orm import Session
 
 from ..models import Certificate, PublishedManifest, RoomInstance, Run, Season
 from ..security import new_certificate_id
@@ -121,7 +120,10 @@ def verification_level(s: Session, cert: Certificate) -> dict[str, Any]:
         level, text = "full", "Room manifest is public: anyone can re-simulate this run through the pinned engine."
     elif inst and inst.kind == "ranked":
         until = iso(season.ends_at) if season else None
-        level, text = "chain", f"Ranked room: the manifest stays sealed until the season closes ({until}). The signature and hash chain can be checked now."
+        level, text = (
+            "chain",
+            f"Ranked room: the manifest stays sealed until the season closes ({until}). The signature and hash chain can be checked now.",
+        )
     elif inst and inst.kind == "daily":
         level, text = "chain", "Daily Room: the manifest is published after the UTC day ends; then the run can be fully re-simulated."
     else:

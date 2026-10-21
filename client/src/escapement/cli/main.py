@@ -1,15 +1,15 @@
 """`escapement`: the command-line tool.
 
-    escapement play                       play Practice in the terminal (local engine)
-    escapement login                      save an API key for the hosted arena
-    escapement baseline heuristic         run a baseline locally, or --remote for a certified run
-    escapement generate --tier standard   generate and validate a room (local research mode)
-    escapement validate room.json         run the validation suite on a manifest
-    escapement batch --agent heuristic    batch-run a baseline over generated rooms and export results
-    escapement verify cert.json           check a certificate offline (add --replay, --manifest)
-    escapement replay replay.json         verify and print a replay
-    escapement export RUN_ID              download a run's replay and certificate
-    escapement mcp                        start the MCP server on stdio
+escapement play                       play Practice in the terminal (local engine)
+escapement login                      save an API key for the hosted arena
+escapement baseline heuristic         run a baseline locally, or --remote for a certified run
+escapement generate --tier standard   generate and validate a room (local research mode)
+escapement validate room.json         run the validation suite on a manifest
+escapement batch --agent heuristic    batch-run a baseline over generated rooms and export results
+escapement verify cert.json           check a certificate offline (add --replay, --manifest)
+escapement replay replay.json         verify and print a replay
+escapement export RUN_ID              download a run's replay and certificate
+escapement mcp                        start the MCP server on stdio
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from typing import Any
 
 from escapement_engine import ENGINE_VERSION
 
-from ..sdk.config import config_dir, load_config, resolve, save_config
+from ..sdk.config import config_dir, resolve, save_config
 from ..sdk.tools import describe_observation
 
 USE_COLOR = sys.stdout.isatty() and not os.environ.get("NO_COLOR")
@@ -160,7 +160,17 @@ def cmd_baseline(args: argparse.Namespace) -> None:
         from ..sdk.client import Client
 
         client = Client()
-        run = client.create_run(args.room, agent={"name": agent.name, "version": agent.version, "model": "none (rule-based baseline)", "framework": "escapement-engine baselines", "memory": "explicit state"}, replace_active=True)
+        run = client.create_run(
+            args.room,
+            agent={
+                "name": agent.name,
+                "version": agent.version,
+                "model": "none (rule-based baseline)",
+                "framework": "escapement-engine baselines",
+                "memory": "explicit state",
+            },
+            replace_active=True,
+        )
         print(f"Run {run.id}: {run.watch_url}")
         obs = run.observation
         agent.reset()
@@ -219,7 +229,9 @@ def cmd_generate(args: argparse.Namespace) -> None:
     for check in g.report.checks:
         print(f"  {ok('pass') if check.passed else bad('FAIL')}  {check.name}" + (dim(f"  {check.detail}") if check.detail else ""))
     print(f"instance hash {g.instance_hash}")
-    print(f"shortest solution {g.min_length} actions ({'proven minimum' if g.optimality == 'proven' else 'best verified'}), budget {g.manifest.budget.actions}")
+    print(
+        f"shortest solution {g.min_length} actions ({'proven minimum' if g.optimality == 'proven' else 'best verified'}), budget {g.manifest.budget.actions}"
+    )
     if args.out:
         Path(args.out).write_text(manifest_json(g.manifest))
         print(f"manifest -> {args.out}")
@@ -254,7 +266,16 @@ def cmd_batch(args: argparse.Namespace) -> None:
             agent = make_agent(args.agent, seed=f"{args.seed}-{i}-{r}")
             res = run_local(agent, g.manifest, f"batch-{i}-{r}")
             results.setdefault(g.instance_hash, []).append((res.outcome == "escaped", res.actions_used))
-            rows.append({"instance": g.manifest.room_id, "instance_hash": g.instance_hash, "run": r, "outcome": res.outcome, "actions_used": res.actions_used, "min_length": g.min_length})
+            rows.append(
+                {
+                    "instance": g.manifest.room_id,
+                    "instance_hash": g.instance_hash,
+                    "run": r,
+                    "outcome": res.outcome,
+                    "actions_used": res.actions_used,
+                    "min_length": g.min_length,
+                }
+            )
         print(dim(f"instance {i + 1}/{args.instances} done"), end="\r")
     s = summarize(results)
     print()
@@ -298,9 +319,16 @@ def cmd_verify(args: argparse.Namespace) -> None:
     replay = _read_json(args.replay) if args.replay else None
     manifest = load_manifest(_read_json(args.manifest)) if args.manifest else None
     report = verify(cert, _keyset(args), replay, manifest)
-    levels = {"none": "nothing verified", "signature": "signature", "chain": "signature + hash chain", "full": "signature + hash chain + full re-simulation"}
+    levels = {
+        "none": "nothing verified",
+        "signature": "signature",
+        "chain": "signature + hash chain",
+        "full": "signature + hash chain + full re-simulation",
+    }
     print(f"certificate {cert.get('certificate_id')}  run {cert.get('run_id')}")
-    print(f"outcome {cert.get('outcome')} in {cert.get('actions_used')}/{cert.get('action_budget')} actions; room {cert.get('room', {}).get('room_id')}")
+    print(
+        f"outcome {cert.get('outcome')} in {cert.get('actions_used')}/{cert.get('action_budget')} actions; room {cert.get('room', {}).get('room_id')}"
+    )
     for p in report.problems:
         print(bad(f"  ✗ {p}"))
     for n in report.notes:
@@ -319,7 +347,13 @@ def cmd_verify(args: argparse.Namespace) -> None:
         except Exception:
             print(dim("  · revocation status not checked (server unreachable)"))
     agent = cert.get("agent", {})
-    print(dim(f"  self-reported: agent {agent.get('name')} {agent.get('version')}, model {agent.get('model')}" if not agent.get("model_attested") else f"  first-party reference run: {agent.get('provider')} {agent.get('model')}"))
+    print(
+        dim(
+            f"  self-reported: agent {agent.get('name')} {agent.get('version')}, model {agent.get('model')}"
+            if not agent.get("model_attested")
+            else f"  first-party reference run: {agent.get('provider')} {agent.get('model')}"
+        )
+    )
     if report.ok:
         print(ok(f"VALID ({levels[report.level]})"))
     else:
@@ -335,7 +369,10 @@ def cmd_replay(args: argparse.Namespace) -> None:
         replay = replay["replay"]
     chain = verify_chain(replay)
     print(f"run {replay['run_id']} on {replay['room']['room_id']} ({replay['room'].get('tier')}), outcome {replay['outcome']}")
-    print((ok("chain ok") if chain.ok else bad(f"chain BROKEN: {chain.reason} at step {chain.first_bad_seq}")) + dim(f"  ({chain.steps_checked} steps)"))
+    print(
+        (ok("chain ok") if chain.ok else bad(f"chain BROKEN: {chain.reason} at step {chain.first_bad_seq}"))
+        + dim(f"  ({chain.steps_checked} steps)")
+    )
     if args.manifest:
         sim = resimulate(replay, load_manifest(_read_json(args.manifest)))
         print(ok("re-simulation matches") if sim.ok else bad("re-simulation differs: " + "; ".join(sim.mismatches[:3])))

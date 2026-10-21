@@ -4,20 +4,21 @@ privacy and public-mode hardening."""
 from datetime import date, timedelta
 
 import pytest
-from fastapi.testclient import TestClient
-
 from escapement_api.app import create_app
-from escapement_api.models import DailyRoom, Run, Season, SealedManifest
+from escapement_api.models import DailyRoom, Run, SealedManifest, Season
 from escapement_api.services import seasons as season_service
 from escapement_api.timeutil import utcnow
 from escapement_engine.generation import load_manifest
+from fastapi.testclient import TestClient
 
 from .conftest import WEB, api_key, login, start
 
 
 def make_season(ctx, n=5, tiers=("standard",), starts=None):
     with ctx.db.owner_session() as s:
-        season = season_service.create_season(s, ctx.settings, "s1", "Season One", starts or utcnow() - timedelta(days=1), tiers=tiers, instances=n)
+        season = season_service.create_season(
+            s, ctx.settings, "s1", "Season One", starts or utcnow() - timedelta(days=1), tiers=tiers, instances=n
+        )
         season.status = "open"
     return "s1"
 
@@ -64,7 +65,9 @@ def test_ranked_run_embargo_and_season_close(app, ctx):
     verify = other.get(f"/api/v1/certificates/{run.last['certificate_id']}/verify").json()
     assert verify["level"] == "full"
     # Closed seasons accept no ranked runs.
-    r = web.post("/api/v1/runs", json={"room": "s1-standard-01", "agent": {"name": "x", "version": "2"}}, headers={"Authorization": f"Bearer {key}"})
+    r = web.post(
+        "/api/v1/runs", json={"room": "s1-standard-01", "agent": {"name": "x", "version": "2"}}, headers={"Authorization": f"Bearer {key}"}
+    )
     assert r.status_code == 409
 
 
@@ -73,7 +76,11 @@ def test_three_certified_runs_per_instance(app, ctx):
     web, key = api_key(app)
     for _ in range(3):
         play(web, key, "s1-standard-01", [{"tool": "review_journal", "arguments": {}}])
-    r = web.post("/api/v1/runs", json={"room": "s1-standard-01", "agent": {"name": "solver", "version": "1.0"}}, headers={"Authorization": f"Bearer {key}"})
+    r = web.post(
+        "/api/v1/runs",
+        json={"room": "s1-standard-01", "agent": {"name": "solver", "version": "1.0"}},
+        headers={"Authorization": f"Bearer {key}"},
+    )
     assert r.status_code == 409 and r.json()["error"]["code"] == "RUN_LIMIT"
     # A new agent version is a new point on the profile, with its own allowance.
     play(web, key, "s1-standard-01", [], agent={"name": "solver", "version": "2.0"})
@@ -264,7 +271,9 @@ def test_local_research_generate_and_batch(app, ctx):
     assert r.status_code == 200, r.text
     inst = r.json()["instances"][0]
     assert inst["validation"]["passed"]
-    job = web.post("/api/v1/admin/jobs", json={"kind": "batch_run", "payload": {"agent": "heuristic", "instance_ids": [inst["room_id"]], "runs": 2}}).json()
+    job = web.post(
+        "/api/v1/admin/jobs", json={"kind": "batch_run", "payload": {"agent": "heuristic", "instance_ids": [inst["room_id"]], "runs": 2}}
+    ).json()
     assert Worker(ctx).run_once()
     done = [j for j in web.get("/api/v1/admin/jobs").json()["jobs"] if j["id"] == job["id"]][0]
     assert done["status"] == "done" and done["result"]["summary"]["runs"] == 2

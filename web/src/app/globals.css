@@ -1,0 +1,248 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/newsreader";
+@import "@fontsource-variable/jetbrains-mono";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+ * Escapement design tokens.
+ * Quiet, high-contrast, text-and-icon first (PRD 17.6). Colour reinforces
+ * meaning but never carries it alone: every status also has an icon and a word.
+ */
+:root {
+  --paper: #f8f7f3;
+  --surface: #ffffff;
+  --sunken: #f1efe9;
+  --line: #e2dfd7;
+  --line-strong: #cfcbc0;
+  --ink: #17160f;
+  --ink-2: #3d3b34;
+  --muted: #66635a;
+  --faint: #8f8b80;
+  --signal: #1f4fd1;
+  --signal-soft: #e8eefc;
+  --signal-ink: #173b9e;
+  --self: #8a5a00;
+  --self-soft: #fbf3df;
+  --good: #15703a;
+  --good-soft: #e5f3ea;
+  --bad: #b3261e;
+  --bad-soft: #fbe9e7;
+  --warn: #9a5b00;
+  --warn-soft: #fdf1dc;
+  --focus: #1f4fd1;
+  --shadow: 0 1px 2px rgb(23 22 15 / 0.05), 0 4px 16px -4px rgb(23 22 15 / 0.08);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --paper: #0e0e0c;
+  --surface: #161613;
+  --sunken: #1d1c19;
+  --line: #2b2a25;
+  --line-strong: #3b3a33;
+  --ink: #eeece6;
+  --ink-2: #d4d1c8;
+  --muted: #a6a297;
+  --faint: #7d796f;
+  --signal: #86a8ff;
+  --signal-soft: #18213a;
+  --signal-ink: #b5c8ff;
+  --self: #e7b34c;
+  --self-soft: #2a2213;
+  --good: #5fcf8b;
+  --good-soft: #13261a;
+  --bad: #ff8a80;
+  --bad-soft: #2d1614;
+  --warn: #f0b25a;
+  --warn-soft: #2b2112;
+  --focus: #86a8ff;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 20px -6px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-signal-ink: var(--signal-ink);
+  --color-self: var(--self);
+  --color-self-soft: var(--self-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader Variable", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --shadow-card: var(--shadow);
+}
+
+@layer base {
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  background: var(--paper);
+  min-height: 100dvh;
+}
+
+::selection {
+  background: var(--signal-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+}
+
+.font-serif {
+  font-optical-sizing: auto;
+  letter-spacing: -0.012em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Long-form text (methodology, reports). */
+.prose-esc p,
+.prose-esc li {
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.prose-esc h2 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--ink);
+}
+.prose-esc h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+.prose-esc p + p {
+  margin-top: 0.85rem;
+}
+.prose-esc ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+.prose-esc ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+.prose-esc li + li {
+  margin-top: 0.35rem;
+}
+.prose-esc code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--sunken);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.05rem 0.3rem;
+}
+.prose-esc a {
+  color: var(--signal-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-esc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin-top: 1rem;
+}
+.prose-esc th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--sunken);
+}
+.prose-esc th,
+.prose-esc td {
+  border: 1px solid var(--line);
+  padding: 0.55rem 0.75rem;
+  vertical-align: top;
+}
+.prose-esc blockquote {
+  border-left: 3px solid var(--line-strong);
+  padding-left: 1rem;
+  color: var(--ink-2);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+}
+
+/* A faint grid used behind hero diagrams. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@keyframes esc-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-in {
+  animation: esc-fade-in 220ms ease-out both;
+}
+@keyframes esc-pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.live-dot {
+  animation: esc-pulse-dot 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

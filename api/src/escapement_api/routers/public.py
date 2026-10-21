@@ -3,15 +3,14 @@ from __future__ import annotations
 from datetime import date
 from typing import Any
 
-from fastapi import APIRouter, Query, Request, Response
-from sqlalchemy import select
-
 from escapement_engine.certificate import DOES_NOT_PROVE, PROVES
 from escapement_engine.rooms.emergency_lockdown import TIERS
 from escapement_engine.schemas.actions import tool_schemas
 from escapement_engine.schemas.endings import ENDING_LABELS, ENDINGS
 from escapement_engine.schemas.manifest import FAILURE_CODES
 from escapement_engine.version import ENGINE_VERSION, PROTOCOL_VERSION
+from fastapi import APIRouter, Query, Request, Response
+from sqlalchemy import select
 
 from ..deps import ctx, principal
 from ..errors import APIError, not_found
@@ -219,9 +218,11 @@ def reference(request: Request) -> dict[str, Any]:
                 lb = leaderboard(s, cur, tier, p.user_id)
                 boards[tier] = [r for r in lb["rows"] if r["reference"]]
         system = s.execute(select(User.id).where(User.is_system.is_(True))).scalars().all()
-        practice = s.execute(
-            select(Run).where(Run.instance_id == "practice", Run.user_id.in_(system), Run.status != "in_progress")
-        ).scalars().all()
+        practice = (
+            s.execute(select(Run).where(Run.instance_id == "practice", Run.user_id.in_(system), Run.status != "in_progress"))
+            .scalars()
+            .all()
+        )
         by_agent: dict[str, dict[str, Any]] = {}
         for r in practice:
             key = f"{(r.declared or {}).get('name')} {(r.declared or {}).get('version')}"

@@ -72,9 +72,7 @@ class Database:
         self.owner = _make_engine(settings.database_url, pool_size=5)
         if self.postgres:
             self.api = (
-                _make_engine(settings.database_url_api)
-                if settings.database_url_api
-                else _make_engine(settings.database_url, role=API_ROLE)
+                _make_engine(settings.database_url_api) if settings.database_url_api else _make_engine(settings.database_url, role=API_ROLE)
             )
             self.service = (
                 _make_engine(settings.database_url_service)
@@ -93,22 +91,19 @@ class Database:
 
     @contextmanager
     def api_session(self, user_id: str | None = None) -> Iterator[Session]:
-        with self._api() as session:
-            with session.begin():
-                self._set_user(session, user_id)
-                yield session
+        with self._api() as session, session.begin():
+            self._set_user(session, user_id)
+            yield session
 
     @contextmanager
     def service_session(self) -> Iterator[Session]:
-        with self._service() as session:
-            with session.begin():
-                yield session
+        with self._service() as session, session.begin():
+            yield session
 
     @contextmanager
     def owner_session(self) -> Iterator[Session]:
-        with self._owner() as session:
-            with session.begin():
-                yield session
+        with self._owner() as session, session.begin():
+            yield session
 
     def create_all_sqlite(self) -> None:
         """SQLite has no migrations-with-RLS path; create tables directly."""

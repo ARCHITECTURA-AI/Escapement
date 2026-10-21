@@ -13,13 +13,12 @@ import pytest
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-from fastapi.testclient import TestClient  # noqa: E402
-from sqlalchemy import create_engine, text  # noqa: E402
-
 from escapement_api.app import create_app  # noqa: E402
 from escapement_api.config import Settings  # noqa: E402
 from escapement_api.db import normalize_url  # noqa: E402
 from escapement_engine.generation import build_practice  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+from sqlalchemy import create_engine, text  # noqa: E402
 
 PG_URL = os.environ.get("ESCAPEMENT_TEST_DATABASE_URL")
 BACKENDS = ["sqlite"] + (["postgres"] if PG_URL else [])
@@ -42,7 +41,11 @@ def _reset_postgres(url: str) -> None:
         return
     engine = create_engine(normalize_url(url))
     with engine.begin() as conn:
-        tables = conn.execute(text("SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename <> 'alembic_version'")).scalars().all()
+        tables = (
+            conn.execute(text("SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename <> 'alembic_version'"))
+            .scalars()
+            .all()
+        )
         conn.execute(text("TRUNCATE " + ", ".join(tables) + " CASCADE"))
     engine.dispose()
 

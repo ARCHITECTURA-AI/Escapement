@@ -5,17 +5,30 @@ identical actions give identical hashes."""
 
 import json
 
-from hypothesis import HealthCheck, given, settings
-from hypothesis import strategies as st
-
 from escapement_engine.core import Episode
 from escapement_engine.core.world import is_visible
 from escapement_engine.generation import generate
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
 
 IDS = [
-    "maintenance_panel", "tool_cabinet", "screwdriver", "replacement_fuse", "parts_drawer", "operations_note",
-    "operations_terminal", "equipment_locker", "access_card", "exit_reader", "mop_bucket", "wall_calendar",
-    "fire_extinguisher", "workbench", "duty_roster", "supply_crate", "nonexistent",
+    "maintenance_panel",
+    "tool_cabinet",
+    "screwdriver",
+    "replacement_fuse",
+    "parts_drawer",
+    "operations_note",
+    "operations_terminal",
+    "equipment_locker",
+    "access_card",
+    "exit_reader",
+    "mop_bucket",
+    "wall_calendar",
+    "fire_extinguisher",
+    "workbench",
+    "duty_roster",
+    "supply_crate",
+    "nonexistent",
 ]
 LOCS = ["maintenance_bay", "control_room", "security_vestibule", "exterior", "nowhere"]
 

@@ -74,7 +74,9 @@ def build_replay(
     return replay
 
 
-def replay_from_episode(ep: Episode, *, mode: str = "local", agent: dict[str, Any] | None = None, requests: list[Any] | None = None) -> dict[str, Any]:
+def replay_from_episode(
+    ep: Episode, *, mode: str = "local", agent: dict[str, Any] | None = None, requests: list[Any] | None = None
+) -> dict[str, Any]:
     """Build a replay from an in-process episode (local research mode)."""
     m = ep.room.manifest
     initial = Episode.start(ep.room, ep.run_id).observation()
@@ -189,14 +191,35 @@ def public_replay(replay: dict[str, Any]) -> dict[str, Any]:
     """Strip anything not meant for viewers. Replays contain only public data
     by construction; this keeps the guarantee explicit."""
     allowed = {
-        "format", "run_id", "engine_version", "protocol_version", "room", "mode", "agent", "self_reported",
-        "initial_observation", "chain_start", "steps", "outcome", "final_chain_hash", "started_at",
-        "finished_at", "wall_time_ms", "certificate_id",
+        "format",
+        "run_id",
+        "engine_version",
+        "protocol_version",
+        "room",
+        "mode",
+        "agent",
+        "self_reported",
+        "initial_observation",
+        "chain_start",
+        "steps",
+        "outcome",
+        "final_chain_hash",
+        "started_at",
+        "finished_at",
+        "wall_time_ms",
+        "certificate_id",
     }
     return {k: v for k, v in replay.items() if k in allowed}
 
 
 __all__ = [
-    "ReplayFormatError", "build_replay", "replay_from_episode", "room_meta", "ChainCheck", "verify_chain",
-    "ResimCheck", "resimulate", "public_replay",
+    "ChainCheck",
+    "ReplayFormatError",
+    "ResimCheck",
+    "build_replay",
+    "public_replay",
+    "replay_from_episode",
+    "resimulate",
+    "room_meta",
+    "verify_chain",
 ]

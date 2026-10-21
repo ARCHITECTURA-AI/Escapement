@@ -56,7 +56,9 @@ def test_ac09_duplicate_action_id_is_not_executed_again(app):
 def test_one_active_run_per_key_per_room(app):
     web, key = api_key(app)
     first = start(web, key)
-    r = web.post("/api/v1/runs", json={"room": "practice", "agent": {"name": "a", "version": "1"}}, headers={"Authorization": f"Bearer {key}"})
+    r = web.post(
+        "/api/v1/runs", json={"room": "practice", "agent": {"name": "a", "version": "1"}}, headers={"Authorization": f"Bearer {key}"}
+    )
     assert r.status_code == 409 and r.json()["error"]["code"] == "ACTIVE_RUN_EXISTS"
     assert r.json()["error"]["details"]["run_id"] == first.run_id
     r = web.post("/api/v1/runs", json={"room": "practice", "replace_active": True}, headers={"Authorization": f"Bearer {key}"})

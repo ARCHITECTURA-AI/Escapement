@@ -2,7 +2,6 @@
 codes, movement, power dependencies, costs, terminal states, invalid actions."""
 
 import pytest
-
 from escapement_engine.core import Episode, EpisodeFinished
 from escapement_engine.schemas.endings import (
     ACTION_BUDGET_EXHAUSTED,

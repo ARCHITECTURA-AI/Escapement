@@ -178,6 +178,16 @@ def verify(
 
 
 __all__ = [
-    "PROVES", "DOES_NOT_PROVE", "SELF_REPORTED_FIELDS", "generate_keypair", "public_from_private", "key_id_for",
-    "signing_payload", "sign_certificate", "keyset_entry", "VerifyReport", "verify_signature", "verify",
+    "DOES_NOT_PROVE",
+    "PROVES",
+    "SELF_REPORTED_FIELDS",
+    "VerifyReport",
+    "generate_keypair",
+    "key_id_for",
+    "keyset_entry",
+    "public_from_private",
+    "sign_certificate",
+    "signing_payload",
+    "verify",
+    "verify_signature",
 ]

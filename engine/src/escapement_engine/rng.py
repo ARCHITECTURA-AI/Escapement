@@ -5,7 +5,8 @@ template and engine versions forever (section 12.1)."""
 from __future__ import annotations
 
 import hashlib
-from typing import Sequence, TypeVar
+from collections.abc import Sequence
+from typing import TypeVar
 
 T = TypeVar("T")
 

@@ -94,7 +94,7 @@ class Episode:
     # -- construction -----------------------------------------------------
 
     @classmethod
-    def start(cls, manifest: RoomManifest | CompiledRoom, run_id: str) -> "Episode":
+    def start(cls, manifest: RoomManifest | CompiledRoom, run_id: str) -> Episode:
         room = manifest if isinstance(manifest, CompiledRoom) else CompiledRoom(manifest)
         rh = instance_hash(room.manifest)
         return cls(
@@ -113,7 +113,7 @@ class Episode:
         state: State,
         chain_hash: str,
         last_result: Result | None = None,
-    ) -> "Episode":
+    ) -> Episode:
         room = manifest if isinstance(manifest, CompiledRoom) else CompiledRoom(manifest)
         return cls(
             room=room,

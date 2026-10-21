@@ -17,15 +17,14 @@ from typing import Any
 try:  # mcp >= 2
     from mcp.server.mcpserver import MCPServer as _Server
 except ImportError:  # mcp 1.x
-    from mcp.server.fastmcp import FastMCP as _Server  # type: ignore[no-redef]
+    from mcp.server.fastmcp import FastMCP as _Server  # type: ignore[no-redef,attr-defined]
 
 from ..sdk.client import Client, Run
 from ..sdk.errors import EscapementError
 from ..sdk.tools import SYSTEM_PROMPT, describe_observation
 
 INSTRUCTIONS = (
-    SYSTEM_PROMPT
-    + " Start with start_run (room 'practice' is free and unranked). Then call one room tool per decision. "
+    SYSTEM_PROMPT + " Start with start_run (room 'practice' is free and unranked). Then call one room tool per decision. "
     "Call finish_run when you are done or stuck; the run ends by itself when you escape or the budget runs out."
 )
 

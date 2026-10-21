@@ -9,7 +9,8 @@ from typing import Any
 from sqlalchemy import delete, select, update
 from sqlalchemy.orm import Session
 
-from ..models import AgentVersion, ApiKey, Certificate, HintEvent, Run, RunState, Session as DbSession, Transition, User, UserPrivate
+from ..models import AgentVersion, ApiKey, Certificate, HintEvent, Run, RunState, Transition, User, UserPrivate
+from ..models import Session as DbSession
 from ..timeutil import iso, utcnow
 from .certs import tombstone
 
@@ -26,19 +27,42 @@ def export(s: Session, user_id: str) -> dict[str, Any]:
         steps = s.execute(select(Transition).where(Transition.run_id == r.id).order_by(Transition.seq)).scalars().all()
         run_out.append(
             {
-                "id": r.id, "instance_id": r.instance_id, "mode": r.mode, "status": r.status, "actions_used": r.actions_used,
-                "started_at": iso(r.started_at), "finished_at": iso(r.finished_at), "declared": r.declared, "usage": r.usage,
-                "final_chain_hash": r.final_chain_hash, "certificate_id": r.certificate_id,
+                "id": r.id,
+                "instance_id": r.instance_id,
+                "mode": r.mode,
+                "status": r.status,
+                "actions_used": r.actions_used,
+                "started_at": iso(r.started_at),
+                "finished_at": iso(r.finished_at),
+                "declared": r.declared,
+                "usage": r.usage,
+                "final_chain_hash": r.final_chain_hash,
+                "certificate_id": r.certificate_id,
                 "steps": [{"seq": t.seq, "action": t.action, "result": t.result, "decision_summary": t.decision_summary} for t in steps],
             }
         )
     return {
         "exported_at": iso(utcnow()),
-        "user": {"id": user.id, "handle": user.handle, "display_name": user.display_name, "created_at": iso(user.created_at), "profile_public": user.profile_public} if user else None,
+        "user": {
+            "id": user.id,
+            "handle": user.handle,
+            "display_name": user.display_name,
+            "created_at": iso(user.created_at),
+            "profile_public": user.profile_public,
+        }
+        if user
+        else None,
         "email": private.email if private else None,
         "api_keys": [{"name": k.name, "prefix": k.prefix, "created_at": iso(k.created_at), "revoked_at": iso(k.revoked_at)} for k in keys],
         "agent_versions": [
-            {"id": v.id, "name": v.name, "version": v.version_label, "model": v.declared_model, "framework": v.framework, "memory": v.memory_strategy}
+            {
+                "id": v.id,
+                "name": v.name,
+                "version": v.version_label,
+                "model": v.declared_model,
+                "framework": v.framework,
+                "memory": v.memory_strategy,
+            }
             for v in versions
         ],
         "runs": run_out,

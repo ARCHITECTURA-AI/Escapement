@@ -4,7 +4,6 @@ unsolvable instances are rejected, generation reproduces from seed and
 version."""
 
 import pytest
-
 from escapement_engine.core import CompiledRoom, Episode, instance_hash
 from escapement_engine.generation import (
     PRACTICE_SEED,
@@ -93,7 +92,14 @@ def test_dead_end_is_detected():
     m, intended = build("standard", "deadend", "deadend")
     # Using the card on the panel destroys it: the exit becomes unreachable
     # from any state after that mistake, though still reachable overall.
-    bad = Rule(id="shred", tool="use", item="access_card", target="maintenance_panel", effects=[Effect(kind="move_object", obj="access_card", to="@gone")], message="Gone.")
+    bad = Rule(
+        id="shred",
+        tool="use",
+        item="access_card",
+        target="maintenance_panel",
+        effects=[Effect(kind="move_object", obj="access_card", to="@gone")],
+        message="Gone.",
+    )
     rules = [bad, *m.rules]
     report = validate(m.model_copy(update={"rules": rules}), intended)
     assert any(c.id == "dead_ends" and not c.passed for c in report.checks)

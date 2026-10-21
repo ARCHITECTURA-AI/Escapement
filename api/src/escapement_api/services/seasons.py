@@ -7,13 +7,12 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 from typing import Any
 
-from sqlalchemy import select, update
-from sqlalchemy.orm import Session
-
 from escapement_engine.generation import generate, season_seed
 from escapement_engine.rooms.emergency_lockdown import TIERS
 from escapement_engine.schemas.endings import ESCAPED, IN_PROGRESS
 from escapement_engine.version import ENGINE_VERSION
+from sqlalchemy import select, update
+from sqlalchemy.orm import Session
 
 from ..errors import APIError
 from ..models import PublishedManifest, RoomInstance, Run, Season, User
@@ -105,15 +104,24 @@ def season_report(s: Session, season: Season) -> dict[str, Any]:
     intervals, budgets and agent configurations, failures included."""
     tiers = {}
     for tier in season.tiers:
-        instances = s.execute(
-            select(RoomInstance).where(RoomInstance.season_id == season.id, RoomInstance.tier == tier).order_by(RoomInstance.position)
-        ).scalars().all()
+        instances = (
+            s.execute(
+                select(RoomInstance).where(RoomInstance.season_id == season.id, RoomInstance.tier == tier).order_by(RoomInstance.position)
+            )
+            .scalars()
+            .all()
+        )
         published = {
-            p.instance_id: p for p in s.execute(select(PublishedManifest).where(PublishedManifest.instance_id.in_([i.id for i in instances]))).scalars()
+            p.instance_id: p
+            for p in s.execute(select(PublishedManifest).where(PublishedManifest.instance_id.in_([i.id for i in instances]))).scalars()
         }
-        runs = s.execute(
-            select(Run).where(Run.season_id == season.id, Run.instance_id.in_([i.id for i in instances]), Run.status != IN_PROGRESS)
-        ).scalars().all()
+        runs = (
+            s.execute(
+                select(Run).where(Run.season_id == season.id, Run.instance_id.in_([i.id for i in instances]), Run.status != IN_PROGRESS)
+            )
+            .scalars()
+            .all()
+        )
         tiers[tier] = {
             "budget": TIERS[tier].budget,
             "parameters": {
@@ -137,9 +145,7 @@ def season_report(s: Session, season: Season) -> dict[str, Any]:
             "endings": endings_breakdown(list(runs)),
             "leaderboard": leaderboard(s, season, tier),
         }
-    participants = s.execute(
-        select(Run.user_id).where(Run.season_id == season.id).distinct()
-    ).scalars().all()
+    participants = s.execute(select(Run.user_id).where(Run.season_id == season.id).distinct()).scalars().all()
     humans = s.execute(select(User.id).where(User.id.in_([p for p in participants if p]), User.is_system.is_(False))).scalars().all()
     return {
         "season_id": season.id,
@@ -161,9 +167,11 @@ def season_report(s: Session, season: Season) -> dict[str, Any]:
 
 
 def season_public(s: Session, season: Season) -> dict[str, Any]:
-    instances = s.execute(
-        select(RoomInstance).where(RoomInstance.season_id == season.id).order_by(RoomInstance.tier, RoomInstance.position)
-    ).scalars().all()
+    instances = (
+        s.execute(select(RoomInstance).where(RoomInstance.season_id == season.id).order_by(RoomInstance.tier, RoomInstance.position))
+        .scalars()
+        .all()
+    )
     now = utcnow()
     return {
         "id": season.id,

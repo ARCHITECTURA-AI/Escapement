@@ -8,9 +8,6 @@ from datetime import date
 from functools import lru_cache
 from typing import Any
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session
-
 from escapement_engine.core import CompiledRoom
 from escapement_engine.generation import (
     PRACTICE_ROOM_ID,
@@ -22,6 +19,8 @@ from escapement_engine.generation import (
 )
 from escapement_engine.rooms.emergency_lockdown import FAMILY, FAMILY_TITLE, TEMPLATE_VERSION, TIERS
 from escapement_engine.version import ENGINE_VERSION
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from ..config import Settings
 from ..errors import APIError, not_found
@@ -181,11 +180,15 @@ def publish_instance(s: Session, instance_id: str) -> None:
 
 def publish_past_dailies(s: Session) -> int:
     today = utc_today()
-    rows = s.execute(
-        select(DailyRoom).join(RoomInstance, RoomInstance.id == DailyRoom.instance_id).where(
-            DailyRoom.date < today, RoomInstance.manifest_public.is_(False)
+    rows = (
+        s.execute(
+            select(DailyRoom)
+            .join(RoomInstance, RoomInstance.id == DailyRoom.instance_id)
+            .where(DailyRoom.date < today, RoomInstance.manifest_public.is_(False))
         )
-    ).scalars().all()
+        .scalars()
+        .all()
+    )
     for row in rows:
         publish_instance(s, row.instance_id)
     return len(rows)

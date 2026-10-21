@@ -13,7 +13,14 @@ from ..models import Job
 from ..timeutil import iso, utcnow
 
 
-def enqueue(s: Session, kind: str, payload: dict[str, Any] | None = None, priority: int = 100, run_after: datetime | None = None, max_attempts: int = 3) -> Job:
+def enqueue(
+    s: Session,
+    kind: str,
+    payload: dict[str, Any] | None = None,
+    priority: int = 100,
+    run_after: datetime | None = None,
+    max_attempts: int = 3,
+) -> Job:
     job = Job(kind=kind, payload=payload or {}, priority=priority, run_after=run_after or utcnow(), max_attempts=max_attempts)
     s.add(job)
     s.flush()
@@ -30,11 +37,11 @@ def claim(s: Session, worker_id: str, kinds: list[str] | None = None) -> Job | N
     if job is None:
         return None
     updated = s.execute(
-        update(Job).where(Job.id == job.id, Job.status == "queued").values(
-            status="running", locked_at=utcnow(), locked_by=worker_id, attempts=Job.attempts + 1, updated_at=utcnow()
-        )
+        update(Job)
+        .where(Job.id == job.id, Job.status == "queued")
+        .values(status="running", locked_at=utcnow(), locked_by=worker_id, attempts=Job.attempts + 1, updated_at=utcnow())
     )
-    if updated.rowcount != 1:  # lost a race on SQLite
+    if getattr(updated, "rowcount", 1) != 1:  # lost a race on SQLite
         return None
     s.refresh(job)
     return job
@@ -60,9 +67,9 @@ def fail(s: Session, job_id: str, error: str, retry_in: timedelta | None = None)
 def defer(s: Session, job_id: str, until: datetime, note: str) -> None:
     """Put a job back without counting an attempt (e.g. provider daily limit)."""
     s.execute(
-        update(Job).where(Job.id == job_id).values(
-            status="queued", run_after=until, attempts=Job.attempts - 1, progress=note, updated_at=utcnow()
-        )
+        update(Job)
+        .where(Job.id == job_id)
+        .values(status="queued", run_after=until, attempts=Job.attempts - 1, progress=note, updated_at=utcnow())
     )
 
 
@@ -72,12 +79,22 @@ def reclaim_stuck(s: Session, older_than: timedelta = timedelta(minutes=30)) -> 
     res = s.execute(
         update(Job).where(Job.status == "running", Job.locked_at < utcnow() - older_than).values(status="queued", locked_by=None)
     )
-    return res.rowcount or 0
+    return getattr(res, "rowcount", 0) or 0
 
 
 def job_public(j: Job) -> dict[str, Any]:
     return {
-        "id": j.id, "kind": j.kind, "payload": j.payload, "status": j.status, "priority": j.priority,
-        "attempts": j.attempts, "max_attempts": j.max_attempts, "run_after": iso(j.run_after),
-        "result": j.result, "error": j.error, "progress": j.progress, "created_at": iso(j.created_at), "updated_at": iso(j.updated_at),
+        "id": j.id,
+        "kind": j.kind,
+        "payload": j.payload,
+        "status": j.status,
+        "priority": j.priority,
+        "attempts": j.attempts,
+        "max_attempts": j.max_attempts,
+        "run_after": iso(j.run_after),
+        "result": j.result,
+        "error": j.error,
+        "progress": j.progress,
+        "created_at": iso(j.created_at),
+        "updated_at": iso(j.updated_at),
     }

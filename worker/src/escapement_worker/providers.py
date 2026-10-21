@@ -36,7 +36,14 @@ class Provider(Protocol):
 class OpenAICompatible:
     """Groq by default; any OpenAI-compatible chat completions endpoint works."""
 
-    def __init__(self, name: str = "groq", model: str = "openai/gpt-oss-20b", base_url: str | None = None, api_key: str | None = None, timeout: float = 60) -> None:
+    def __init__(
+        self,
+        name: str = "groq",
+        model: str = "openai/gpt-oss-20b",
+        base_url: str | None = None,
+        api_key: str | None = None,
+        timeout: float = 60,
+    ) -> None:
         self.name = name
         self.model = model
         self.base_url = (base_url or os.environ.get("REFERENCE_BASE_URL") or "https://api.groq.com/openai/v1").rstrip("/")
@@ -69,7 +76,9 @@ class OpenAICompatible:
             raise ProviderError(f"provider rejected the request: {resp.status_code} {resp.text[:200]}", fatal=True)
         data = resp.json()
         usage = data.get("usage") or {}
-        return Completion(data["choices"][0]["message"], int(usage.get("prompt_tokens", 0)), int(usage.get("completion_tokens", 0)), headers)
+        return Completion(
+            data["choices"][0]["message"], int(usage.get("prompt_tokens", 0)), int(usage.get("completion_tokens", 0)), headers
+        )
 
 
 def _retry_after(headers: dict[str, str]) -> float:
@@ -108,7 +117,14 @@ def parse_duration(value: str) -> float:
 class ScriptedProvider:
     """Deterministic provider for tests and demos: replays tool calls."""
 
-    def __init__(self, calls: list[tuple[str, dict[str, Any]]], name: str = "scripted", model: str = "scripted-1", tokens: int = 500, headers: dict[str, str] | None = None) -> None:
+    def __init__(
+        self,
+        calls: list[tuple[str, dict[str, Any]]],
+        name: str = "scripted",
+        model: str = "scripted-1",
+        tokens: int = 500,
+        headers: dict[str, str] | None = None,
+    ) -> None:
         self.name = name
         self.model = model
         self.calls = list(calls)
@@ -121,5 +137,9 @@ class ScriptedProvider:
 
         tool, args = self.calls[min(self.i, len(self.calls) - 1)]
         self.i += 1
-        msg = {"role": "assistant", "content": None, "tool_calls": [{"id": f"call_{self.i}", "type": "function", "function": {"name": tool, "arguments": json.dumps(args)}}]}
+        msg = {
+            "role": "assistant",
+            "content": None,
+            "tool_calls": [{"id": f"call_{self.i}", "type": "function", "function": {"name": tool, "arguments": json.dumps(args)}}],
+        }
         return Completion(msg, self.tokens, 20, self.headers)

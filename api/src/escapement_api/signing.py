@@ -8,9 +8,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from sqlalchemy import select
-
 from escapement_engine.certificate import generate_keypair, key_id_for, keyset_entry, public_from_private, sign_certificate
+from sqlalchemy import select
 
 from .config import Settings
 from .db import Database

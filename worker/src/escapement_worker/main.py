@@ -15,8 +15,6 @@ import logging
 import os
 from typing import Any
 
-from sqlalchemy import select
-
 from escapement import Client
 from escapement.sdk.errors import EscapementError
 from escapement_api.app import build_context
@@ -49,6 +47,9 @@ class ReferenceWorker(Worker):
         out = []
         for model in self.models:
             provider = self.provider_factory(model)
+            if getattr(provider, "api_key", "configured") is None:
+                log.warning("no provider key: skipping %s for %s", kind, model)
+                continue
             if model not in self.drips:
                 self.drips[model] = self.drip_factory(provider.name, model)
             drip = self.drips[model]
@@ -77,7 +78,14 @@ class ReferenceWorker(Worker):
             try:
                 run = self.client.create_run(
                     room,
-                    agent={"name": cfg["name"], "version": cfg["version"], "model": cfg["model"], "framework": f"escapement reference harness {cfg.get('prompt_version', '')}".strip(), "memory": cfg["memory"], "config_hash": config_hash(cfg)},
+                    agent={
+                        "name": cfg["name"],
+                        "version": cfg["version"],
+                        "model": cfg["model"],
+                        "framework": f"escapement reference harness {cfg.get('prompt_version', '')}".strip(),
+                        "memory": cfg["memory"],
+                        "config_hash": config_hash(cfg),
+                    },
                     provider=cfg["provider"],
                     reference_seed=seed,
                     replace_active=True,

@@ -1,5 +1,4 @@
 import pytest
-
 from escapement_engine.core import CompiledRoom, Episode
 from escapement_engine.generation import build_practice, practice_manifest
 
